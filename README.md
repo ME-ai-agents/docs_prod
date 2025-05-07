@@ -138,6 +138,14 @@ The system consists of three primary layers: Client Interfaces, Neural
 Core Platform, and Agentic Products, connected through a Master Control
 Protocol.
 
+```mermaid
+flowchart TD
+subgraph CLIENT_INTERFACES["CLIENT INTERFACES"]
+CC[Chat Client]
+...
+```
+
+```mermaid
 flowchart TD
 
 subgraph CLIENT_INTERFACES\[\"CLIENT INTERFACES\"\]
@@ -219,6 +227,9 @@ class NEURAL_CORE green
 class MCP orange
 
 class PRODUCTS purple
+
+...
+```
 
 **3.2 Key Components**
 
