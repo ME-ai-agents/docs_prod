@@ -385,36 +385,16 @@ stateDiagram-v2
 
 #### 5.1.1 Create Workflow Definition
 
-```
-POST /api/v1/workflow/definitions
-Content-Type: application/json
-Authorization: Bearer {token}
-
-Request Body:
-{
-  "name": "Customer Onboarding",
-  "description": "Process for onboarding new customers",
-  "definition": {
-    "nodes": [...],
-    "transitions": [...],
-    "parameters": [...]
-  },
-  "tags": ["customer", "onboarding", "registration"]
-}
-
-Response (201 Created):
-{
-  "definitionId": "wfd-12345",
-  "name": "Customer Onboarding",
-  "version": "1.0.0",
-  "createdDate": "2025-05-07T14:30:00Z",
-  "createdBy": "system",
-  "isActive": true,
-  "links": {
-    "self": "/api/v1/workflow/definitions/wfd-12345",
-    "instances": "/api/v1/workflow/definitions/wfd-12345/instances"
-  }
-}
+```mermaid
+sequenceDiagram
+    participant Client
+    participant WDS as Workflow Definition Service
+    
+    Client->>+WDS: POST /api/v1/workflow/definitions
+    Note over Client,WDS: Authorization: Bearer {token}<br>Content-Type: application/json<br>{<br>  "name": "Customer Onboarding",<br>  "description": "Process for onboarding new customers",<br>  "definition": { "nodes": [...], "transitions": [...], "parameters": [...] },<br>  "tags": ["customer", "onboarding", "registration"]<br>}
+    
+    WDS-->>-Client: 201 Created
+    Note over WDS,Client: {<br>  "definitionId": "wfd-12345",<br>  "name": "Customer Onboarding",<br>  "version": "1.0.0",<br>  "createdDate": "2025-05-07T14:30:00Z",<br>  "createdBy": "system",<br>  "isActive": true,<br>  "links": {<br>    "self": "/api/v1/workflow/definitions/wfd-12345",<br>    "instances": "/api/v1/workflow/definitions/wfd-12345/instances"<br>  }<br>}
 ```
 
 #### 5.1.2 Get Workflow Definition
