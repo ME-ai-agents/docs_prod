@@ -179,7 +179,7 @@ flowchart TD
 | | Integration | API Gateways, ESB, Message Brokers | External system integration |
 | | Domain Logic | Business Rules Engines, Expert Systems | Domain-specific business logic |
 
-#### System Use Case Diagram
+## Neural Core Platform Use Case Diagram
 
 ```plantuml
 @startuml
@@ -187,7 +187,6 @@ left to right direction
 actor "End User" as user
 actor "Enterprise System" as system
 actor "Administrator" as admin
-
 rectangle "Neural Core Platform" {
   usecase "Engage in Natural Conversation" as UC1
   usecase "Execute Dynamic Workflows" as UC2
@@ -198,7 +197,6 @@ rectangle "Neural Core Platform" {
   usecase "Manage Memory Across Sessions" as UC7
   usecase "Configure System" as UC8
 }
-
 user --> UC1
 user --> UC2
 user --> UC4
