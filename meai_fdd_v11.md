@@ -124,6 +124,112 @@ The implementation leverages modern distributed technologies:
 ### 3.0 High-Level Architecture
 
 The ME.AI Neural Core Mesh Architecture combines several key layers in a distributed mesh topology, enabling seamless integration and communication between components.
+```mermaid
+flowchart TD
+    subgraph Users["User Roles"]
+        EndUser["👤 End User"]
+        AdminUser["👤 Admin User"]
+        DevUser["👤 Developer"]
+    end
+    
+    subgraph Interfaces["Interface Layer"]
+        subgraph Channels["Multi-Channel Interface"]
+            Chat["Chat Interfaces"]
+            Voice["Voice Interface"]
+            Media["Media Processing"]
+            Teams["MS Teams Integration"]
+        end
+        
+        subgraph AdminUI["Administration UI"]
+            SPC["Semantic Profile Configuration"]
+            PAC["Product Administration"]
+            SDC["System Dashboard"]
+        end
+        
+        subgraph DevSDK["Developer SDK"]
+            API["API Management"]
+            SDK["Development Tools"]
+            DPR["Developer Portal"]
+        end
+    end
+    
+    subgraph CoreLayers["Core Platform Layers"]
+        subgraph UIAG["UI Agentic Layer"]
+            UAF["UI Agent Framework"]
+            UDL["UI Distribution Layer"]
+            MMI["Multi-Modal Interaction"]
+            UPE["UI Personalization"]
+        end
+        
+        subgraph NCMESH["Neural Core Mesh"]
+            CP["Conversation Processing"]
+            MM["Memory Management"]
+            USE["User Semantic Evolution"]
+            AC["Adaptive Communication"]
+            MLS["Multilingual Support"]
+            ERS["Empathetic Response"]
+            DWE["Dynamic Workflow Engine"]
+        end
+        
+        subgraph MCP["Mesh Control Protocol"]
+            AD["Agent Discovery"]
+            SM["State Management"]
+            CR["Coalition Routing"]
+            MCS["Model Context Sharing"]
+            CFP["Coalition Formation"]
+        end
+    end
+    
+    subgraph ProductsIntegrations["Products & Integrations"]
+        subgraph APL["Agentic Products Layer"]
+            ITS["IT Support Product"]
+            CSP["Customer Service Product"]
+            FP["Future Products"]
+            DOA["Device Operator Agent"]
+            DPD["Device Passport Database"]
+        end
+        
+        subgraph ANL["Analytics & Insights"]
+            UB["User Behavior Analytics"]
+            OP["Operational Performance"]
+            SI["System Intelligence"]
+            BI["Business Insights"]
+            CD["Conversation Dashboards"]
+        end
+        
+        subgraph EXT["External Integrations"]
+            EAI["External AI Services"]
+            ERP["Enterprise Systems"]
+            CRM["CRM Systems"]
+            ITM["IT Management Systems"]
+        end
+    end
+    
+    classDef userLayer fill:#D5DBDB,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef interfaceLayer fill:#F9E79F,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef uiLayer fill:#F9E79F,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef ncLayer fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef mcpLayer fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef aplLayer fill:#D2B4DE,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef extLayer fill:#FADBD8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef adminLayer fill:#F5CBA7,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef analyticsLayer fill:#A9DFBF,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef devLayer fill:#AED6F1,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef groupLayer fill:#FFFFFF,stroke:#2C3E50,stroke-width:3px,color:#2C3E50
+    
+    class Users,EndUser,AdminUser,DevUser userLayer
+    class Interfaces,Channels,Chat,Voice,Media,Teams interfaceLayer
+    class AdminUI,SPC,PAC,SDC adminLayer
+    class DevSDK,API,SDK,DPR devLayer
+    class CoreLayers groupLayer
+    class UIAG,UAF,UDL,MMI,UPE uiLayer
+    class NCMESH,CP,MM,USE,AC,MLS,ERS,DWE ncLayer
+    class MCP,AD,SM,CR,MCS,CFP mcpLayer
+    class ProductsIntegrations groupLayer
+    class APL,ITS,CSP,FP,DOA,DPD aplLayer
+    class ANL,UB,OP,SI,BI,CD analyticsLayer
+    class EXT,EAI,ERP,CRM,ITM extLayer
+```
 
 ```mermaid
 flowchart TD
