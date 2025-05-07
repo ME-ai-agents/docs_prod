@@ -181,32 +181,35 @@ flowchart TD
 
 ## Neural Core Platform Use Case Diagram
 
-```plantuml
-@startuml
-left to right direction
-actor "End User" as user
-actor "Enterprise System" as system
-actor "Administrator" as admin
-rectangle "Neural Core Platform" {
-  usecase "Engage in Natural Conversation" as UC1
-  usecase "Execute Dynamic Workflows" as UC2
-  usecase "Access Enterprise Systems" as UC3
-  usecase "Provide Multilingual Support" as UC4
-  usecase "Deliver Empathetic Responses" as UC5
-  usecase "Maintain User-Specific Semantics" as UC6
-  usecase "Manage Memory Across Sessions" as UC7
-  usecase "Configure System" as UC8
-}
-user --> UC1
-user --> UC2
-user --> UC4
-user --> UC5
-system --> UC3
-admin --> UC8
-UC1 --> UC6
-UC1 --> UC7
-UC2 --> UC3
-@enduml
+```mermaid
+flowchart LR
+    user((End User))
+    system((Enterprise System))
+    admin((Administrator))
+    
+    subgraph NCP["Neural Core Platform"]
+        UC1["Engage in Natural Conversation"]
+        UC2["Execute Dynamic Workflows"]
+        UC3["Access Enterprise Systems"]
+        UC4["Provide Multilingual Support"]
+        UC5["Deliver Empathetic Responses"]
+        UC6["Maintain User-Specific Semantics"]
+        UC7["Manage Memory Across Sessions"]
+        UC8["Configure System"]
+    end
+    
+    user --> UC1
+    user --> UC2
+    user --> UC4
+    user --> UC5
+    system --> UC3
+    admin --> UC8
+    UC1 --> UC6
+    UC1 --> UC7
+    UC2 --> UC3
+    
+    classDef actor fill:#f9f,stroke:#333,stroke-width:1px
+    class user,system,admin actor
 ```
 
 #### System Data Flow Diagram
