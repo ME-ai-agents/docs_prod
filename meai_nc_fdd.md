@@ -409,31 +409,36 @@ flowchart LR
 
 #### Semantic Evolution Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "User" as user
-actor "System" as system
-
-rectangle "Semantic Evolution System" {
-  usecase "Create Semantic Profile" as UC1
-  usecase "Update Entity Familiarity" as UC2
-  usecase "Build Knowledge Graph" as UC3
-  usecase "Track Conceptual Understanding" as UC4
-  usecase "Apply Semantic Context" as UC5
-  usecase "Merge Organization/User Semantics" as UC6
-}
-
-user --> UC1
-system --> UC2
-system --> UC3
-system --> UC4
-UC1 --> UC5
-UC2 --> UC5
-UC3 --> UC5
-UC4 --> UC5
-UC5 --> UC6
-@enduml
+```mermaid
+sequenceDiagram
+    participant User
+    participant System
+    participant SEP as Semantic Profile Service
+    participant EF as Entity Familiarity Service
+    participant KG as Knowledge Graph Service
+    participant CU as Conceptual Understanding Service
+    participant SC as Semantic Context Service
+    participant MS as Merge Semantics Service
+    
+    User->>SEP: Create Semantic Profile (UC1)
+    
+    par System-initiated processes
+        System->>EF: Update Entity Familiarity (UC2)
+        System->>KG: Build Knowledge Graph (UC3)
+        System->>CU: Track Conceptual Understanding (UC4)
+    end
+    
+    SEP->>SC: Provide User Profile Data
+    EF->>SC: Provide Entity Familiarity Data
+    KG->>SC: Provide Knowledge Graph Data
+    CU->>SC: Provide Conceptual Understanding Data
+    
+    Note over SC: Apply Semantic Context (UC5)
+    SC->>MS: Forward Integrated Semantic Context
+    
+    Note over MS: Merge Organization/User Semantics (UC6)
+    MS-->>User: Return Personalized Semantic Experience
+    MS-->>System: Update System Knowledge
 ```
 
 ### 4.2 Adaptive Communication
