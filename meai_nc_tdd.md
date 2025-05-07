@@ -82,6 +82,8 @@ flowchart TD
     class NC,MCP,DWE,AP,MM system
     class MEAI boundary
 ```
+
+
 ### 2.1 Key Interactions
 
 The Dynamic Workflow Engine:
