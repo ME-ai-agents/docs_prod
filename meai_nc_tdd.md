@@ -76,6 +76,38 @@ C4 Context
     UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
 ```
 
+```mermaid
+flowchart TD
+    User["👤 End User\n(Interacts with the system)"]
+    
+    subgraph MEAI["ME.AI Neural Core Platform"]
+        NC["Neural Core\n(Conversation intelligence and processing)"]
+        MCP["Master Control Protocol\n(Orchestration and communication layer)"]
+        DWE["Dynamic Workflow Engine\n(Workflow orchestration and automation)"]
+        AP["Agentic Products\n(Domain-specific capabilities)"]
+        MM["Memory Management\n(Conversation memory across time spans)"]
+    end
+    
+    EXT["External Enterprise Systems\n(CRM, ERP, Knowledge Bases, etc.)"]
+    
+    User -->|"Interacts with"| NC
+    NC -->|"Triggers workflows,\nReceives workflow status"| DWE
+    DWE -->|"Coordinates via"| MCP
+    DWE -->|"Persists &\nretrieves context"| MM
+    MCP -->|"Dispatches tasks"| AP
+    DWE -->|"Integrates with"| EXT
+    
+    %% Styling
+    classDef person fill:#08427B,stroke:#052E56,color:#fff
+    classDef external fill:#999999,stroke:#666666,color:#fff
+    classDef system fill:#1168BD,stroke:#0B4884,color:#fff
+    classDef boundary fill:#ffffff,stroke:#cccccc,stroke-width:1px,color:#000
+    
+    class User person
+    class EXT external
+    class NC,MCP,DWE,AP,MM system
+    class MEAI boundary
+```
 ### 2.1 Key Interactions
 
 The Dynamic Workflow Engine:
