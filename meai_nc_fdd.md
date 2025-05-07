@@ -1324,62 +1324,93 @@ flowchart TD
 
 #### MCP Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "Neural Core" as core
-actor "Agentic Product" as product
-actor "Administrator" as admin
-
-rectangle "Master Control Protocol" {
-  usecase "Discover Agents" as UC1
-  usecase "Route Messages" as UC2
-  usecase "Coordinate Workflows" as UC3
-  usecase "Monitor Performance" as UC4
-  usecase "Manage Resources" as UC5
-  usecase "Enforce Security" as UC6
-}
-
-core --> UC1
-core --> UC2
-core --> UC3
-product --> UC1
-product --> UC2
-admin --> UC4
-admin --> UC5
-admin --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC4
-UC5 --> UC3
-UC6 --> UC2
-@enduml
+```mermaid
+sequenceDiagram
+    participant NC as Neural Core
+    participant AR as Agent Registry
+    participant MR as Message Router
+    participant WC as Workflow Coordinator
+    participant PM as Performance Monitor
+    participant RM as Resource Manager
+    participant SE as Security Enforcer
+    participant AP as Agentic Product
+    participant Admin as Administrator
+    
+    Note over NC, AP: Agent Discovery Phase
+    NC->>AR: Request agent discovery (UC1)
+    AP->>AR: Register agent capabilities (UC1)
+    AR->>NC: Return available agents
+    AR->>AP: Confirm registration
+    
+    Note over NC, AP: Message Routing Phase
+    par Security Enforcement
+        Admin->>SE: Configure security policies (UC6)
+        SE->>MR: Apply security rules to routing
+    end
+    
+    NC->>MR: Send message to agent (UC2)
+    MR->>MR: Apply security verification
+    MR->>AP: Route message to appropriate agent
+    AP->>MR: Return response
+    MR->>NC: Deliver agent response
+    
+    Note over NC, AP: Workflow Coordination Phase
+    par Resource Management
+        Admin->>RM: Configure resource allocation (UC5)
+        RM->>WC: Provide resource constraints
+    end
+    
+    NC->>WC: Request workflow execution (UC3)
+    WC->>WC: Apply resource constraints
+    WC->>AP: Coordinate task execution
+    AP->>WC: Report task completion
+    WC->>NC: Return workflow results
+    
+    Note over NC, Admin: Monitoring Phase
+    WC->>PM: Report workflow performance (UC4)
+    Admin->>PM: Request performance metrics (UC4)
+    PM->>Admin: Provide performance dashboard
+    
+    Note over NC, Admin: Continuous Operation Loop
 ```
 
 #### MCP Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Neural Core" as core
-RECTANGLE "Agent Registry" as registry
-RECTANGLE "Message Router" as router
-RECTANGLE "Task Scheduler" as scheduler
-RECTANGLE "Workflow Engine" as workflow
-RECTANGLE "Resource Allocator" as allocator
-RECTANGLE "Agentic Products" as products
-
-core --> registry : Agent Discovery
-core --> router : Message Sending
-registry --> router : Agent Location
-router --> products : Message Delivery
-core --> scheduler : Task Scheduling
-scheduler --> workflow : Task Orchestration
-workflow --> allocator : Resource Requests
-allocator --> products : Resource Allocation
-products --> router : Result Messages
-router --> core : Response Routing
-@enduml
+```mermaid
+sequenceDiagram
+    participant NC as Neural Core
+    participant AR as Agent Registry
+    participant MR as Message Router
+    participant TS as Task Scheduler
+    participant WE as Workflow Engine
+    participant RA as Resource Allocator
+    participant AP as Agentic Products
+    
+    Note over NC, AP: Discovery Phase
+    NC->>AR: Query for available agents
+    AR->>AR: Maintain agent registry
+    AR->>MR: Provide agent location information
+    
+    Note over NC, AP: Simple Message Flow
+    NC->>MR: Send message to agent
+    MR->>AP: Deliver message to appropriate agent
+    AP->>MR: Return result message
+    MR->>NC: Route response back to core
+    
+    Note over NC, AP: Complex Workflow Execution
+    NC->>TS: Schedule complex task execution
+    
+    par Orchestration and Resource Management
+        TS->>WE: Forward task for orchestration
+        WE->>RA: Request necessary resources
+        RA->>AP: Allocate resources to products
+    end
+    
+    WE->>AP: Coordinate workflow execution
+    AP->>MR: Return workflow results
+    MR->>NC: Route workflow results to core
+    
+    Note over NC, AP: Continuous Operation Cycle
 ```
 
 ### 5.2 Agent-to-Agent Communication
@@ -1444,61 +1475,82 @@ flowchart TD
 
 #### Agent-to-Agent Communication Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "Agent 1" as agent1
-actor "Agent 2" as agent2
-actor "Administrator" as admin
-
-rectangle "Agent-to-Agent Communication" {
-  usecase "Register Capabilities" as UC1
-  usecase "Discover Agents" as UC2
-  usecase "Send Synchronous Request" as UC3
-  usecase "Publish Event" as UC4
-  usecase "Subscribe to Topic" as UC5
-  usecase "Monitor Communication" as UC6
-}
-
-agent1 --> UC1
-agent1 --> UC2
-agent1 --> UC3
-agent1 --> UC4
-agent2 --> UC1
-agent2 --> UC2
-agent2 --> UC3
-agent2 --> UC5
-admin --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC2 --> UC4
-UC5 --> UC4
-@enduml
+```mermaid
+sequenceDiagram
+    participant Agent1 as Agent 1
+    participant AR as Agent Registry
+    participant MS as Messaging Service
+    participant EB as Event Bus
+    participant MO as Monitoring Service
+    participant Agent2 as Agent 2
+    participant Admin as Administrator
+    
+    Note over Agent1, Agent2: Registration Phase
+    Agent1->>AR: Register capabilities (UC1)
+    Agent2->>AR: Register capabilities (UC1)
+    
+    Note over Agent1, Agent2: Discovery Phase
+    Agent1->>AR: Discover available agents (UC2)
+    AR->>Agent1: Return agent directory
+    Agent2->>AR: Discover available agents (UC2)
+    AR->>Agent2: Return agent directory
+    
+    Note over Agent1, Agent2: Event Subscription
+    Agent2->>EB: Subscribe to topic (UC5)
+    
+    Note over Agent1, Agent2: Communication Phase
+    par Synchronous Communication
+        Agent1->>MS: Send synchronous request to Agent2 (UC3)
+        MS->>Agent2: Deliver request
+        Agent2->>MS: Return response
+        MS->>Agent1: Deliver response
+    and Asynchronous Communication
+        Agent1->>EB: Publish event to topic (UC4)
+        EB->>Agent2: Deliver event to subscriber
+    end
+    
+    Note over Agent1, Admin: Monitoring Phase
+    MO->>AR: Monitor registration activities
+    MO->>MS: Monitor request/response patterns
+    MO->>EB: Monitor publish/subscribe activities
+    Admin->>MO: Access communication analytics (UC6)
+    MO->>Admin: Provide monitoring dashboard
+    
+    Note over Agent1, Admin: Continuous Communication Cycle
 ```
 
 #### Agent-to-Agent Communication Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Agent 1" as agent1
-RECTANGLE "Agent Registry" as registry
-RECTANGLE "Message Router" as router
-RECTANGLE "Message Broker" as broker
-RECTANGLE "Security Gateway" as security
-RECTANGLE "Agent 2" as agent2
-
-agent1 --> registry : Register Capabilities
-agent1 --> registry : Discover Agents
-registry --> agent1 : Agent Information
-agent1 --> security : Authentication
-security --> router : Authorized Message
-router --> agent2 : Synchronous Request
-agent2 --> router : Synchronous Response
-router --> agent1 : Response Delivery
-agent1 --> broker : Publish Event
-broker --> agent2 : Event Notification
-@enduml
+```mermaid
+sequenceDiagram
+    participant A1 as Agent 1
+    participant AR as Agent Registry
+    participant SG as Security Gateway
+    participant MR as Message Router
+    participant MB as Message Broker
+    participant A2 as Agent 2
+    
+    Note over A1, A2: Registration & Discovery Phase
+    A1->>AR: Register capabilities
+    A2->>AR: Register capabilities (implied)
+    A1->>AR: Discover available agents
+    AR->>A1: Return agent information
+    
+    Note over A1, A2: Secure Synchronous Communication
+    A1->>SG: Request authentication
+    SG->>SG: Validate credentials
+    SG->>MR: Forward authorized message
+    MR->>A2: Deliver synchronous request
+    A2->>A2: Process request
+    A2->>MR: Return synchronous response
+    MR->>A1: Deliver response
+    
+    Note over A1, A2: Asynchronous Event Communication
+    A1->>MB: Publish event
+    Note right of MB: Event persisted and distributed
+    MB->>A2: Deliver event notification
+    
+    Note over A1, A2: Complete Communication Cycle
 ```
 
 ### 5.3 Workflow Orchestration Service
@@ -1602,63 +1654,112 @@ flowchart TD
 
 #### Workflow Orchestration Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "Neural Core" as core
-actor "Agentic Product" as product
-actor "Administrator" as admin
-
-rectangle "Workflow Orchestration Service" {
-  usecase "Register Workflow Template" as UC1
-  usecase "Instantiate Workflow" as UC2
-  usecase "Coordinate Task Execution" as UC3
-  usecase "Manage Workflow State" as UC4
-  usecase "Handle Workflow Events" as UC5
-  usecase "Monitor Workflow Execution" as UC6
-}
-
-product --> UC1
-core --> UC2
-core --> UC3
-product --> UC3
-system --> UC4
-system --> UC5
-admin --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC4
-UC4 --> UC5
-UC5 --> UC3
-UC3 --> UC6
-@enduml
+```mermaid
+sequenceDiagram
+    participant AP as Agentic Product
+    participant TR as Template Registry
+    participant NC as Neural Core
+    participant WI as Workflow Instantiator
+    participant TC as Task Coordinator
+    participant SM as State Manager
+    participant EH as Event Handler
+    participant MS as Monitoring Service
+    participant Admin as Administrator
+    
+    Note over AP, TR: Template Registration Phase
+    AP->>TR: Register workflow template (UC1)
+    TR->>TR: Validate and store template
+    
+    Note over NC, WI: Instantiation Phase
+    NC->>TR: Request template
+    TR->>NC: Return template definition
+    NC->>WI: Request workflow instantiation (UC2)
+    WI->>WI: Configure workflow instance
+    WI->>TC: Create executable workflow instance
+    
+    Note over NC, EH: Execution Phase
+    activate TC
+    
+    par Coordination and State Management
+        NC->>TC: Submit task request (UC3)
+        AP->>TC: Provide domain capabilities (UC3)
+        TC->>SM: Update workflow state (UC4)
+        SM->>TC: Return current state information
+    end
+    
+    TC->>EH: Generate workflow event (UC5)
+    EH->>EH: Process event
+    EH->>TC: Provide event-driven instructions
+    
+    loop Task Execution Cycle
+        TC->>AP: Assign task to product
+        AP->>TC: Return task results
+        TC->>SM: Update workflow state
+        
+        opt Event Triggering
+            TC->>EH: Generate workflow event
+            EH->>TC: Provide handling instructions
+        end
+        
+        TC->>MS: Report execution progress (UC6)
+    end
+    
+    deactivate TC
+    
+    Note over Admin, MS: Monitoring Phase
+    Admin->>MS: Request workflow status (UC6)
+    MS->>Admin: Provide execution metrics
+    
+    Note over AP, Admin: Workflow Lifecycle Complete
 ```
 
 #### Workflow Orchestration Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Workflow Template" as template
-RECTANGLE "Workflow Instance" as instance
-RECTANGLE "State Manager" as state
-RECTANGLE "Event Bus" as events
-RECTANGLE "Task Dispatcher" as dispatcher
-RECTANGLE "Agent Pool" as agents
-RECTANGLE "Response Collector" as collector
-RECTANGLE "Monitoring Service" as monitoring
-
-template --> instance : Instantiation
-instance --> state : State Updates
-instance --> events : Event Publication
-events --> dispatcher : Task Events
-dispatcher --> agents : Task Assignment
-agents --> collector : Task Completion
-collector --> state : State Updates
-state --> instance : State Information
-state --> monitoring : Execution Metrics
-events --> monitoring : Event Metrics
-@enduml
+```mermaid
+sequenceDiagram
+    participant WT as Workflow Template
+    participant WI as Workflow Instance
+    participant SM as State Manager
+    participant EB as Event Bus
+    participant TD as Task Dispatcher
+    participant AP as Agent Pool
+    participant RC as Response Collector
+    participant MS as Monitoring Service
+    
+    Note over WT, WI: Instantiation Phase
+    WT->>WI: Create workflow instance with template definition
+    
+    Note over WI, MS: Initialization Phase
+    WI->>SM: Initialize workflow state
+    SM->>WI: Return initial state information
+    
+    Note over WI, MS: Execution Phase
+    activate WI
+    
+    WI->>EB: Publish workflow start event
+    EB->>MS: Forward event metrics
+    EB->>TD: Trigger initial task events
+    
+    loop Task Execution Cycle
+        TD->>AP: Assign tasks to appropriate agents
+        AP->>AP: Execute assigned tasks
+        AP->>RC: Submit task completion results
+        RC->>SM: Update workflow state with results
+        SM->>MS: Report execution metrics
+        SM->>WI: Provide updated state information
+        
+        alt Next Tasks Available
+            WI->>EB: Publish task completion event
+            EB->>TD: Trigger next task events
+        else Workflow Complete
+            WI->>EB: Publish workflow completion event
+            EB->>MS: Report final workflow metrics
+        end
+    end
+    
+    deactivate WI
+    
+    Note over WT, MS: Workflow Lifecycle Complete
 ```
 
 ## 6. Agentic Products Architecture
