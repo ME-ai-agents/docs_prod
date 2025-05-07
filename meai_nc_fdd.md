@@ -2393,55 +2393,55 @@ The Workflow State Database maintains the state of active and historical workflo
 #### Workflow State Database Use Case Diagram
 
 ```mermaid
-   graph LR
-       %% Define actors
-       engine((Workflow Engine))
-       monitoring((Monitoring System))
-       admin((Administrator))
-       
-       %% Define use cases
-       UC1[Store Workflow Definition]
-       UC2[Track Workflow Instance]
-       UC3[Record Task Execution]
-       UC4[Manage State Transitions]
-       UC5[Store Workflow Variables]
-       UC6[Analyze Workflow Patterns]
-       
-       %% Actor relationships with use cases
-       engine --> UC1
-       engine --> UC2
-       engine --> UC3
-       engine --> UC4
-       engine --> UC5
-       monitoring --> UC2
-       monitoring --> UC3
-       admin --> UC6
-       
-       %% Dependencies between use cases
-       UC1 --> UC2
-       UC2 --> UC3
-       UC2 --> UC4
-       UC2 --> UC5
-       UC4 --> UC6
-       UC3 --> UC6
-       
-       %% Add container to represent the Workflow State Database
-       subgraph WorkflowStateDatabase[Workflow State Database]
-           UC1
-           UC2
-           UC3
-           UC4
-           UC5
-           UC6
-       end
-       
-       %% Styling
-       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-       
-       class engine,monitoring,admin actor
-       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-       style WorkflowStateDatabase fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+      graph LR
+          %% Define actors
+          engine((Workflow Engine))
+          monitoring((Monitoring System))
+          admin((Administrator))
+          
+          %% Define use cases
+          UC1[Store Workflow Definition]
+          UC2[Track Workflow Instance]
+          UC3[Record Task Execution]
+          UC4[Manage State Transitions]
+          UC5[Store Workflow Variables]
+          UC6[Analyze Workflow Patterns]
+          
+          %% Actor relationships with use cases
+          engine --> UC1
+          engine --> UC2
+          engine --> UC3
+          engine --> UC4
+          engine --> UC5
+          monitoring --> UC2
+          monitoring --> UC3
+          admin --> UC6
+          
+          %% Dependencies between use cases
+          UC1 --> UC2
+          UC2 --> UC3
+          UC2 --> UC4
+          UC2 --> UC5
+          UC4 --> UC6
+          UC3 --> UC6
+          
+          %% Add container to represent the Workflow State Database
+          subgraph WorkflowStateDatabase[Workflow State Database]
+              UC1
+              UC2
+              UC3
+              UC4
+              UC5
+              UC6
+          end
+          
+          %% Styling
+          classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+          classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+          
+          class engine,monitoring,admin actor
+          class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+          style WorkflowStateDatabase fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Workflow State Database Data Flow Diagram
