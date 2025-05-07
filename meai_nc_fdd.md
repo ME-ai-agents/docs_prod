@@ -695,28 +695,40 @@ sequenceDiagram
 
 #### Multilingual Support Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "User Input" as input
-RECTANGLE "Language Detection" as detection
-RECTANGLE "Cultural Context" as culture
-RECTANGLE "Translation Service" as translation
-RECTANGLE "Proficiency Analysis" as proficiency
-RECTANGLE "Response Generation" as generation
-RECTANGLE "Localization" as localization
-RECTANGLE "Output Delivery" as output
-
-input --> detection : Text/Speech
-detection --> culture : Language/Dialect
-detection --> proficiency : Language Capability
-detection --> translation : Source Language
-culture --> localization : Cultural Parameters
-proficiency --> generation : Complexity Level
-translation --> generation : Translated Content
-generation --> localization : Base Response
-localization --> output : Localized Response
-@enduml
+```mermaid
+sequenceDiagram
+    participant UI as User Interface
+    participant LD as Language Detection
+    participant CC as Cultural Context
+    participant PA as Proficiency Analysis
+    participant TS as Translation Service
+    participant RG as Response Generation
+    participant LO as Localization
+    participant OD as Output Delivery
+    
+    Note over UI: User begins interaction
+    UI->>LD: Send user input (Text/Speech)
+    
+    Note over LD: Language processing branch point
+    par Language Detection triggers parallel processes
+        LD->>CC: Forward language/dialect information
+        LD->>PA: Provide language capability assessment
+        LD->>TS: Send source language for translation
+    end
+    
+    Note over TS, RG: Translation and response preparation
+    TS->>RG: Provide translated content
+    PA->>RG: Set appropriate complexity level
+    
+    Note over RG, LO: Response refinement
+    RG->>LO: Send base response
+    CC->>LO: Provide cultural parameters
+    
+    Note over LO, OD: Finalization
+    LO->>OD: Deliver culturally appropriate, localized response
+    
+    Note over OD: Complete interaction cycle
+    OD->>UI: Present final response to user
 ```
 
 ### 4.4 Empathetic Response System
@@ -790,59 +802,90 @@ flowchart TD
 
 #### Empathetic Response Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "User" as user
-actor "System" as system
-
-rectangle "Empathetic Response System" {
-  usecase "Detect User Emotion" as UC1
-  usecase "Analyze Emotional Context" as UC2
-  usecase "Select Empathetic Strategy" as UC3
-  usecase "Generate Supporting Response" as UC4
-  usecase "Adapt to Cultural Context" as UC5
-  usecase "Monitor Emotional Impact" as UC6
-}
-
-user --> UC1
-system --> UC2
-system --> UC3
-system --> UC4
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC4
-UC1 --> UC5
-UC5 --> UC4
-UC4 --> UC6
-UC6 --> UC3
-@enduml
+```mermaid
+sequenceDiagram
+    participant User
+    participant ED as Emotion Detection (UC1)
+    participant HC as Historical Context
+    participant CC as Cultural Context (UC5)
+    participant EC as Emotional Context Analysis (UC2)
+    participant RS as Response Strategy Selection (UC3)
+    participant EG as Empathetic Generation (UC4)
+    participant DC as Delivery Calibration
+    participant IM as Impact Monitoring (UC6)
+    
+    Note over User: Interaction begins
+    User->>ED: Provide input (text/voice/visual)
+    
+    Note over ED: User Emotion Detection
+    ED->>HC: Record current emotional state
+    ED->>CC: Provide emotional context for cultural adaptation
+    
+    par Context Analysis
+        HC->>EC: Supply emotional history and patterns
+        CC->>EC: Provide cultural context for emotion
+    end
+    
+    EC->>RS: Forward analyzed emotional context
+    
+    Note over RS: Strategy Formulation
+    HC->>RS: Provide historical emotional patterns
+    CC->>RS: Supply cultural parameters
+    
+    RS->>EG: Transmit selected empathetic approach
+    
+    Note over EG: Response Creation
+    EG->>DC: Generate base empathetic response
+    
+    Note over DC: Response Refinement
+    DC->>User: Deliver calibrated empathetic response
+    
+    Note over User, IM: Feedback and Learning
+    User->>IM: React to empathetic response
+    IM->>RS: Provide effectiveness feedback
+    
+    Note over RS: Continuous Improvement Cycle
+    RS->>RS: Adjust strategy based on effectiveness
 ```
 
 #### Empathetic Response Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "User Input" as input
-RECTANGLE "Emotion Detection" as detection
-RECTANGLE "Historical Context" as history
-RECTANGLE "Cultural Context" as culture
-RECTANGLE "Response Strategy" as strategy
-RECTANGLE "Empathetic Generation" as generation
-RECTANGLE "Delivery Calibration" as calibration
-RECTANGLE "Impact Monitoring" as monitoring
-
-input --> detection : Text/Voice/Visual
-detection --> history : Current Emotional State
-history --> strategy : Emotional Patterns
-culture --> strategy : Cultural Parameters
-strategy --> generation : Empathetic Approach
-generation --> calibration : Base Response
-calibration --> input : Empathetic Response
-input --> monitoring : User Reaction
-monitoring --> strategy : Effectiveness Feedback
-@enduml
+```mermaid
+sequenceDiagram
+    participant User
+    participant ED as Emotion Detection
+    participant HC as Historical Context
+    participant CC as Cultural Context
+    participant RS as Response Strategy
+    participant EG as Empathetic Generation
+    participant DC as Delivery Calibration
+    participant IM as Impact Monitoring
+    
+    Note over User: Interaction begins
+    User->>ED: Send input (Text/Voice/Visual)
+    
+    Note over ED: Emotion Analysis
+    ED->>HC: Record current emotional state
+    
+    Note over HC, CC: Context Assembly
+    HC->>RS: Provide emotional patterns
+    CC->>RS: Supply cultural parameters
+    
+    Note over RS: Strategy Selection
+    RS->>EG: Forward selected empathetic approach
+    
+    Note over EG: Response Creation
+    EG->>DC: Deliver base response
+    
+    Note over DC: Response Refinement
+    DC->>User: Present calibrated empathetic response
+    
+    Note over User, IM: Feedback Loop
+    User->>IM: React to response
+    IM->>RS: Provide effectiveness feedback
+    
+    Note over RS: Continuous Improvement
+    RS->>RS: Refine strategy based on feedback
 ```
 
 ### 4.5 Memory Management
@@ -922,61 +965,90 @@ flowchart TD
 
 #### Memory Management Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "User" as user
-actor "System" as system
-
-rectangle "Memory Management System" {
-  usecase "Maintain Active Context" as UC1
-  usecase "Persist Session State" as UC2
-  usecase "Retrieve Relevant Context" as UC3
-  usecase "Consolidate Memory" as UC4
-  usecase "Optimize Memory Usage" as UC5
-  usecase "Support Semantic Recall" as UC6
-}
-
-user --> UC1
-system --> UC2
-system --> UC3
-system --> UC4
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC1
-UC2 --> UC4
-UC4 --> UC5
-UC5 --> UC3
-UC4 --> UC6
-UC6 --> UC3
-@enduml
+```mermaid
+sequenceDiagram
+    participant User
+    participant AC as Active Context Manager
+    participant SS as Session State Persistence
+    participant RC as Relevant Context Retrieval
+    participant MC as Memory Consolidation
+    participant MO as Memory Optimization
+    participant SR as Semantic Recall
+    
+    Note over User, SR: Interaction Cycle Begin
+    User->>AC: Provide new input/interaction (UC1)
+    
+    Note over AC, SS: Context Persistence
+    AC->>SS: Update session state (UC2)
+    
+    Note over SS, MC: Memory Management Processes
+    par Memory Processing Branch
+        SS->>MC: Forward session data for consolidation (UC4)
+        SS->>RC: Request relevant context (UC3)
+    end
+    
+    Note over MC, MO: Background Memory Processes
+    par Memory Enhancement Processes
+        MC->>MO: Send consolidated data for optimization (UC5)
+        MC->>SR: Update semantic knowledge base (UC6)
+    end
+    
+    Note over RC, AC: Context Retrieval Paths
+    par Context Sources
+        RC->>AC: Return active context for ongoing interaction (UC3→UC1)
+        MO->>RC: Provide optimized memory structures (UC5→UC3)
+        SR->>RC: Supply semantic associations (UC6→UC3)
+    end
+    
+    Note over User, AC: Interaction Continues
+    AC->>User: Present contextually informed response
+    
+    Note over User, SR: Continuous Memory Cycle
 ```
 
 #### Memory Management Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Conversation Input" as input
-RECTANGLE "Short-term Memory" as shortterm
-RECTANGLE "Cross-session Memory" as crosssession
-RECTANGLE "Semantic Memory" as semantic
-RECTANGLE "Memory Consolidation" as consolidation
-RECTANGLE "Retrieval Service" as retrieval
-RECTANGLE "Context Assembly" as assembly
-RECTANGLE "Response Generation" as generation
-
-input --> shortterm : Current Context
-shortterm --> crosssession : Session Persistence
-crosssession --> semantic : Long-term Storage
-shortterm --> retrieval : Recent Context
-crosssession --> retrieval : Historical Context
-semantic --> retrieval : Semantic Knowledge
-retrieval --> assembly : Relevant Context
-assembly --> generation : Assembled Context
-shortterm --> consolidation : Compression
-consolidation --> crosssession : Compressed Memory
-@enduml
+```mermaid
+sequenceDiagram
+    participant User
+    participant CI as Conversation Input
+    participant STM as Short-term Memory
+    participant MC as Memory Consolidation
+    participant CSM as Cross-session Memory
+    participant SM as Semantic Memory
+    participant RS as Retrieval Service
+    participant CA as Context Assembly
+    participant RG as Response Generation
+    
+    Note over User, RG: Conversation Begins
+    User->>CI: Provide new message/query
+    
+    Note over CI, STM: Immediate Processing
+    CI->>STM: Store current context
+    
+    Note over STM, RS: Context Retrieval Phase
+    par Memory System Queries
+        STM->>RS: Provide recent context
+        STM->>MC: Send data for compression
+        CSM->>RS: Supply historical context
+        SM->>RS: Contribute semantic knowledge
+    end
+    
+    Note over RS, CA: Context Integration
+    RS->>CA: Forward all relevant context
+    
+    Note over CA, RG: Response Preparation
+    CA->>RG: Deliver assembled context
+    RG->>User: Generate contextually informed response
+    
+    Note over STM, CSM: Memory Persistence
+    STM->>CSM: Persist session information
+    MC->>CSM: Store compressed memory
+    
+    Note over CSM, SM: Long-term Storage
+    CSM->>SM: Transfer for long-term semantic storage
+    
+    Note over User, SM: Memory Cycle Complete
 ```
 
 ### 4.6 Dynamic Workflow Engine
@@ -1084,62 +1156,101 @@ flowchart TD
 
 #### Dynamic Workflow Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "User" as user
-actor "Workflow Designer" as designer
-actor "Administrator" as admin
-
-rectangle "Dynamic Workflow Engine" {
-  usecase "Design Workflow Template" as UC1
-  usecase "Instantiate Workflow" as UC2
-  usecase "Execute Workflow Tasks" as UC3
-  usecase "Monitor Workflow Progress" as UC4
-  usecase "Handle Exceptions" as UC5
-  usecase "Analyze Workflow Performance" as UC6
-}
-
-designer --> UC1
-user --> UC2
-system --> UC3
-admin --> UC4
-system --> UC5
-admin --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC4
-UC4 --> UC5
-UC5 --> UC3
-UC3 --> UC6
-@enduml
+```mermaid
+sequenceDiagram
+    participant WD as Workflow Designer
+    participant WTR as Workflow Template Repository
+    participant User
+    participant WI as Workflow Instantiator
+    participant WE as Workflow Executor
+    participant WM as Workflow Monitor
+    participant EH as Exception Handler
+    participant PA as Performance Analyzer
+    participant Admin
+    
+    Note over WD, WTR: Design Phase
+    WD->>WTR: Design and publish workflow template (UC1)
+    
+    Note over User, WI: Instantiation Phase
+    User->>WI: Request workflow creation (UC2)
+    WI->>WTR: Retrieve template
+    WTR->>WI: Return template definition
+    WI->>WE: Create workflow instance
+    
+    Note over WE, WM: Execution Phase
+    activate WE
+    WE->>WE: Begin task execution (UC3)
+    
+    par Monitoring & Execution
+        WE->>WM: Report execution progress
+        Admin->>WM: Observe workflow status (UC4)
+        WM->>Admin: Display progress metrics
+    end
+    
+    Note over WE, EH: Exception Handling
+    WE->>EH: Report exception condition
+    EH->>EH: Process exception (UC5)
+    EH->>WE: Provide recovery instructions
+    WE->>WE: Resume execution with recovery path
+    
+    Note over WE, PA: Completion and Analysis
+    WE->>PA: Submit execution data
+    deactivate WE
+    PA->>PA: Analyze workflow performance (UC6)
+    Admin->>PA: Request performance insights
+    PA->>Admin: Provide performance analytics
+    
+    Note over WD, Admin: Continuous Improvement Cycle
 ```
 
 #### Dynamic Workflow Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Conversation Trigger" as trigger
-RECTANGLE "Workflow Selection" as selection
-RECTANGLE "Workflow Instantiation" as instantiation
-RECTANGLE "Task Execution" as execution
-RECTANGLE "State Management" as state
-RECTANGLE "Progress Tracking" as progress
-RECTANGLE "Notification Service" as notification
-RECTANGLE "Error Handling" as error
-
-trigger --> selection : Intent/Event
-selection --> instantiation : Template Selection
-instantiation --> execution : Workflow Instance
-execution --> state : Execution State
-state --> execution : State Information
-execution --> progress : Task Completion
-progress --> notification : Progress Updates
-execution --> error : Exceptions
-error --> execution : Recovery Actions
-state --> selection : Historical Data
-@enduml
+```mermaid
+sequenceDiagram
+    participant User
+    participant CT as Conversation Trigger
+    participant WS as Workflow Selection
+    participant WI as Workflow Instantiation
+    participant TE as Task Execution
+    participant SM as State Management
+    participant PT as Progress Tracking
+    participant NS as Notification Service
+    participant EH as Error Handling
+    
+    Note over User, EH: Workflow Initiation Phase
+    User->>CT: Initiate conversation
+    CT->>WS: Forward intent/event
+    
+    Note over WS, WI: Selection & Setup Phase
+    SM->>WS: Provide historical data for context
+    WS->>WI: Select appropriate workflow template
+    WI->>TE: Create and initialize workflow instance
+    
+    Note over TE, SM: Execution Phase
+    activate TE
+    
+    loop Execution Cycle
+        TE->>SM: Update execution state
+        SM->>TE: Return current state information
+        TE->>PT: Report task completion
+        
+        opt Notification
+            PT->>NS: Send progress updates
+            NS->>User: Notify user of progress
+        end
+        
+        opt Exception Occurs
+            TE->>EH: Send exception information
+            EH->>TE: Provide recovery actions
+        end
+    end
+    
+    deactivate TE
+    
+    Note over SM, WS: Completion & Learning
+    SM->>WS: Update historical data for future selections
+    
+    Note over User, EH: Workflow Complete
 ```
 
 ## 5. Master Control Protocol (MCP)
