@@ -2229,29 +2229,29 @@ graph LR
 #### Workflow Template Repository Data Flow Diagram
 
 ```mermaid
-flowchart TD
-    designer["Workflow Designer"]
-    catalog["Template Catalog"]
-    version["Version Manager"]
-    library["Template Library"]
-    testing["Testing Environment"]
-    customization["Customization Tools"]
-    cicd["CI/CD Pipeline"]
-    deployment["Deployment Target"]
-    
-    designer --> |Template Registration| catalog
-    designer --> |Version Management| version
-    version --> |Template Storage| library
-    library --> |Template Validation| testing
-    testing --> |Test Results| version
-    library --> |Template Retrieval| customization
-    customization --> |Customized Template| version
-    version --> |Deployment Request| cicd
-    cicd --> |Template Deployment| deployment
-    catalog --> |Template Search| designer
-    
-    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-    class designer,catalog,version,library,testing,customization,cicd,deployment component
+   flowchart TD
+       designer["Workflow Designer"]
+       catalog["Template Catalog"]
+       version["Version Manager"]
+       library["Template Library"]
+       testing["Testing Environment"]
+       customization["Customization Tools"]
+       cicd["CI/CD Pipeline"]
+       deployment["Deployment Target"]
+       
+       designer --> |Template Registration| catalog
+       designer --> |Version Management| version
+       version --> |Template Storage| library
+       library --> |Template Validation| testing
+       testing --> |Test Results| version
+       library --> |Template Retrieval| customization
+       customization --> |Customized Template| version
+       version --> |Deployment Request| cicd
+       cicd --> |Template Deployment| deployment
+       catalog --> |Template Search| designer
+       
+       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+       class designer,catalog,version,library,testing,customization,cicd,deployment component
 ```
 
 ## 7. Database Architecture
@@ -2261,80 +2261,80 @@ flowchart TD
 The Workflow State Database maintains the state of active and historical workflows.
 
 ```mermaid
-erDiagram
-    WorkflowDefinition ||--o{ WorkflowInstance : instantiates
-    WorkflowInstance ||--o{ WorkflowTaskExecution : contains
-    WorkflowInstance ||--o{ WorkflowStateTransition : records
-    WorkflowInstance ||--o{ WorkflowVariable : uses
-    WorkflowInstance ||--o{ WorkflowEvent : generates
-    
-    WorkflowDefinition {
-        string DefinitionID PK "UUID - Primary Key"
-        string Name "Indexed"
-        string Version "Semantic version"
-        json Definition "JSONB"
-        date CreatedDate "Timestamp with timezone"
-        string CreatedBy "User reference"
-        boolean IsActive "Indexed"
-        array Tags "String array"
-        string Description "Text"
-    }
-    
-    WorkflowInstance {
-        string InstanceID PK "UUID - Primary Key"
-        string DefinitionID FK "Indexed"
-        string Status "Enum, Indexed"
-        date StartTime "Timestamp with timezone"
-        date EndTime "Timestamp with timezone, Nullable"
-        string InitiatedBy "User reference"
-        string Priority "Enum, Indexed"
-        json Context "JSONB"
-        string ConversationID "Conversation reference, Indexed"
-    }
-    
-    WorkflowTaskExecution {
-        string ExecutionID PK "UUID - Primary Key"
-        string InstanceID FK "Indexed"
-        string TaskName "Task reference"
-        string TaskType "Enum"
-        string Status "Enum, Indexed"
-        date StartTime "Timestamp with timezone"
-        date EndTime "Timestamp with timezone, Nullable"
-        string AssignedAgent "Agent reference"
-        json Parameters "JSONB"
-        json Result "JSONB, Nullable"
-        string ErrorDetails "Text, Nullable"
-    }
-    
-    WorkflowStateTransition {
-        string TransitionID PK "UUID - Primary Key"
-        string InstanceID FK "Indexed"
-        string FromState "State reference"
-        string ToState "State reference"
-        date TransitionTime "Timestamp with timezone, Indexed"
-        string Trigger "Trigger reference"
-        json ContextSnapshot "JSONB"
-    }
-    
-    WorkflowVariable {
-        string VariableID PK "UUID - Primary Key"
-        string InstanceID FK "Indexed"
-        string Name "Variable name, Indexed"
-        string DataType "Data type enum"
-        json Value "JSONB"
-        date LastUpdated "Timestamp with timezone"
-        string Scope "Variable scope"
-    }
-    
-    WorkflowEvent {
-        string EventID PK "UUID - Primary Key"
-        string InstanceID FK "Indexed"
-        string EventType "Event type enum, Indexed"
-        date Timestamp "Timestamp with timezone, Indexed"
-        json Payload "JSONB"
-        boolean Processed "Indexed"
-        string SourceComponent "Component reference"
-    }
+   workflowDiagram
+       WorkflowDefinition ||--o{ WorkflowInstance : instantiates
+       WorkflowInstance ||--o{ WorkflowTaskExecution : contains
+       WorkflowInstance ||--o{ WorkflowStateTransition : records
+       WorkflowInstance ||--o{ WorkflowVariable : uses
+       WorkflowInstance ||--o{ WorkflowEvent : generates
+       
+       WorkflowDefinition {
+           string DefinitionID PK "UUID - Primary Key"
+           string Name "Indexed"
+           string Version "Semantic version"
+           json Definition "JSONB"
+           date CreatedDate "Timestamp with timezone"
+           string CreatedBy "User reference"
+           boolean IsActive "Indexed"
+           array Tags "String array"
+           string Description "Text"
+       }
+       
+       WorkflowInstance {
+           string InstanceID PK "UUID - Primary Key"
+           string DefinitionID FK "Indexed"
+           string Status "Enum, Indexed"
+           date StartTime "Timestamp with timezone"
+           date EndTime "Timestamp with timezone, Nullable"
+           string InitiatedBy "User reference"
+           string Priority "Enum, Indexed"
+           json Context "JSONB"
+           string ConversationID "Conversation reference, Indexed"
+       }
+       
+       WorkflowTaskExecution {
+           string ExecutionID PK "UUID - Primary Key"
+           string InstanceID FK "Indexed"
+           string TaskName "Task reference"
+           string TaskType "Enum"
+           string Status "Enum, Indexed"
+           date StartTime "Timestamp with timezone"
+           date EndTime "Timestamp with timezone, Nullable"
+           string AssignedAgent "Agent reference"
+           json Parameters "JSONB"
+           json Result "JSONB, Nullable"
+           string ErrorDetails "Text, Nullable"
+       }
+       
+       WorkflowStateTransition {
+           string TransitionID PK "UUID - Primary Key"
+           string InstanceID FK "Indexed"
+           string FromState "State reference"
+           string ToState "State reference"
+           date TransitionTime "Timestamp with timezone, Indexed"
+           string Trigger "Trigger reference"
+           json ContextSnapshot "JSONB"
+       }
+       
+       WorkflowVariable {
+           string VariableID PK "UUID - Primary Key"
+           string InstanceID FK "Indexed"
+           string Name "Variable name, Indexed"
+           string DataType "Data type enum"
+           json Value "JSONB"
+           date LastUpdated "Timestamp with timezone"
+           string Scope "Variable scope"
+       }
+       
+       WorkflowEvent {
+           string EventID PK "UUID - Primary Key"
+           string InstanceID FK "Indexed"
+           string EventType "Event type enum, Indexed"
+           date Timestamp "Timestamp with timezone, Indexed"
+           json Payload "JSONB"
+           boolean Processed "Indexed"
+           string SourceComponent "Component reference"
+       }
 ```
 
 #### Key Functional Characteristics:
