@@ -2447,40 +2447,40 @@ The Workflow State Database maintains the state of active and historical workflo
 #### Workflow State Database Data Flow Diagram
 
 ```mermaid
-   flowchart TD
-       engine["Workflow Engine"]
-       definition["Definition Store"]
-       instance["Instance Store"]
-       task["Task Store"]
-       state["State Store"]
-       variable["Variable Store"]
-       event["Event Store"]
-       monitoring["Monitoring System"]
-       analytics["Analytics System"]
-       
-       engine --> |Store Definition| definition
-       engine --> |Create/Update Instance| instance
-       engine --> |Record Task Execution| task
-       engine --> |Record State Transition| state
-       engine --> |Store/Update Variables| variable
-       engine --> |Record Events| event
-       
-       definition --> |Definition Reference| instance
-       instance --> |Instance Reference| task
-       instance --> |Instance Reference| state
-       instance --> |Instance Reference| variable
-       instance --> |Instance Reference| event
-       
-       monitoring --> |Query Status| instance
-       monitoring --> |Query Execution| task
-       monitoring --> |Query Transitions| state
-       
-       analytics --> |Historical Data| instance
-       analytics --> |Performance Data| task
-       analytics --> |Transition Patterns| state
-       
-       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-       class engine,definition,instance,task,state,variable,event,monitoring,analytics component
+flowchart TD
+    engine["Workflow Engine"]
+    definition["Definition Store"]
+    instance["Instance Store"]
+    task["Task Store"]
+    state["State Store"]
+    variable["Variable Store"]
+    event["Event Store"]
+    monitoring["Monitoring System"]
+    analytics["Analytics System"]
+    
+    engine --> |Store Definition| definition
+    engine --> |Create/Update Instance| instance
+    engine --> |Record Task Execution| task
+    engine --> |Record State Transition| state
+    engine --> |Store/Update Variables| variable
+    engine --> |Record Events| event
+    
+    definition --> |Definition Reference| instance
+    instance --> |Instance Reference| task
+    instance --> |Instance Reference| state
+    instance --> |Instance Reference| variable
+    instance --> |Instance Reference| event
+    
+    monitoring --> |Query Status| instance
+    monitoring --> |Query Execution| task
+    monitoring --> |Query Transitions| state
+    
+    analytics --> |Historical Data| instance
+    analytics --> |Performance Data| task
+    analytics --> |Transition Patterns| state
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class engine,definition,instance,task,state,variable,event,monitoring,analytics component
 ```
 
 ## 8. Key Functional Flows
