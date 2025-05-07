@@ -2606,81 +2606,81 @@ flowchart TD
 #### Conversation Processing Use Case Diagram
 
 ```mermaid
-graph LR
-    %% Define actors
-    user((User))
-    system((System))
-    
-    %% Define use cases
-    UC1[Process User Input]
-    UC2[Extract Information]
-    UC3[Execute Agent Actions]
-    UC4[Manage Memory]
-    UC5[Generate Response]
-    UC6[Trigger Workflows]
-    
-    %% Actor relationships with use cases
-    user --> UC1
-    system --> UC2
-    system --> UC3
-    system --> UC4
-    system --> UC5
-    system --> UC6
-    
-    %% Dependencies between use cases
-    UC1 --> UC2
-    UC2 --> UC3
-    UC2 --> UC6
-    UC3 --> UC4
-    UC4 --> UC5
-    UC5 --> user
-    
-    %% Add container to represent the Conversation Processing
-    subgraph ConversationProcessing[Conversation Processing]
-        UC1
-        UC2
-        UC3
-        UC4
-        UC5
-        UC6
-    end
-    
-    %% Styling
-    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-    
-    class user,system actor
-    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-    style ConversationProcessing fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+   graph LR
+       %% Define actors
+       user((User))
+       system((System))
+       
+       %% Define use cases
+       UC1[Process User Input]
+       UC2[Extract Information]
+       UC3[Execute Agent Actions]
+       UC4[Manage Memory]
+       UC5[Generate Response]
+       UC6[Trigger Workflows]
+       
+       %% Actor relationships with use cases
+       user --> UC1
+       system --> UC2
+       system --> UC3
+       system --> UC4
+       system --> UC5
+       system --> UC6
+       
+       %% Dependencies between use cases
+       UC1 --> UC2
+       UC2 --> UC3
+       UC2 --> UC6
+       UC3 --> UC4
+       UC4 --> UC5
+       UC5 --> user
+       
+       %% Add container to represent the Conversation Processing
+       subgraph ConversationProcessing[Conversation Processing]
+           UC1
+           UC2
+           UC3
+           UC4
+           UC5
+           UC6
+       end
+       
+       %% Styling
+       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+       
+       class user,system actor
+       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+       style ConversationProcessing fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Conversation Processing Data Flow Diagram
 
 ```mermaid
-flowchart TD
-    input["User Input"]
-    auth["Authentication"]
-    preprocess["Preprocessing"]
-    extract["Information Extraction"]
-    agent["Agent Execution"]
-    memory["Memory Management"]
-    response["Response Generation"]
-    workflow["Workflow Engine"]
-    output["User Output"]
-    
-    input --> |User Input| auth
-    auth --> |Authenticated Input| preprocess
-    preprocess --> |Processed Input| extract
-    extract --> |Extracted Information| agent
-    extract --> |Intent/Trigger| workflow
-    agent --> |Execution Results| memory
-    memory --> |Context/Memory| response
-    workflow --> |Workflow Status| response
-    response --> |Formatted Response| output
-    output --> |Continuous Conversation| input
-    
-    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-    class input,auth,preprocess,extract,agent,memory,response,workflow,output component
+   flowchart TD
+       input["User Input"]
+       auth["Authentication"]
+       preprocess["Preprocessing"]
+       extract["Information Extraction"]
+       agent["Agent Execution"]
+       memory["Memory Management"]
+       response["Response Generation"]
+       workflow["Workflow Engine"]
+       output["User Output"]
+       
+       input --> |User Input| auth
+       auth --> |Authenticated Input| preprocess
+       preprocess --> |Processed Input| extract
+       extract --> |Extracted Information| agent
+       extract --> |Intent/Trigger| workflow
+       agent --> |Execution Results| memory
+       memory --> |Context/Memory| response
+       workflow --> |Workflow Status| response
+       response --> |Formatted Response| output
+       output --> |Continuous Conversation| input
+       
+       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+       class input,auth,preprocess,extract,agent,memory,response,workflow,output component
 ```
 
 ### 8.2 User-Organization Semantic Fallback Flow
@@ -2688,35 +2688,35 @@ flowchart TD
 The flow for determining when to use user-specific semantic data versus organization defaults.
 
 ```mermaid
-flowchart TD
-    UR[User Request - Natural Language] & CA[Context Analysis - Context Analyzer] --> SKRL
-    
-    subgraph SKRL["SEMANTIC KNOWLEDGE RETRIEVAL"]
-        USS[User-Specific Semantics - User Knowledge Base] --> MA[Match Available? - Matching Algorithm]
-        OS[Organization Semantics - Org Knowledge Base] --> MA
-        MA -->|Yes| YB[YES BRANCH]
-        MA -->|No| NB[NO BRANCH]
-        YB --> UUS[Use User Semantics - User-Specific Knowledge]
-        NB --> UOS[Use Org Semantics - Organization Knowledge]
-        UUS & UOS --> CK[Combined Knowledge - Knowledge Integration]
-    end
-    
-    SKRL --> SLP
-    
-    subgraph SLP["SEMANTIC LEARNING PROCESS"]
-        DNSO[Detect New Semantics Opportunity - Learning Trigger]
-        CUSR[Create User Semantic Records - Knowledge Creation]
-        UUSP[Update User Semantic Profile - Profile Update]
-        DNSO --> CUSR --> UUSP
-    end
-    
-    classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-    classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-    classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-    
-    class SKRL blue
-    class SLP green
-    class USS,OS,MA,DNSO tech
+   flowchart TD
+       UR[User Request - Natural Language] & CA[Context Analysis - Context Analyzer] --> SKRL
+       
+       subgraph SKRL["SEMANTIC KNOWLEDGE RETRIEVAL"]
+           USS[User-Specific Semantics - User Knowledge Base] --> MA[Match Available? - Matching Algorithm]
+           OS[Organization Semantics - Org Knowledge Base] --> MA
+           MA -->|Yes| YB[YES BRANCH]
+           MA -->|No| NB[NO BRANCH]
+           YB --> UUS[Use User Semantics - User-Specific Knowledge]
+           NB --> UOS[Use Org Semantics - Organization Knowledge]
+           UUS & UOS --> CK[Combined Knowledge - Knowledge Integration]
+       end
+       
+       SKRL --> SLP
+       
+       subgraph SLP["SEMANTIC LEARNING PROCESS"]
+           DNSO[Detect New Semantics Opportunity - Learning Trigger]
+           CUSR[Create User Semantic Records - Knowledge Creation]
+           UUSP[Update User Semantic Profile - Profile Update]
+           DNSO --> CUSR --> UUSP
+       end
+       
+       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+       
+       class SKRL blue
+       class SLP green
+       class USS,OS,MA,DNSO tech
 ```
 
 #### Semantic Fallback Technical Stack
@@ -2735,80 +2735,80 @@ flowchart TD
 #### Semantic Fallback Use Case Diagram
 
 ```mermaid
-graph LR
-    %% Define actors
-    user((User))
-    system((System))
-    
-    %% Define use cases
-    UC1[Analyze Request Context]
-    UC2[Search User Semantics]
-    UC3[Search Organization Semantics]
-    UC4[Decide Knowledge Source]
-    UC5[Combine Knowledge]
-    UC6[Learn New Semantics]
-    
-    %% Actor relationships with use cases
-    user --> UC1
-    system --> UC2
-    system --> UC3
-    system --> UC4
-    
-    %% Dependencies between use cases
-    UC1 --> UC2
-    UC1 --> UC3
-    UC1 --> UC6
-    UC2 --> UC4
-    UC3 --> UC4
-    UC4 --> UC5
-    UC5 --> user
-    UC6 --> UC2
-    
-    %% Add container to represent the Semantic Fallback System
-    subgraph SemanticFallbackSystem[Semantic Fallback System]
-        UC1
-        UC2
-        UC3
-        UC4
-        UC5
-        UC6
-    end
-    
-    %% Styling
-    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-    
-    class user,system actor
-    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-    style SemanticFallbackSystem fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+   graph LR
+       %% Define actors
+       user((User))
+       system((System))
+       
+       %% Define use cases
+       UC1[Analyze Request Context]
+       UC2[Search User Semantics]
+       UC3[Search Organization Semantics]
+       UC4[Decide Knowledge Source]
+       UC5[Combine Knowledge]
+       UC6[Learn New Semantics]
+       
+       %% Actor relationships with use cases
+       user --> UC1
+       system --> UC2
+       system --> UC3
+       system --> UC4
+       
+       %% Dependencies between use cases
+       UC1 --> UC2
+       UC1 --> UC3
+       UC1 --> UC6
+       UC2 --> UC4
+       UC3 --> UC4
+       UC4 --> UC5
+       UC5 --> user
+       UC6 --> UC2
+       
+       %% Add container to represent the Semantic Fallback System
+       subgraph SemanticFallbackSystem[Semantic Fallback System]
+           UC1
+           UC2
+           UC3
+           UC4
+           UC5
+           UC6
+       end
+       
+       %% Styling
+       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+       
+       class user,system actor
+       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+       style SemanticFallbackSystem fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Semantic Fallback Data Flow Diagram
 
 ```mermaid
-flowchart TD
-    request["User Request"]
-    context["Context Analysis"]
-    user["User Semantics"]
-    org["Organization Semantics"]
-    decision["Matching Decision"]
-    integration["Knowledge Integration"]
-    response["Response Generation"]
-    learning["Learning Process"]
-    
-    request --> |Request Content| context
-    context --> |Context Information| user
-    context --> |Context Information| org
-    context --> |Learning Opportunities| learning
-    user --> |User Matches| decision
-    org --> |Org Matches| decision
-    decision --> |Knowledge Selection| integration
-    integration --> |Integrated Knowledge| response
-    learning --> |Knowledge Updates| user
-    response --> request
-    
-    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-    class request,context,user,org,decision,integration,response,learning component
+   flowchart TD
+       request["User Request"]
+       context["Context Analysis"]
+       user["User Semantics"]
+       org["Organization Semantics"]
+       decision["Matching Decision"]
+       integration["Knowledge Integration"]
+       response["Response Generation"]
+       learning["Learning Process"]
+       
+       request --> |Request Content| context
+       context --> |Context Information| user
+       context --> |Context Information| org
+       context --> |Learning Opportunities| learning
+       user --> |User Matches| decision
+       org --> |Org Matches| decision
+       decision --> |Knowledge Selection| integration
+       integration --> |Integrated Knowledge| response
+       learning --> |Knowledge Updates| user
+       response --> request
+       
+       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+       class request,context,user,org,decision,integration,response,learning component
 ```
 
 ### 8.3 Memory Management Flow
@@ -2816,64 +2816,64 @@ flowchart TD
 The detailed flow for managing conversation memory across different time spans.
 
 ```mermaid
-flowchart TD
-    subgraph MR["MEMORY ROUTER"]
-        PBR[Priority-based Routing - Routing Algorithm]
-        TTLM[TTL Management & Expiration - TTL Policies]
-        SP[Storage Policy - Policy Engine]
-    end
-    
-    MR --> IP
-    
-    subgraph IP["INPUT PROCESSING"]
-        MTC[Memory Type Classification - Type Classifier]
-        DP[Data Preparation - Data Processor]
-        CL[Context Linking - Context Linker]
-    end
-    
-    IP --> MO
-    
-    subgraph MO["MEMORY OPERATIONS"]
-        WO[Write Operations - Write Handler]
-        RO[Read Operations - Read Handler]
-        UO[Update Operations - Update Handler]
-        DO[Delete Operations - Delete Handler]
-        CO[Compression Operations - Compression Engine]
-        IO[Index Operations - Index Manager]
-    end
-    
-    MO --> MD
-    
-    subgraph MD["MEMORY DESTINATIONS"]
-        WM[Working Memory - Redis/In-Memory]
-        STM[Short-term Memory - Cache Layer]
-        LTM[Long-term Memory - Persistent Storage]
-        EM[Episodic Memory - Time-series Storage]
-        SM[Semantic Memory - Knowledge Graph]
-        USM[User-Specific Memory - User Database]
-    end
-    
-    MD --> MOP
-    
-    subgraph MOP["MEMORY OPTIMIZATION"]
-        PS[Progressive Summarization - Summarizer]
-        MC[Memory Consolidation - Consolidation Engine]
-        GC[Garbage Collection - Resource Reclaimer]
-    end
-    
-    classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-    classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-    classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
-    classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
-    classDef red fill:#e74c3c,stroke:#000,stroke-width:1px,color:#fff
-    classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-    
-    class MR blue
-    class IP green
-    class MO orange
-    class MD purple
-    class MOP red
-    class PBR,TTLM,MTC,WO,WM,PS tech
+   flowchart TD
+       subgraph MR["MEMORY ROUTER"]
+           PBR[Priority-based Routing - Routing Algorithm]
+           TTLM[TTL Management & Expiration - TTL Policies]
+           SP[Storage Policy - Policy Engine]
+       end
+       
+       MR --> IP
+       
+       subgraph IP["INPUT PROCESSING"]
+           MTC[Memory Type Classification - Type Classifier]
+           DP[Data Preparation - Data Processor]
+           CL[Context Linking - Context Linker]
+       end
+       
+       IP --> MO
+       
+       subgraph MO["MEMORY OPERATIONS"]
+           WO[Write Operations - Write Handler]
+           RO[Read Operations - Read Handler]
+           UO[Update Operations - Update Handler]
+           DO[Delete Operations - Delete Handler]
+           CO[Compression Operations - Compression Engine]
+           IO[Index Operations - Index Manager]
+       end
+       
+       MO --> MD
+       
+       subgraph MD["MEMORY DESTINATIONS"]
+           WM[Working Memory - Redis/In-Memory]
+           STM[Short-term Memory - Cache Layer]
+           LTM[Long-term Memory - Persistent Storage]
+           EM[Episodic Memory - Time-series Storage]
+           SM[Semantic Memory - Knowledge Graph]
+           USM[User-Specific Memory - User Database]
+       end
+       
+       MD --> MOP
+       
+       subgraph MOP["MEMORY OPTIMIZATION"]
+           PS[Progressive Summarization - Summarizer]
+           MC[Memory Consolidation - Consolidation Engine]
+           GC[Garbage Collection - Resource Reclaimer]
+       end
+       
+       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+       classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
+       classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
+       classDef red fill:#e74c3c,stroke:#000,stroke-width:1px,color:#fff
+       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+       
+       class MR blue
+       class IP green
+       class MO orange
+       class MD purple
+       class MOP red
+       class PBR,TTLM,MTC,WO,WM,PS tech
 ```
 
 #### Memory Management Flow Technical Stack
@@ -2895,79 +2895,79 @@ flowchart TD
 #### Memory Management Flow Use Case Diagram
 
 ```mermaid
-graph LR
-    %% Define actors
-    system((Conversation System))
-    consumer((Memory Consumer))
-    admin((Administrator))
-    
-    %% Define use cases
-    UC1[Route Memory Operation]
-    UC2[Process Memory Input]
-    UC3[Execute Memory Operation]
-    UC4[Store in Appropriate Destination]
-    UC5[Optimize Memory Usage]
-    UC6[Monitor Memory Health]
-    
-    %% Actor relationships with use cases
-    system --> UC1
-    system --> UC2
-    system --> UC3
-    consumer --> UC4
-    admin --> UC5
-    admin --> UC6
-    
-    %% Dependencies between use cases
-    UC1 --> UC2
-    UC2 --> UC3
-    UC3 --> UC4
-    UC4 --> UC5
-    UC5 --> UC6
-    
-    %% Add container to represent the Memory Management Flow
-    subgraph MemoryManagementFlow[Memory Management Flow]
-        UC1
-        UC2
-        UC3
-        UC4
-        UC5
-        UC6
-    end
-    
-    %% Styling
-    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-    
-    class system,consumer,admin actor
-    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-    style MemoryManagementFlow fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+   graph LR
+       %% Define actors
+       system((Conversation System))
+       consumer((Memory Consumer))
+       admin((Administrator))
+       
+       %% Define use cases
+       UC1[Route Memory Operation]
+       UC2[Process Memory Input]
+       UC3[Execute Memory Operation]
+       UC4[Store in Appropriate Destination]
+       UC5[Optimize Memory Usage]
+       UC6[Monitor Memory Health]
+       
+       %% Actor relationships with use cases
+       system --> UC1
+       system --> UC2
+       system --> UC3
+       consumer --> UC4
+       admin --> UC5
+       admin --> UC6
+       
+       %% Dependencies between use cases
+       UC1 --> UC2
+       UC2 --> UC3
+       UC3 --> UC4
+       UC4 --> UC5
+       UC5 --> UC6
+       
+       %% Add container to represent the Memory Management Flow
+       subgraph MemoryManagementFlow[Memory Management Flow]
+           UC1
+           UC2
+           UC3
+           UC4
+           UC5
+           UC6
+       end
+       
+       %% Styling
+       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+       
+       class system,consumer,admin actor
+       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+       style MemoryManagementFlow fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Memory Management Flow Data Flow Diagram
 
 ```mermaid
-flowchart TD
-    system["Conversation System"]
-    router["Memory Router"]
-    processor["Input Processor"]
-    operation["Operation Handler"]
-    storage["Memory Storage"]
-    optimization["Optimization Engine"]
-    monitoring["Monitoring System"]
-    
-    system --> |Memory Request| router
-    router --> |Routed Request| processor
-    processor --> |Processed Data| operation
-    operation --> |Storage Operation| storage
-    storage --> |Operation Result| operation
-    operation --> |Operation Response| system
-    storage --> |Storage Metrics| optimization
-    optimization --> |Optimization Actions| storage
-    storage --> |Health Metrics| monitoring
-    monitoring --> |Policy Updates| router
-    
-    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-    class system,router,processor,operation,storage,optimization,monitoring component
+   flowchart TD
+       system["Conversation System"]
+       router["Memory Router"]
+       processor["Input Processor"]
+       operation["Operation Handler"]
+       storage["Memory Storage"]
+       optimization["Optimization Engine"]
+       monitoring["Monitoring System"]
+       
+       system --> |Memory Request| router
+       router --> |Routed Request| processor
+       processor --> |Processed Data| operation
+       operation --> |Storage Operation| storage
+       storage --> |Operation Result| operation
+       operation --> |Operation Response| system
+       storage --> |Storage Metrics| optimization
+       optimization --> |Optimization Actions| storage
+       storage --> |Health Metrics| monitoring
+       monitoring --> |Policy Updates| router
+       
+       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+       class system,router,processor,operation,storage,optimization,monitoring component
 ```
 
 ### 8.4 Dynamic Workflow Execution Flow
@@ -2975,73 +2975,73 @@ flowchart TD
 The flow for executing dynamic workflows based on conversation context and user needs.
 
 ```mermaid
-flowchart TD
-    UT[User Trigger - Conversation Intent] & ST[System Trigger - System Event] --> WIF
-    
-    subgraph WIF["WORKFLOW INITIATION FLOW"]
-        TP[Trigger Processing - Event Processor]
-        CA[Context Analysis - Context Analyzer]
-        WS[Workflow Selection - Template Matcher]
-        PS[Parameter Setting - Parameter Configuration]
-        TP --> CA --> WS --> PS
-    end
-    
-    WIF --> WEF
-    
-    subgraph WEF["WORKFLOW EXECUTION FLOW"]
-        WI[Workflow Instantiation - Instance Creator]
-        TS[Task Scheduling - Task Scheduler]
-        TR[Task Routing - Task Router]
-        TE[Task Execution - Task Executor]
-        SR[Status Reporting - Status Reporter]
-        WI --> TS --> TR --> TE --> SR
-    end
-    
-    WEF --> BCF
-    
-    subgraph BCF["BRANCHING & CONTROL FLOW"]
-        CD[Condition Determination - Condition Evaluator]
-        BP[Branch Processing - Branch Handler]
-        EP[Error Processing - Error Handler]
-        CR[Compensation Routing - Compensation Manager]
-        CD --> BP
-        CD --> EP --> CR
-    end
-    
-    BCF --> PIF
-    
-    subgraph PIF["PROGRESS & INTEGRATION FLOW"]
-        PM[Progress Monitoring - Progress Monitor]
-        NM[Notification Management - Notification Manager]
-        DC[Data Collection - Data Collector]
-        SI[System Integration - Integration Service]
-        PM --> NM
-        PM --> DC --> SI
-    end
-    
-    PIF --> WCF
-    
-    subgraph WCF["WORKFLOW COMPLETION FLOW"]
-        FC[Final Cleanup - Cleanup Service]
-        SR2[State Recording - State Recorder]
-        AR[Analytics Recording - Analytics Service]
-        NS[Next Steps Determination - Next Steps Planner]
-        FC --> SR2 --> AR --> NS
-    end
-    
-    classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-    classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-    classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
-    classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
-    classDef red fill:#e74c3c,stroke:#000,stroke-width:1px,color:#fff
-    classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-    
-    class WIF blue
-    class WEF green
-    class BCF orange
-    class PIF purple
-    class WCF red
-    class TP,CA,WI,TS,CD,PM,FC tech
+   flowchart TD
+       UT[User Trigger - Conversation Intent] & ST[System Trigger - System Event] --> WIF
+       
+       subgraph WIF["WORKFLOW INITIATION FLOW"]
+           TP[Trigger Processing - Event Processor]
+           CA[Context Analysis - Context Analyzer]
+           WS[Workflow Selection - Template Matcher]
+           PS[Parameter Setting - Parameter Configuration]
+           TP --> CA --> WS --> PS
+       end
+       
+       WIF --> WEF
+       
+       subgraph WEF["WORKFLOW EXECUTION FLOW"]
+           WI[Workflow Instantiation - Instance Creator]
+           TS[Task Scheduling - Task Scheduler]
+           TR[Task Routing - Task Router]
+           TE[Task Execution - Task Executor]
+           SR[Status Reporting - Status Reporter]
+           WI --> TS --> TR --> TE --> SR
+       end
+       
+       WEF --> BCF
+       
+       subgraph BCF["BRANCHING & CONTROL FLOW"]
+           CD[Condition Determination - Condition Evaluator]
+           BP[Branch Processing - Branch Handler]
+           EP[Error Processing - Error Handler]
+           CR[Compensation Routing - Compensation Manager]
+           CD --> BP
+           CD --> EP --> CR
+       end
+       
+       BCF --> PIF
+       
+       subgraph PIF["PROGRESS & INTEGRATION FLOW"]
+           PM[Progress Monitoring - Progress Monitor]
+           NM[Notification Management - Notification Manager]
+           DC[Data Collection - Data Collector]
+           SI[System Integration - Integration Service]
+           PM --> NM
+           PM --> DC --> SI
+       end
+       
+       PIF --> WCF
+       
+       subgraph WCF["WORKFLOW COMPLETION FLOW"]
+           FC[Final Cleanup - Cleanup Service]
+           SR2[State Recording - State Recorder]
+           AR[Analytics Recording - Analytics Service]
+           NS[Next Steps Determination - Next Steps Planner]
+           FC --> SR2 --> AR --> NS
+       end
+       
+       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+       classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
+       classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
+       classDef red fill:#e74c3c,stroke:#000,stroke-width:1px,color:#fff
+       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+       
+       class WIF blue
+       class WEF green
+       class BCF orange
+       class PIF purple
+       class WCF red
+       class TP,CA,WI,TS,CD,PM,FC tech
 ```
 
 #### Key Functional Characteristics:
