@@ -1844,60 +1844,82 @@ flowchart TD
 
 #### Product Isolation Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "MCP" as mcp
-actor "External System" as external
-actor "Administrator" as admin
-
-rectangle "Agentic Product" {
-  usecase "Receive Task" as UC1
-  usecase "Select Agent" as UC2
-  usecase "Execute Capability" as UC3
-  usecase "Access Domain Knowledge" as UC4
-  usecase "Integrate External System" as UC5
-  usecase "Monitor Performance" as UC6
-}
-
-mcp --> UC1
-system --> UC2
-system --> UC3
-system --> UC4
-external --> UC5
-admin --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC4
-UC3 --> UC5
-UC3 --> UC6
-@enduml
+```mermaid
+graph LR
+    %% Actors
+    mcp((MCP))
+    system((System))
+    external((External System))
+    admin((Administrator))
+    
+    %% Use Cases
+    UC1[Receive Task]
+    UC2[Select Agent]
+    UC3[Execute Capability]
+    UC4[Access Domain Knowledge]
+    UC5[Integrate External System]
+    UC6[Monitor Performance]
+    
+    %% Relationships
+    mcp --> UC1
+    system --> UC2
+    system --> UC3
+    system --> UC4
+    external --> UC5
+    admin --> UC6
+    
+    %% Use Case Relationships
+    UC1 --> UC2
+    UC2 --> UC3
+    UC3 --> UC4
+    UC3 --> UC5
+    UC3 --> UC6
+    
+    %% Title and styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class mcp,system,external,admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    
+    %% Add container to represent the Agentic Product
+    subgraph AgenticProduct[Agentic Product]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    style AgenticProduct fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Product Isolation Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "MCP" as mcp
-RECTANGLE "Task Planner" as planner
-RECTANGLE "Agent Selector" as selector
-RECTANGLE "Agent Pool" as agents
-RECTANGLE "Domain Knowledge" as knowledge
-RECTANGLE "Product Database" as database
-RECTANGLE "External Systems" as external
-RECTANGLE "Monitoring Service" as monitoring
-
-mcp --> planner : Task Request
-planner --> selector : Task Plan
-selector --> agents : Agent Selection
-agents --> knowledge : Knowledge Query
-agents --> database : Data Operations
-agents --> external : Integration Calls
-agents --> mcp : Task Results
-agents --> monitoring : Performance Metrics
-monitoring --> mcp : Status Reports
-@enduml
+```mermaid
+flowchart LR
+    mcp["MCP"]
+    planner["Task Planner"]
+    selector["Agent Selector"]
+    agents["Agent Pool"]
+    knowledge["Domain Knowledge"]
+    database["Product Database"]
+    external["External Systems"]
+    monitoring["Monitoring Service"]
+    
+    mcp --> |Task Request| planner
+    planner --> |Task Plan| selector
+    selector --> |Agent Selection| agents
+    agents --> |Knowledge Query| knowledge
+    agents --> |Data Operations| database
+    agents --> |Integration Calls| external
+    agents --> |Task Results| mcp
+    agents --> |Performance Metrics| monitoring
+    monitoring --> |Status Reports| mcp
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class mcp,planner,selector,agents,knowledge,database,external,monitoring component
 ```
 
 ### 6.2 Product Integration
@@ -1970,68 +1992,88 @@ flowchart TD
 
 #### Product Integration Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "Neural Core" as core
-actor "Product A" as productA
-actor "Product B" as productB
-actor "Administrator" as admin
-
-rectangle "Product Integration" {
-  usecase "Exchange Semantic Knowledge" as UC1
-  usecase "Share Conversation Context" as UC2
-  usecase "Authenticate Request" as UC3
-  usecase "Synchronize Data" as UC4
-  usecase "Exchange Events" as UC5
-  usecase "Monitor Integration Health" as UC6
-}
-
-core --> UC1
-core --> UC2
-core --> UC3
-productA --> UC1
-productA --> UC3
-productA --> UC4
-productA --> UC5
-productB --> UC1
-productB --> UC3
-productB --> UC4
-productB --> UC5
-admin --> UC6
-UC3 --> UC1
-UC3 --> UC2
-UC3 --> UC4
-UC3 --> UC5
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    core((Neural Core))
+    productA((Product A))
+    productB((Product B))
+    admin((Administrator))
+    
+    %% Define use cases
+    UC1[Exchange Semantic Knowledge]
+    UC2[Share Conversation Context]
+    UC3[Authenticate Request]
+    UC4[Synchronize Data]
+    UC5[Exchange Events] 
+    UC6[Monitor Integration Health]
+    
+    %% Actor relationships with use cases
+    core --> UC1
+    core --> UC2
+    core --> UC3
+    productA --> UC1
+    productA --> UC3
+    productA --> UC4
+    productA --> UC5
+    productB --> UC1
+    productB --> UC3
+    productB --> UC4
+    productB --> UC5
+    admin --> UC6
+    
+    %% Dependencies between use cases
+    UC3 --> UC1
+    UC3 --> UC2
+    UC3 --> UC4
+    UC3 --> UC5
+    
+    %% Add container to represent the Product Integration system
+    subgraph ProductIntegration[Product Integration]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class core,productA,productB,admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style ProductIntegration fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Product Integration Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Neural Core" as core
-RECTANGLE "Integration Interfaces" as interfaces
-RECTANGLE "API Gateway" as gateway
-RECTANGLE "Event Bus" as events
-RECTANGLE "Service Mesh" as mesh
-RECTANGLE "Data Sync Service" as sync
-RECTANGLE "Product A" as productA
-RECTANGLE "Product B" as productB
-
-core --> interfaces : API Calls
-interfaces --> gateway : Routed Requests
-gateway --> mesh : Service Routing
-mesh --> productA : Service Request
-mesh --> productB : Service Request
-productA --> events : Event Publication
-events --> productB : Event Consumption
-productA --> sync : Data Changes
-sync --> productB : Synchronized Data
-productA --> core : Response Data
-productB --> core : Response Data
-@enduml
+```mermaid
+flowchart LR
+    core["Neural Core"]
+    interfaces["Integration Interfaces"]
+    gateway["API Gateway"]
+    events["Event Bus"]
+    mesh["Service Mesh"]
+    sync["Data Sync Service"]
+    productA["Product A"]
+    productB["Product B"]
+    
+    core --> |API Calls| interfaces
+    interfaces --> |Routed Requests| gateway
+    gateway --> |Service Routing| mesh
+    mesh --> |Service Request| productA
+    mesh --> |Service Request| productB
+    productA --> |Event Publication| events
+    events --> |Event Consumption| productB
+    productA --> |Data Changes| sync
+    sync --> |Synchronized Data| productB
+    productA --> |Response Data| core
+    productB --> |Response Data| core
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class core,interfaces,gateway,events,mesh,sync,productA,productB component
 ```
 
 ### 6.3 Workflow Template Repository
@@ -2135,61 +2177,81 @@ flowchart TD
 
 #### Workflow Template Repository Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "Workflow Designer" as designer
-actor "Product Developer" as developer
-actor "Administrator" as admin
-
-rectangle "Workflow Template Repository" {
-  usecase "Create Workflow Template" as UC1
-  usecase "Version Workflow Template" as UC2
-  usecase "Test Workflow Template" as UC3
-  usecase "Search for Templates" as UC4
-  usecase "Customize Template" as UC5
-  usecase "Deploy Template" as UC6
-}
-
-designer --> UC1
-designer --> UC2
-designer --> UC3
-developer --> UC4
-developer --> UC5
-admin --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC6
-UC4 --> UC5
-UC5 --> UC6
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    designer((Workflow Designer))
+    developer((Product Developer))
+    admin((Administrator))
+    
+    %% Define use cases
+    UC1[Create Workflow Template]
+    UC2[Version Workflow Template]
+    UC3[Test Workflow Template]
+    UC4[Search for Templates]
+    UC5[Customize Template]
+    UC6[Deploy Template]
+    
+    %% Actor relationships with use cases
+    designer --> UC1
+    designer --> UC2
+    designer --> UC3
+    developer --> UC4
+    developer --> UC5
+    admin --> UC6
+    
+    %% Dependencies between use cases
+    UC1 --> UC2
+    UC2 --> UC3
+    UC3 --> UC6
+    UC4 --> UC5
+    UC5 --> UC6
+    
+    %% Add container to represent the Workflow Template Repository
+    subgraph WorkflowTemplateRepository[Workflow Template Repository]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class designer,developer,admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style WorkflowTemplateRepository fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Workflow Template Repository Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Workflow Designer" as designer
-RECTANGLE "Template Catalog" as catalog
-RECTANGLE "Version Manager" as version
-RECTANGLE "Template Library" as library
-RECTANGLE "Testing Environment" as testing
-RECTANGLE "Customization Tools" as customization
-RECTANGLE "CI/CD Pipeline" as cicd
-RECTANGLE "Deployment Target" as deployment
-
-designer --> catalog : Template Registration
-designer --> version : Version Management
-version --> library : Template Storage
-library --> testing : Template Validation
-testing --> version : Test Results
-library --> customization : Template Retrieval
-customization --> version : Customized Template
-version --> cicd : Deployment Request
-cicd --> deployment : Template Deployment
-catalog --> designer : Template Search
-@enduml
+```mermaid
+flowchart TD
+    designer["Workflow Designer"]
+    catalog["Template Catalog"]
+    version["Version Manager"]
+    library["Template Library"]
+    testing["Testing Environment"]
+    customization["Customization Tools"]
+    cicd["CI/CD Pipeline"]
+    deployment["Deployment Target"]
+    
+    designer --> |Template Registration| catalog
+    designer --> |Version Management| version
+    version --> |Template Storage| library
+    library --> |Template Validation| testing
+    testing --> |Test Results| version
+    library --> |Template Retrieval| customization
+    customization --> |Customized Template| version
+    version --> |Deployment Request| cicd
+    cicd --> |Template Deployment| deployment
+    catalog --> |Template Search| designer
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class designer,catalog,version,library,testing,customization,cicd,deployment component
 ```
 
 ## 7. Database Architecture
@@ -2330,72 +2392,95 @@ erDiagram
 
 #### Workflow State Database Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "Workflow Engine" as engine
-actor "Monitoring System" as monitoring
-actor "Administrator" as admin
-
-rectangle "Workflow State Database" {
-  usecase "Store Workflow Definition" as UC1
-  usecase "Track Workflow Instance" as UC2
-  usecase "Record Task Execution" as UC3
-  usecase "Manage State Transitions" as UC4
-  usecase "Store Workflow Variables" as UC5
-  usecase "Analyze Workflow Patterns" as UC6
-}
-
-engine --> UC1
-engine --> UC2
-engine --> UC3
-engine --> UC4
-engine --> UC5
-monitoring --> UC2
-monitoring --> UC3
-admin --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC2 --> UC4
-UC2 --> UC5
-UC4 --> UC6
-UC3 --> UC6
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    engine((Workflow Engine))
+    monitoring((Monitoring System))
+    admin((Administrator))
+    
+    %% Define use cases
+    UC1[Store Workflow Definition]
+    UC2[Track Workflow Instance]
+    UC3[Record Task Execution]
+    UC4[Manage State Transitions]
+    UC5[Store Workflow Variables]
+    UC6[Analyze Workflow Patterns]
+    
+    %% Actor relationships with use cases
+    engine --> UC1
+    engine --> UC2
+    engine --> UC3
+    engine --> UC4
+    engine --> UC5
+    monitoring --> UC2
+    monitoring --> UC3
+    admin --> UC6
+    
+    %% Dependencies between use cases
+    UC1 --> UC2
+    UC2 --> UC3
+    UC2 --> UC4
+    UC2 --> UC5
+    UC4 --> UC6
+    UC3 --> UC6
+    
+    %% Add container to represent the Workflow State Database
+    subgraph WorkflowStateDatabase[Workflow State Database]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class engine,monitoring,admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style WorkflowStateDatabase fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Workflow State Database Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Workflow Engine" as engine
-RECTANGLE "Definition Store" as definition
-RECTANGLE "Instance Store" as instance
-RECTANGLE "Task Store" as task
-RECTANGLE "State Store" as state
-RECTANGLE "Variable Store" as variable
-RECTANGLE "Event Store" as event
-RECTANGLE "Monitoring System" as monitoring
-RECTANGLE "Analytics System" as analytics
-
-engine --> definition : Store Definition
-engine --> instance : Create/Update Instance
-engine --> task : Record Task Execution
-engine --> state : Record State Transition
-engine --> variable : Store/Update Variables
-engine --> event : Record Events
-definition --> instance : Definition Reference
-instance --> task : Instance Reference
-instance --> state : Instance Reference
-instance --> variable : Instance Reference
-instance --> event : Instance Reference
-monitoring --> instance : Query Status
-monitoring --> task : Query Execution
-monitoring --> state : Query Transitions
-analytics --> instance : Historical Data
-analytics --> task : Performance Data
-analytics --> state : Transition Patterns
-@enduml
+```mermaid
+flowchart TD
+    engine["Workflow Engine"]
+    definition["Definition Store"]
+    instance["Instance Store"]
+    task["Task Store"]
+    state["State Store"]
+    variable["Variable Store"]
+    event["Event Store"]
+    monitoring["Monitoring System"]
+    analytics["Analytics System"]
+    
+    engine --> |Store Definition| definition
+    engine --> |Create/Update Instance| instance
+    engine --> |Record Task Execution| task
+    engine --> |Record State Transition| state
+    engine --> |Store/Update Variables| variable
+    engine --> |Record Events| event
+    
+    definition --> |Definition Reference| instance
+    instance --> |Instance Reference| task
+    instance --> |Instance Reference| state
+    instance --> |Instance Reference| variable
+    instance --> |Instance Reference| event
+    
+    monitoring --> |Query Status| instance
+    monitoring --> |Query Execution| task
+    monitoring --> |Query Transitions| state
+    
+    analytics --> |Historical Data| instance
+    analytics --> |Performance Data| task
+    analytics --> |Transition Patterns| state
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class engine,definition,instance,task,state,variable,event,monitoring,analytics component
 ```
 
 ## 8. Key Functional Flows
@@ -2520,62 +2605,82 @@ flowchart TD
 
 #### Conversation Processing Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "User" as user
-actor "System" as system
-
-rectangle "Conversation Processing" {
-  usecase "Process User Input" as UC1
-  usecase "Extract Information" as UC2
-  usecase "Execute Agent Actions" as UC3
-  usecase "Manage Memory" as UC4
-  usecase "Generate Response" as UC5
-  usecase "Trigger Workflows" as UC6
-}
-
-user --> UC1
-system --> UC2
-system --> UC3
-system --> UC4
-system --> UC5
-system --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC4
-UC4 --> UC5
-UC2 --> UC6
-UC5 --> user
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    user((User))
+    system((System))
+    
+    %% Define use cases
+    UC1[Process User Input]
+    UC2[Extract Information]
+    UC3[Execute Agent Actions]
+    UC4[Manage Memory]
+    UC5[Generate Response]
+    UC6[Trigger Workflows]
+    
+    %% Actor relationships with use cases
+    user --> UC1
+    system --> UC2
+    system --> UC3
+    system --> UC4
+    system --> UC5
+    system --> UC6
+    
+    %% Dependencies between use cases
+    UC1 --> UC2
+    UC2 --> UC3
+    UC2 --> UC6
+    UC3 --> UC4
+    UC4 --> UC5
+    UC5 --> user
+    
+    %% Add container to represent the Conversation Processing
+    subgraph ConversationProcessing[Conversation Processing]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class user,system actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style ConversationProcessing fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Conversation Processing Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "User Input" as input
-RECTANGLE "Authentication" as auth
-RECTANGLE "Preprocessing" as preprocess
-RECTANGLE "Information Extraction" as extract
-RECTANGLE "Agent Execution" as agent
-RECTANGLE "Memory Management" as memory
-RECTANGLE "Response Generation" as response
-RECTANGLE "Workflow Engine" as workflow
-RECTANGLE "User Output" as output
-
-input --> auth : User Input
-auth --> preprocess : Authenticated Input
-preprocess --> extract : Processed Input
-extract --> agent : Extracted Information
-extract --> workflow : Intent/Trigger
-agent --> memory : Execution Results
-memory --> response : Context/Memory
-workflow --> response : Workflow Status
-response --> output : Formatted Response
-output --> input : Continuous Conversation
-@enduml
+```mermaid
+flowchart TD
+    input["User Input"]
+    auth["Authentication"]
+    preprocess["Preprocessing"]
+    extract["Information Extraction"]
+    agent["Agent Execution"]
+    memory["Memory Management"]
+    response["Response Generation"]
+    workflow["Workflow Engine"]
+    output["User Output"]
+    
+    input --> |User Input| auth
+    auth --> |Authenticated Input| preprocess
+    preprocess --> |Processed Input| extract
+    extract --> |Extracted Information| agent
+    extract --> |Intent/Trigger| workflow
+    agent --> |Execution Results| memory
+    memory --> |Context/Memory| response
+    workflow --> |Workflow Status| response
+    response --> |Formatted Response| output
+    output --> |Continuous Conversation| input
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class input,auth,preprocess,extract,agent,memory,response,workflow,output component
 ```
 
 ### 8.2 User-Organization Semantic Fallback Flow
@@ -2629,60 +2734,81 @@ flowchart TD
 
 #### Semantic Fallback Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "User" as user
-actor "System" as system
-
-rectangle "Semantic Fallback System" {
-  usecase "Analyze Request Context" as UC1
-  usecase "Search User Semantics" as UC2
-  usecase "Search Organization Semantics" as UC3
-  usecase "Decide Knowledge Source" as UC4
-  usecase "Combine Knowledge" as UC5
-  usecase "Learn New Semantics" as UC6
-}
-
-user --> UC1
-system --> UC2
-system --> UC3
-system --> UC4
-UC1 --> UC2
-UC1 --> UC3
-UC2 --> UC4
-UC3 --> UC4
-UC4 --> UC5
-UC5 --> user
-UC1 --> UC6
-UC6 --> UC2
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    user((User))
+    system((System))
+    
+    %% Define use cases
+    UC1[Analyze Request Context]
+    UC2[Search User Semantics]
+    UC3[Search Organization Semantics]
+    UC4[Decide Knowledge Source]
+    UC5[Combine Knowledge]
+    UC6[Learn New Semantics]
+    
+    %% Actor relationships with use cases
+    user --> UC1
+    system --> UC2
+    system --> UC3
+    system --> UC4
+    
+    %% Dependencies between use cases
+    UC1 --> UC2
+    UC1 --> UC3
+    UC1 --> UC6
+    UC2 --> UC4
+    UC3 --> UC4
+    UC4 --> UC5
+    UC5 --> user
+    UC6 --> UC2
+    
+    %% Add container to represent the Semantic Fallback System
+    subgraph SemanticFallbackSystem[Semantic Fallback System]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class user,system actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style SemanticFallbackSystem fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Semantic Fallback Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "User Request" as request
-RECTANGLE "Context Analysis" as context
-RECTANGLE "User Semantics" as user
-RECTANGLE "Organization Semantics" as org
-RECTANGLE "Matching Decision" as decision
-RECTANGLE "Knowledge Integration" as integration
-RECTANGLE "Response Generation" as response
-RECTANGLE "Learning Process" as learning
-
-request --> context : Request Content
-context --> user : Context Information
-context --> org : Context Information
-user --> decision : User Matches
-org --> decision : Org Matches
-decision --> integration : Knowledge Selection
-integration --> response : Integrated Knowledge
-context --> learning : Learning Opportunities
-learning --> user : Knowledge Updates
-@enduml
+```mermaid
+flowchart TD
+    request["User Request"]
+    context["Context Analysis"]
+    user["User Semantics"]
+    org["Organization Semantics"]
+    decision["Matching Decision"]
+    integration["Knowledge Integration"]
+    response["Response Generation"]
+    learning["Learning Process"]
+    
+    request --> |Request Content| context
+    context --> |Context Information| user
+    context --> |Context Information| org
+    context --> |Learning Opportunities| learning
+    user --> |User Matches| decision
+    org --> |Org Matches| decision
+    decision --> |Knowledge Selection| integration
+    integration --> |Integrated Knowledge| response
+    learning --> |Knowledge Updates| user
+    response --> request
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class request,context,user,org,decision,integration,response,learning component
 ```
 
 ### 8.3 Memory Management Flow
@@ -2768,60 +2894,80 @@ flowchart TD
 
 #### Memory Management Flow Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "Conversation System" as system
-actor "Memory Consumer" as consumer
-actor "Administrator" as admin
-
-rectangle "Memory Management Flow" {
-  usecase "Route Memory Operation" as UC1
-  usecase "Process Memory Input" as UC2
-  usecase "Execute Memory Operation" as UC3
-  usecase "Store in Appropriate Destination" as UC4
-  usecase "Optimize Memory Usage" as UC5
-  usecase "Monitor Memory Health" as UC6
-}
-
-system --> UC1
-system --> UC2
-system --> UC3
-consumer --> UC4
-admin --> UC5
-admin --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC4
-UC4 --> UC5
-UC5 --> UC6
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    system((Conversation System))
+    consumer((Memory Consumer))
+    admin((Administrator))
+    
+    %% Define use cases
+    UC1[Route Memory Operation]
+    UC2[Process Memory Input]
+    UC3[Execute Memory Operation]
+    UC4[Store in Appropriate Destination]
+    UC5[Optimize Memory Usage]
+    UC6[Monitor Memory Health]
+    
+    %% Actor relationships with use cases
+    system --> UC1
+    system --> UC2
+    system --> UC3
+    consumer --> UC4
+    admin --> UC5
+    admin --> UC6
+    
+    %% Dependencies between use cases
+    UC1 --> UC2
+    UC2 --> UC3
+    UC3 --> UC4
+    UC4 --> UC5
+    UC5 --> UC6
+    
+    %% Add container to represent the Memory Management Flow
+    subgraph MemoryManagementFlow[Memory Management Flow]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class system,consumer,admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style MemoryManagementFlow fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Memory Management Flow Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Conversation System" as system
-RECTANGLE "Memory Router" as router
-RECTANGLE "Input Processor" as processor
-RECTANGLE "Operation Handler" as operation
-RECTANGLE "Memory Storage" as storage
-RECTANGLE "Optimization Engine" as optimization
-RECTANGLE "Monitoring System" as monitoring
-
-system --> router : Memory Request
-router --> processor : Routed Request
-processor --> operation : Processed Data
-operation --> storage : Storage Operation
-storage --> operation : Operation Result
-operation --> system : Operation Response
-storage --> optimization : Storage Metrics
-optimization --> storage : Optimization Actions
-storage --> monitoring : Health Metrics
-monitoring --> router : Policy Updates
-@enduml
+```mermaid
+flowchart TD
+    system["Conversation System"]
+    router["Memory Router"]
+    processor["Input Processor"]
+    operation["Operation Handler"]
+    storage["Memory Storage"]
+    optimization["Optimization Engine"]
+    monitoring["Monitoring System"]
+    
+    system --> |Memory Request| router
+    router --> |Routed Request| processor
+    processor --> |Processed Data| operation
+    operation --> |Storage Operation| storage
+    storage --> |Operation Result| operation
+    operation --> |Operation Response| system
+    storage --> |Storage Metrics| optimization
+    optimization --> |Optimization Actions| storage
+    storage --> |Health Metrics| monitoring
+    monitoring --> |Policy Updates| router
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class system,router,processor,operation,storage,optimization,monitoring component
 ```
 
 ### 8.4 Dynamic Workflow Execution Flow
@@ -2953,75 +3099,95 @@ flowchart TD
 
 #### Dynamic Workflow Execution Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "User" as user
-actor "System" as system
-actor "External System" as external
-
-rectangle "Dynamic Workflow Execution" {
-  usecase "Process Workflow Trigger" as UC1
-  usecase "Select Workflow Template" as UC2
-  usecase "Execute Workflow Tasks" as UC3
-  usecase "Handle Branching Logic" as UC4
-  usecase "Monitor Progress" as UC5
-  usecase "Complete Workflow" as UC6
-}
-
-user --> UC1
-system --> UC1
-system --> UC2
-system --> UC3
-system --> UC4
-system --> UC5
-external --> UC3
-system --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC4
-UC4 --> UC3
-UC3 --> UC5
-UC5 --> UC6
-UC6 --> user
-UC6 --> external
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    user((User))
+    system((System))
+    external((External System))
+    
+    %% Define use cases
+    UC1[Process Workflow Trigger]
+    UC2[Select Workflow Template]
+    UC3[Execute Workflow Tasks]
+    UC4[Handle Branching Logic]
+    UC5[Monitor Progress]
+    UC6[Complete Workflow]
+    
+    %% Actor relationships with use cases
+    user --> UC1
+    system --> UC1
+    system --> UC2
+    system --> UC3
+    system --> UC4
+    system --> UC5
+    external --> UC3
+    system --> UC6
+    
+    %% Dependencies between use cases
+    UC1 --> UC2
+    UC2 --> UC3
+    UC3 --> UC4
+    UC4 --> UC3
+    UC3 --> UC5
+    UC5 --> UC6
+    UC6 --> user
+    UC6 --> external
+    
+    %% Add container to represent the Dynamic Workflow Execution
+    subgraph DynamicWorkflowExecution[Dynamic Workflow Execution]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class user,system,external actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style DynamicWorkflowExecution fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Dynamic Workflow Execution Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Trigger Source" as trigger
-RECTANGLE "Context Analyzer" as context
-RECTANGLE "Template Selector" as selector
-RECTANGLE "Parameter Configurator" as parameter
-RECTANGLE "Workflow Engine" as engine
-RECTANGLE "Task Router" as router
-RECTANGLE "Agent Pool" as agents
-RECTANGLE "Condition Evaluator" as condition
-RECTANGLE "Progress Monitor" as monitor
-RECTANGLE "Notification Service" as notification
-RECTANGLE "External Systems" as external
-RECTANGLE "Completion Handler" as completion
-
-trigger --> context : Trigger Event
-context --> selector : Context Information
-selector --> parameter : Selected Template
-parameter --> engine : Configured Workflow
-engine --> router : Task Assignment
-router --> agents : Routed Tasks
-agents --> engine : Task Results
-engine --> condition : Execution State
-condition --> engine : Branch Decision
-engine --> monitor : Execution Progress
-monitor --> notification : Progress Updates
-engine --> external : Integration Calls
-external --> engine : External Results
-engine --> completion : Workflow Completion
-completion --> notification : Completion Notification
-@enduml
+```mermaid
+flowchart TD
+    trigger["Trigger Source"]
+    context["Context Analyzer"]
+    selector["Template Selector"]
+    parameter["Parameter Configurator"]
+    engine["Workflow Engine"]
+    router["Task Router"]
+    agents["Agent Pool"]
+    condition["Condition Evaluator"]
+    monitor["Progress Monitor"]
+    notification["Notification Service"]
+    external["External Systems"]
+    completion["Completion Handler"]
+    
+    trigger --> |Trigger Event| context
+    context --> |Context Information| selector
+    selector --> |Selected Template| parameter
+    parameter --> |Configured Workflow| engine
+    engine --> |Task Assignment| router
+    router --> |Routed Tasks| agents
+    agents --> |Task Results| engine
+    engine --> |Execution State| condition
+    condition --> |Branch Decision| engine
+    engine --> |Execution Progress| monitor
+    monitor --> |Progress Updates| notification
+    engine --> |Integration Calls| external
+    external --> |External Results| engine
+    engine --> |Workflow Completion| completion
+    completion --> |Completion Notification| notification
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class trigger,context,selector,parameter,engine,router,agents,condition,monitor,notification,external,completion component
 ```
 
 ## 9. Integration Architecture
@@ -3106,80 +3272,105 @@ flowchart TD
 
 #### Integration Architecture Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "Neural Core" as core
-actor "Agentic Product" as product
-actor "External System" as external
-actor "Administrator" as admin
-
-rectangle "Integration Architecture" {
-  usecase "Connect via API" as UC1
-  usecase "Exchange Events" as UC2
-  usecase "Transfer Files" as UC3
-  usecase "Send/Receive Messages" as UC4
-  usecase "Secure Communications" as UC5
-  usecase "Monitor Integration Health" as UC6
-}
-
-core --> UC1
-core --> UC2
-product --> UC1
-product --> UC3
-product --> UC4
-external --> UC1
-external --> UC2
-external --> UC3
-external --> UC4
-admin --> UC5
-admin --> UC6
-UC1 --> UC5
-UC2 --> UC5
-UC3 --> UC5
-UC4 --> UC5
-UC5 --> UC6
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    core((Neural Core))
+    product((Agentic Product))
+    external((External System))
+    admin((Administrator))
+    
+    %% Define use cases
+    UC1[Connect via API]
+    UC2[Exchange Events]
+    UC3[Transfer Files]
+    UC4[Send/Receive Messages] 
+    UC5[Secure Communications]
+    UC6[Monitor Integration Health]
+    
+    %% Actor relationships with use cases
+    core --> UC1
+    core --> UC2
+    product --> UC1
+    product --> UC3
+    product --> UC4
+    external --> UC1
+    external --> UC2
+    external --> UC3
+    external --> UC4
+    admin --> UC5
+    admin --> UC6
+    
+    %% Dependencies between use cases
+    UC1 --> UC5
+    UC2 --> UC5
+    UC3 --> UC5
+    UC4 --> UC5
+    UC5 --> UC6
+    
+    %% Add container to represent the Integration Architecture
+    subgraph IntegrationArchitecture[Integration Architecture]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class core,product,external,admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style IntegrationArchitecture fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Integration Architecture Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Neural Core" as core
-RECTANGLE "Agentic Products" as products
-RECTANGLE "API Gateway" as gateway
-RECTANGLE "Message Broker" as broker
-RECTANGLE "File Transfer" as file
-RECTANGLE "Data Integration" as data
-RECTANGLE "Security Layer" as security
-RECTANGLE "External Systems" as external
-RECTANGLE "Monitoring" as monitoring
-
-core --> gateway : API Requests
-products --> gateway : API Requests
-core --> broker : Event Publication
-products --> broker : Event Publication
-products --> file : File Transfer
-gateway --> security : Security Validation
-broker --> security : Security Validation
-file --> security : Security Validation
-security --> external : Secure Communication
-external --> security : Response/Events
-security --> gateway : Validated Responses
-security --> broker : Validated Events
-security --> file : Validated Files
-gateway --> core : API Responses
-gateway --> products : API Responses
-broker --> core : Event Notifications
-broker --> products : Event Notifications
-file --> products : Received Files
-gateway --> monitoring : Gateway Metrics
-broker --> monitoring : Broker Metrics
-file --> monitoring : Transfer Metrics
-security --> monitoring : Security Metrics
-@enduml
+```mermaid
+flowchart TD
+    core["Neural Core"]
+    products["Agentic Products"]
+    gateway["API Gateway"]
+    broker["Message Broker"]
+    file["File Transfer"]
+    data["Data Integration"]
+    security["Security Layer"]
+    external["External Systems"]
+    monitoring["Monitoring"]
+    
+    core --> |API Requests| gateway
+    products --> |API Requests| gateway
+    core --> |Event Publication| broker
+    products --> |Event Publication| broker
+    products --> |File Transfer| file
+    
+    gateway --> |Security Validation| security
+    broker --> |Security Validation| security
+    file --> |Security Validation| security
+    
+    security --> |Secure Communication| external
+    external --> |Response/Events| security
+    
+    security --> |Validated Responses| gateway
+    security --> |Validated Events| broker
+    security --> |Validated Files| file
+    
+    gateway --> |API Responses| core
+    gateway --> |API Responses| products
+    broker --> |Event Notifications| core
+    broker --> |Event Notifications| products
+    file --> |Received Files| products
+    
+    gateway --> |Gateway Metrics| monitoring
+    broker --> |Broker Metrics| monitoring
+    file --> |Transfer Metrics| monitoring
+    security --> |Security Metrics| monitoring
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class core,products,gateway,broker,file,data,security,external,monitoring component
 ```
 
 ## 10. Deployment Architecture
@@ -3277,72 +3468,94 @@ flowchart TD
 
 #### Deployment Architecture Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "DevOps Engineer" as devops
-actor "Platform Engineer" as platform
-actor "Administrator" as admin
-actor "End User" as user
-
-rectangle "Deployment Architecture" {
-  usecase "Deploy Environment" as UC1
-  usecase "Manage Kubernetes Cluster" as UC2
-  usecase "Scale Services" as UC3
-  usecase "Monitor System Health" as UC4
-  usecase "Manage Data Services" as UC5
-  usecase "Access Application" as UC6
-}
-
-devops --> UC1
-platform --> UC2
-platform --> UC3
-admin --> UC4
-admin --> UC5
-user --> UC6
-UC1 --> UC2
-UC2 --> UC3
-UC2 --> UC4
-UC2 --> UC5
-UC5 --> UC6
-UC3 --> UC4
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    devops((DevOps Engineer))
+    platform((Platform Engineer))
+    admin((Administrator))
+    user((End User))
+    
+    %% Define use cases
+    UC1[Deploy Environment]
+    UC2[Manage Kubernetes Cluster]
+    UC3[Scale Services]
+    UC4[Monitor System Health]
+    UC5[Manage Data Services]
+    UC6[Access Application]
+    
+    %% Actor relationships with use cases
+    devops --> UC1
+    platform --> UC2
+    platform --> UC3
+    admin --> UC4
+    admin --> UC5
+    user --> UC6
+    
+    %% Dependencies between use cases
+    UC1 --> UC2
+    UC2 --> UC3
+    UC2 --> UC4
+    UC2 --> UC5
+    UC5 --> UC6
+    UC3 --> UC4
+    
+    %% Add container to represent the Deployment Architecture
+    subgraph DeploymentArchitecture[Deployment Architecture]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class devops,platform,admin,user actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style DeploymentArchitecture fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Deployment Architecture Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "User Traffic" as traffic
-RECTANGLE "Load Balancer" as loadbalancer
-RECTANGLE "API Gateway" as gateway
-RECTANGLE "Service Mesh" as mesh
-RECTANGLE "Application Services" as services
-RECTANGLE "Data Services" as data
-RECTANGLE "Monitoring System" as monitoring
-RECTANGLE "CI/CD Pipeline" as cicd
-RECTANGLE "Infrastructure as Code" as iac
-
-traffic --> loadbalancer : User Requests
-loadbalancer --> gateway : Routed Traffic
-gateway --> mesh : API Requests
-mesh --> services : Service Requests
-services --> data : Data Operations
-services --> mesh : Service Responses
-mesh --> gateway : API Responses
-gateway --> loadbalancer : Response Traffic
-loadbalancer --> traffic : User Responses
-services --> monitoring : Metrics/Logs
-data --> monitoring : Metrics/Logs
-mesh --> monitoring : Metrics/Logs
-gateway --> monitoring : Metrics/Logs
-cicd --> iac : Deployment Triggers
-iac --> services : Service Deployment
-iac --> data : Data Service Deployment
-iac --> mesh : Mesh Configuration
-iac --> gateway : Gateway Configuration
-@enduml
+```mermaid
+flowchart TD
+    traffic["User Traffic"]
+    loadbalancer["Load Balancer"]
+    gateway["API Gateway"]
+    mesh["Service Mesh"]
+    services["Application Services"]
+    data["Data Services"]
+    monitoring["Monitoring System"]
+    cicd["CI/CD Pipeline"]
+    iac["Infrastructure as Code"]
+    
+    traffic --> |User Requests| loadbalancer
+    loadbalancer --> |Routed Traffic| gateway
+    gateway --> |API Requests| mesh
+    mesh --> |Service Requests| services
+    services --> |Data Operations| data
+    services --> |Service Responses| mesh
+    mesh --> |API Responses| gateway
+    gateway --> |Response Traffic| loadbalancer
+    loadbalancer --> |User Responses| traffic
+    
+    services --> |Metrics/Logs| monitoring
+    data --> |Metrics/Logs| monitoring
+    mesh --> |Metrics/Logs| monitoring
+    gateway --> |Metrics/Logs| monitoring
+    
+    cicd --> |Deployment Triggers| iac
+    iac --> |Service Deployment| services
+    iac --> |Data Service Deployment| data
+    iac --> |Mesh Configuration| mesh
+    iac --> |Gateway Configuration| gateway
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class traffic,loadbalancer,gateway,mesh,services,data,monitoring,cicd,iac component
 ```
 
 ## 11. Testing Architecture
@@ -3442,77 +3655,99 @@ flowchart TD
 
 #### Testing Architecture Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "Developer" as developer
-actor "QA Engineer" as qa
-actor "Security Engineer" as security
-actor "DevOps Engineer" as devops
-
-rectangle "Testing Architecture" {
-  usecase "Run Unit Tests" as UC1
-  usecase "Perform Integration Testing" as UC2
-  usecase "Execute E2E Testing" as UC3
-  usecase "Conduct Performance Testing" as UC4
-  usecase "Validate Security" as UC5
-  usecase "Automate Testing Pipeline" as UC6
-}
-
-developer --> UC1
-developer --> UC2
-qa --> UC2
-qa --> UC3
-qa --> UC4
-security --> UC5
-devops --> UC6
-UC1 --> UC6
-UC2 --> UC6
-UC3 --> UC6
-UC4 --> UC6
-UC5 --> UC6
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    developer((Developer))
+    qa((QA Engineer))
+    security((Security Engineer))
+    devops((DevOps Engineer))
+    
+    %% Define use cases
+    UC1[Run Unit Tests]
+    UC2[Perform Integration Testing]
+    UC3[Execute E2E Testing]
+    UC4[Conduct Performance Testing]
+    UC5[Validate Security]
+    UC6[Automate Testing Pipeline]
+    
+    %% Actor relationships with use cases
+    developer --> UC1
+    developer --> UC2
+    qa --> UC2
+    qa --> UC3
+    qa --> UC4
+    security --> UC5
+    devops --> UC6
+    
+    %% Dependencies between use cases
+    UC1 --> UC6
+    UC2 --> UC6
+    UC3 --> UC6
+    UC4 --> UC6
+    UC5 --> UC6
+    
+    %% Add container to represent the Testing Architecture
+    subgraph TestingArchitecture[Testing Architecture]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class developer,qa,security,devops actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style TestingArchitecture fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Testing Architecture Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Developer" as developer
-RECTANGLE "CI/CD Pipeline" as cicd
-RECTANGLE "Unit Testing" as unit
-RECTANGLE "Integration Testing" as integration
-RECTANGLE "E2E Testing" as e2e
-RECTANGLE "Performance Testing" as performance
-RECTANGLE "Security Testing" as security
-RECTANGLE "Test Results" as results
-RECTANGLE "Reporting System" as reporting
-RECTANGLE "Deployment Decision" as decision
-
-developer --> cicd : Code Commit
-cicd --> unit : Run Unit Tests
-unit --> integration : Unit Tests Pass
-integration --> e2e : Integration Tests Pass
-e2e --> performance : E2E Tests Pass
-performance --> security : Performance Tests Pass
-security --> results : Security Tests Pass
-unit --> results : Test Results
-integration --> results : Test Results
-e2e --> results : Test Results
-performance --> results : Test Results
-security --> results : Test Results
-results --> reporting : Aggregate Results
-reporting --> decision : Test Report
-decision --> cicd : Deployment Decision
-@enduml
+```mermaid
+flowchart TD
+    developer["Developer"]
+    cicd["CI/CD Pipeline"]
+    unit["Unit Testing"]
+    integration["Integration Testing"]
+    e2e["E2E Testing"]
+    performance["Performance Testing"]
+    security["Security Testing"]
+    results["Test Results"]
+    reporting["Reporting System"]
+    decision["Deployment Decision"]
+    
+    developer --> |Code Commit| cicd
+    cicd --> |Run Unit Tests| unit
+    unit --> |Unit Tests Pass| integration
+    integration --> |Integration Tests Pass| e2e
+    e2e --> |E2E Tests Pass| performance
+    performance --> |Performance Tests Pass| security
+    
+    unit --> |Test Results| results
+    integration --> |Test Results| results
+    e2e --> |Test Results| results
+    performance --> |Test Results| results
+    security --> |Test Results| results
+    
+    security --> |Security Tests Pass| results
+    results --> |Aggregate Results| reporting
+    reporting --> |Test Report| decision
+    decision --> |Deployment Decision| cicd
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class developer,cicd,unit,integration,e2e,performance,security,results,reporting,decision component
 ```
 
 ## 12. Implementation Roadmap
 
 The implementation roadmap outlines the phases for building and deploying the system.
 
-```
+```mermaid
 gantt
     title Implementation Roadmap
     dateFormat YYYY-MM-DD
@@ -3588,74 +3823,96 @@ gantt
 
 #### Implementation Roadmap Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "Development Team" as dev
-actor "QA Team" as qa
-actor "Operations Team" as ops
-actor "Product Team" as product
-
-rectangle "Implementation Roadmap" {
-  usecase "Build Core Foundation" as UC1
-  usecase "Implement Semantic Features" as UC2
-  usecase "Develop MCP" as UC3
-  usecase "Create Workflow Engine" as UC4
-  usecase "Deploy First Product" as UC5
-  usecase "Enhance Platform Capabilities" as UC6
-  usecase "Scale System" as UC7
-  usecase "Add New Products" as UC8
-}
-
-dev --> UC1
-dev --> UC2
-dev --> UC3
-dev --> UC4
-dev --> UC5
-qa --> UC1
-qa --> UC2
-qa --> UC3
-qa --> UC4
-qa --> UC5
-ops --> UC7
-product --> UC6
-product --> UC8
-UC1 --> UC2
-UC1 --> UC3
-UC2 --> UC4
-UC3 --> UC4
-UC4 --> UC5
-UC5 --> UC6
-UC6 --> UC7
-UC7 --> UC8
-@enduml
+```mermaid
+graph LR
+    %% Define actors
+    dev((Development Team))
+    qa((QA Team))
+    ops((Operations Team))
+    product((Product Team))
+    
+    %% Define use cases
+    UC1[Build Core Foundation]
+    UC2[Implement Semantic Features]
+    UC3[Develop MCP]
+    UC4[Create Workflow Engine]
+    UC5[Deploy First Product]
+    UC6[Enhance Platform Capabilities]
+    UC7[Scale System]
+    UC8[Add New Products]
+    
+    %% Actor relationships with use cases
+    dev --> UC1
+    dev --> UC2
+    dev --> UC3
+    dev --> UC4
+    dev --> UC5
+    qa --> UC1
+    qa --> UC2
+    qa --> UC3
+    qa --> UC4
+    qa --> UC5
+    ops --> UC7
+    product --> UC6
+    product --> UC8
+    
+    %% Dependencies between use cases
+    UC1 --> UC2
+    UC1 --> UC3
+    UC2 --> UC4
+    UC3 --> UC4
+    UC4 --> UC5
+    UC5 --> UC6
+    UC6 --> UC7
+    UC7 --> UC8
+    
+    %% Add container to represent the Implementation Roadmap
+    subgraph ImplementationRoadmap[Implementation Roadmap]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+        UC7
+        UC8
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class dev,qa,ops,product actor
+    class UC1,UC2,UC3,UC4,UC5,UC6,UC7,UC8 usecase
+    style ImplementationRoadmap fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Implementation Roadmap Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Neural Core Foundation" as core
-RECTANGLE "Semantic Enhancement" as semantic
-RECTANGLE "Master Control Protocol" as mcp
-RECTANGLE "Dynamic Workflow" as workflow
-RECTANGLE "First Agentic Product" as product1
-RECTANGLE "Advanced Capabilities" as advanced
-RECTANGLE "Scale & Performance" as scale
-RECTANGLE "Additional Products" as products
-
-core --> semantic : Foundation APIs
-core --> mcp : Core Communication
-semantic --> workflow : Semantic Context
-mcp --> workflow : Orchestration Layer
-workflow --> product1 : Workflow Support
-product1 --> advanced : Product Capabilities
-semantic --> advanced : Enhanced Semantics
-mcp --> advanced : Enhanced Control
-advanced --> scale : Advanced Features
-scale --> products : Scalable Platform
-@enduml
+```mermaid
+flowchart TD
+    core["Neural Core Foundation"]
+    semantic["Semantic Enhancement"]
+    mcp["Master Control Protocol"]
+    workflow["Dynamic Workflow"]
+    product1["First Agentic Product"]
+    advanced["Advanced Capabilities"]
+    scale["Scale & Performance"]
+    products["Additional Products"]
+    
+    core --> |Foundation APIs| semantic
+    core --> |Core Communication| mcp
+    semantic --> |Semantic Context| workflow
+    mcp --> |Orchestration Layer| workflow
+    workflow --> |Workflow Support| product1
+    product1 --> |Product Capabilities| advanced
+    semantic --> |Enhanced Semantics| advanced
+    mcp --> |Enhanced Control| advanced
+    advanced --> |Advanced Features| scale
+    scale --> |Scalable Platform| products
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class core,semantic,mcp,workflow,product1,advanced,scale,products component
 ```
 
 ## 13. Conclusion
