@@ -1769,59 +1769,59 @@ sequenceDiagram
 Each Agentic Product operates in isolation with its own domain-specific capabilities and databases.
 
 ```mermaid
-   flowchart TD
-       subgraph AOL["AGENT ORCHESTRATION LAYER"]
-           TP[Task Planner - Planning Algorithm]
-           AS[Agent Selector - Capability Matching]
-           EC[Execution Coordinator - Workflow Engine]
-       end
-       
-       AOL --> SA
-       
-       subgraph SA["SPECIALIZED AGENTS"]
-           IRA[Information Retrieval Agents - Vector Search]
-           TPA[Transaction Processing Agents - ACID Compliance]
-           IA[Integration Agents - API Adapters]
-           DSA[Domain-Specific Agents - Expert Systems]
-           DMA[Decision-Making Agents - Logic/Rules Engine]
-           NA[Notification Agents - Message Dispatchers]
-       end
-       
-       SA --> AC
-       
-       subgraph AC["AGENT CAPABILITIES"]
-           BAI[Backend API Integration - API Gateway]
-           DQE[Database Query Execution - Query Processor]
-           ESI[External Service Integration - Service Connectors]
-           DG[Document Generation - Template Engine]
-           WA[Workflow Automation - Process Automation]
-           LA[Learning & Adaptation - Reinforcement Learning]
-       end
-       
-       AC --> AO
-       
-       subgraph AO["AGENT OVERSIGHT"]
-           SC[Security Controls - Policy Enforcement]
-           CR[Compliance Rules - Regulatory Framework]
-           PM[Performance Monitoring - Metrics Collection]
-           LA2[Logging & Auditing - Audit Trail]
-           ET[Explainability Tools - Explanation Generation]
-           HS[Human Supervision - Human-in-the-loop]
-       end
-       
-       AC --> NSB[Namespace Boundary - Kubernetes Namespace]
-       
-       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-       classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
-       classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
-       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-       
-       class AOL blue
-       class SA green
-       class AC orange
-       class AO purple
-       class IRA,BAI,SC,NSB tech
+flowchart TD
+    subgraph AOL["AGENT ORCHESTRATION LAYER"]
+        TP[Task Planner - Planning Algorithm]
+        AS[Agent Selector - Capability Matching]
+        EC[Execution Coordinator - Workflow Engine]
+    end
+    
+    AOL --> SA
+    
+    subgraph SA["SPECIALIZED AGENTS"]
+        IRA[Information Retrieval Agents - Vector Search]
+        TPA[Transaction Processing Agents - ACID Compliance]
+        IA[Integration Agents - API Adapters]
+        DSA[Domain-Specific Agents - Expert Systems]
+        DMA[Decision-Making Agents - Logic/Rules Engine]
+        NA[Notification Agents - Message Dispatchers]
+    end
+    
+    SA --> AC
+    
+    subgraph AC["AGENT CAPABILITIES"]
+        BAI[Backend API Integration - API Gateway]
+        DQE[Database Query Execution - Query Processor]
+        ESI[External Service Integration - Service Connectors]
+        DG[Document Generation - Template Engine]
+        WA[Workflow Automation - Process Automation]
+        LA[Learning & Adaptation - Reinforcement Learning]
+    end
+    
+    AC --> AO
+    
+    subgraph AO["AGENT OVERSIGHT"]
+        SC[Security Controls - Policy Enforcement]
+        CR[Compliance Rules - Regulatory Framework]
+        PM[Performance Monitoring - Metrics Collection]
+        LA2[Logging & Auditing - Audit Trail]
+        ET[Explainability Tools - Explanation Generation]
+        HS[Human Supervision - Human-in-the-loop]
+    end
+    
+    AC --> NSB[Namespace Boundary - Kubernetes Namespace]
+    
+    classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+    classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+    classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
+    classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
+    classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+    
+    class AOL blue
+    class SA green
+    class AC orange
+    class AO purple
+    class IRA,BAI,SC,NSB tech
 ```
 
 #### Product Isolation Technical Stack
@@ -1845,81 +1845,81 @@ Each Agentic Product operates in isolation with its own domain-specific capabili
 #### Product Isolation Use Case Diagram
 
 ```mermaid
-   graph LR
-       %% Actors
-       mcp((MCP))
-       system((System))
-       external((External System))
-       admin((Administrator))
-       
-       %% Use Cases
-       UC1[Receive Task]
-       UC2[Select Agent]
-       UC3[Execute Capability]
-       UC4[Access Domain Knowledge]
-       UC5[Integrate External System]
-       UC6[Monitor Performance]
-       
-       %% Relationships
-       mcp --> UC1
-       system --> UC2
-       system --> UC3
-       system --> UC4
-       external --> UC5
-       admin --> UC6
-       
-       %% Use Case Relationships
-       UC1 --> UC2
-       UC2 --> UC3
-       UC3 --> UC4
-       UC3 --> UC5
-       UC3 --> UC6
-       
-       %% Title and styling
-       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-       
-       class mcp,system,external,admin actor
-       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-       
-       %% Add container to represent the Agentic Product
-       subgraph AgenticProduct[Agentic Product]
-           UC1
-           UC2
-           UC3
-           UC4
-           UC5
-           UC6
-       end
-       
-       style AgenticProduct fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+graph LR
+    %% Actors
+    mcp((MCP))
+    system((System))
+    external((External System))
+    admin((Administrator))
+    
+    %% Use Cases
+    UC1[Receive Task]
+    UC2[Select Agent]
+    UC3[Execute Capability]
+    UC4[Access Domain Knowledge]
+    UC5[Integrate External System]
+    UC6[Monitor Performance]
+    
+    %% Relationships
+    mcp --> UC1
+    system --> UC2
+    system --> UC3
+    system --> UC4
+    external --> UC5
+    admin --> UC6
+    
+    %% Use Case Relationships
+    UC1 --> UC2
+    UC2 --> UC3
+    UC3 --> UC4
+    UC3 --> UC5
+    UC3 --> UC6
+    
+    %% Title and styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class mcp,system,external,admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    
+    %% Add container to represent the Agentic Product
+    subgraph AgenticProduct[Agentic Product]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    style AgenticProduct fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Product Isolation Data Flow Diagram
 
 ```mermaid
-   flowchart LR
-       mcp["MCP"]
-       planner["Task Planner"]
-       selector["Agent Selector"]
-       agents["Agent Pool"]
-       knowledge["Domain Knowledge"]
-       database["Product Database"]
-       external["External Systems"]
-       monitoring["Monitoring Service"]
-       
-       mcp --> |Task Request| planner
-       planner --> |Task Plan| selector
-       selector --> |Agent Selection| agents
-       agents --> |Knowledge Query| knowledge
-       agents --> |Data Operations| database
-       agents --> |Integration Calls| external
-       agents --> |Task Results| mcp
-       agents --> |Performance Metrics| monitoring
-       monitoring --> |Status Reports| mcp
-       
-       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-       class mcp,planner,selector,agents,knowledge,database,external,monitoring component
+flowchart LR
+    mcp["MCP"]
+    planner["Task Planner"]
+    selector["Agent Selector"]
+    agents["Agent Pool"]
+    knowledge["Domain Knowledge"]
+    database["Product Database"]
+    external["External Systems"]
+    monitoring["Monitoring Service"]
+    
+    mcp --> |Task Request| planner
+    planner --> |Task Plan| selector
+    selector --> |Agent Selection| agents
+    agents --> |Knowledge Query| knowledge
+    agents --> |Data Operations| database
+    agents --> |Integration Calls| external
+    agents --> |Task Results| mcp
+    agents --> |Performance Metrics| monitoring
+    monitoring --> |Status Reports| mcp
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class mcp,planner,selector,agents,knowledge,database,external,monitoring component
 ```
 
 ### 6.2 Product Integration
@@ -1927,49 +1927,49 @@ Each Agentic Product operates in isolation with its own domain-specific capabili
 Each Agentic Product integrates with the Neural Core and other products through standardized interfaces.
 
 ```mermaid
-   flowchart TD
-       subgraph II["INTEGRATION INTERFACES"]
-           SI[Semantic Interface - Knowledge API]
-           CI[Conversation Interface - Conversation API]
-           CTI[Context Interface - Context API]
-           AI[Authentication Interface - Auth API]
-           PI[Product Interface - Product API]
-           UI[User Interface - UI Components]
-       end
-       
-       II --> DS
-       
-       subgraph DS["DATA SYNCHRONIZATION"]
-           CDC[Change Data Capture - Debezium/Kafka Connect]
-           ES[Event Streaming - Kafka/Kinesis]
-           PS[Periodic Synchronization - Batch Processing]
-           CR[Conflict Resolution - CRDT/OT]
-           TM[Transaction Management - Distributed Transactions]
-           CI2[Cache Invalidation - Cache Invalidation Patterns]
-       end
-       
-       DS --> SI2
-       
-       subgraph SI2["SERVICE INTEGRATION"]
-           AG[API Gateway - Kong/Ambassador]
-           SM[Service Mesh - Istio/Linkerd]
-           SP[Sidecar Proxies - Envoy]
-           CB[Circuit Breaker - Hystrix/Resilience4j]
-           LB[Load Balancing - Client-side/Server-side]
-           RM[Retry Mechanisms - Exponential Backoff]
-       end
-       
-       SI2 --> APV[API Versioning - Semantic Versioning]
-       
-       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-       classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
-       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-       
-       class II blue
-       class DS green
-       class SI2 orange
-       class CDC,ES,AG,SM,APV tech
+flowchart TD
+    subgraph II["INTEGRATION INTERFACES"]
+        SI[Semantic Interface - Knowledge API]
+        CI[Conversation Interface - Conversation API]
+        CTI[Context Interface - Context API]
+        AI[Authentication Interface - Auth API]
+        PI[Product Interface - Product API]
+        UI[User Interface - UI Components]
+    end
+    
+    II --> DS
+    
+    subgraph DS["DATA SYNCHRONIZATION"]
+        CDC[Change Data Capture - Debezium/Kafka Connect]
+        ES[Event Streaming - Kafka/Kinesis]
+        PS[Periodic Synchronization - Batch Processing]
+        CR[Conflict Resolution - CRDT/OT]
+        TM[Transaction Management - Distributed Transactions]
+        CI2[Cache Invalidation - Cache Invalidation Patterns]
+    end
+    
+    DS --> SI2
+    
+    subgraph SI2["SERVICE INTEGRATION"]
+        AG[API Gateway - Kong/Ambassador]
+        SM[Service Mesh - Istio/Linkerd]
+        SP[Sidecar Proxies - Envoy]
+        CB[Circuit Breaker - Hystrix/Resilience4j]
+        LB[Load Balancing - Client-side/Server-side]
+        RM[Retry Mechanisms - Exponential Backoff]
+    end
+    
+    SI2 --> APV[API Versioning - Semantic Versioning]
+    
+    classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+    classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+    classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
+    classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+    
+    class II blue
+    class DS green
+    class SI2 orange
+    class CDC,ES,AG,SM,APV tech
 ```
 
 #### Product Integration Technical Stack
@@ -1993,87 +1993,87 @@ Each Agentic Product integrates with the Neural Core and other products through 
 #### Product Integration Use Case Diagram
 
 ```mermaid
-   graph LR
-       %% Define actors
-       core((Neural Core))
-       productA((Product A))
-       productB((Product B))
-       admin((Administrator))
-       
-       %% Define use cases
-       UC1[Exchange Semantic Knowledge]
-       UC2[Share Conversation Context]
-       UC3[Authenticate Request]
-       UC4[Synchronize Data]
-       UC5[Exchange Events] 
-       UC6[Monitor Integration Health]
-       
-       %% Actor relationships with use cases
-       core --> UC1
-       core --> UC2
-       core --> UC3
-       productA --> UC1
-       productA --> UC3
-       productA --> UC4
-       productA --> UC5
-       productB --> UC1
-       productB --> UC3
-       productB --> UC4
-       productB --> UC5
-       admin --> UC6
-       
-       %% Dependencies between use cases
-       UC3 --> UC1
-       UC3 --> UC2
-       UC3 --> UC4
-       UC3 --> UC5
-       
-       %% Add container to represent the Product Integration system
-       subgraph ProductIntegration[Product Integration]
-           UC1
-           UC2
-           UC3
-           UC4
-           UC5
-           UC6
-       end
-       
-       %% Styling
-       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-       
-       class core,productA,productB,admin actor
-       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-       style ProductIntegration fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+graph LR
+    %% Define actors
+    core((Neural Core))
+    productA((Product A))
+    productB((Product B))
+    admin((Administrator))
+    
+    %% Define use cases
+    UC1[Exchange Semantic Knowledge]
+    UC2[Share Conversation Context]
+    UC3[Authenticate Request]
+    UC4[Synchronize Data]
+    UC5[Exchange Events] 
+    UC6[Monitor Integration Health]
+    
+    %% Actor relationships with use cases
+    core --> UC1
+    core --> UC2
+    core --> UC3
+    productA --> UC1
+    productA --> UC3
+    productA --> UC4
+    productA --> UC5
+    productB --> UC1
+    productB --> UC3
+    productB --> UC4
+    productB --> UC5
+    admin --> UC6
+    
+    %% Dependencies between use cases
+    UC3 --> UC1
+    UC3 --> UC2
+    UC3 --> UC4
+    UC3 --> UC5
+    
+    %% Add container to represent the Product Integration system
+    subgraph ProductIntegration[Product Integration]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class core,productA,productB,admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style ProductIntegration fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Product Integration Data Flow Diagram
 
 ```mermaid
-   flowchart LR
-       core["Neural Core"]
-       interfaces["Integration Interfaces"]
-       gateway["API Gateway"]
-       events["Event Bus"]
-       mesh["Service Mesh"]
-       sync["Data Sync Service"]
-       productA["Product A"]
-       productB["Product B"]
-       
-       core --> |API Calls| interfaces
-       interfaces --> |Routed Requests| gateway
-       gateway --> |Service Routing| mesh
-       mesh --> |Service Request| productA
-       mesh --> |Service Request| productB
-       productA --> |Event Publication| events
-       events --> |Event Consumption| productB
-       productA --> |Data Changes| sync
-       sync --> |Synchronized Data| productB
-       productA --> |Response Data| core
-       productB --> |Response Data| core
-       
-       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-       class core,interfaces,gateway,events,mesh,sync,productA,productB component
+flowchart LR
+    core["Neural Core"]
+    interfaces["Integration Interfaces"]
+    gateway["API Gateway"]
+    events["Event Bus"]
+    mesh["Service Mesh"]
+    sync["Data Sync Service"]
+    productA["Product A"]
+    productB["Product B"]
+    
+    core --> |API Calls| interfaces
+    interfaces --> |Routed Requests| gateway
+    gateway --> |Service Routing| mesh
+    mesh --> |Service Request| productA
+    mesh --> |Service Request| productB
+    productA --> |Event Publication| events
+    events --> |Event Consumption| productB
+    productA --> |Data Changes| sync
+    sync --> |Synchronized Data| productB
+    productA --> |Response Data| core
+    productB --> |Response Data| core
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class core,interfaces,gateway,events,mesh,sync,productA,productB component
 ```
 
 ### 6.3 Workflow Template Repository
@@ -2081,54 +2081,54 @@ Each Agentic Product integrates with the Neural Core and other products through 
 The Workflow Template Repository provides reusable workflow templates for common business processes.
 
 ```mermaid
-   flowchart TD
-       subgraph WTR["WORKFLOW TEMPLATE REPOSITORY"]
-           WTC[Workflow Template Catalog - Template Registry]
-           WVM[Workflow Version Manager - Git/Version Control]
-           WTL[Workflow Template Library - Template Store]
-           DWB[Domain Workflow Builder - Workflow Composer]
-       end
-       
-       WTR --> TMF
-       
-       subgraph TMF["TEMPLATE METADATA FRAMEWORK"]
-           PD[Parameter Definitions - Schema Definitions]
-           ID[Integration Descriptors - Integration Specs]
-           CD[Compatibility Descriptors - Compatibility Matrix]
-           RM[Resource Manifests - Resource Requirements]
-       end
-       
-       TMF --> WTE
-       
-       subgraph WTE["WORKFLOW TESTING ENVIRONMENT"]
-           WVT[Workflow Validation Tests - Test Suites]
-           WST[Workflow Simulation Tool - Simulation Engine]
-           WDT[Workflow Debugging Tools - Debug Tooling]
-           WPT[Workflow Performance Tests - Performance Testing]
-       end
-       
-       WTE --> WCT
-       
-       subgraph WCT["WORKFLOW CUSTOMIZATION TOOLS"]
-           WCD[Workflow Cloning & Derivation - Template Forking]
-           WEW[Workflow Extension Wizard - Extension Framework]
-           WPS[Workflow Parameter Settings - Parameter Configuration]
-           WTI[Workflow Trigger Integration - Trigger Framework]
-       end
-       
-       WCT --> CIP[CI/CD Pipeline - Jenkins/GitHub Actions]
-       
-       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-       classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
-       classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
-       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-       
-       class WTR blue
-       class TMF green
-       class WTE orange
-       class WCT purple
-       class WVM,WST,WCD,CIP tech
+flowchart TD
+    subgraph WTR["WORKFLOW TEMPLATE REPOSITORY"]
+        WTC[Workflow Template Catalog - Template Registry]
+        WVM[Workflow Version Manager - Git/Version Control]
+        WTL[Workflow Template Library - Template Store]
+        DWB[Domain Workflow Builder - Workflow Composer]
+    end
+    
+    WTR --> TMF
+    
+    subgraph TMF["TEMPLATE METADATA FRAMEWORK"]
+        PD[Parameter Definitions - Schema Definitions]
+        ID[Integration Descriptors - Integration Specs]
+        CD[Compatibility Descriptors - Compatibility Matrix]
+        RM[Resource Manifests - Resource Requirements]
+    end
+    
+    TMF --> WTE
+    
+    subgraph WTE["WORKFLOW TESTING ENVIRONMENT"]
+        WVT[Workflow Validation Tests - Test Suites]
+        WST[Workflow Simulation Tool - Simulation Engine]
+        WDT[Workflow Debugging Tools - Debug Tooling]
+        WPT[Workflow Performance Tests - Performance Testing]
+    end
+    
+    WTE --> WCT
+    
+    subgraph WCT["WORKFLOW CUSTOMIZATION TOOLS"]
+        WCD[Workflow Cloning & Derivation - Template Forking]
+        WEW[Workflow Extension Wizard - Extension Framework]
+        WPS[Workflow Parameter Settings - Parameter Configuration]
+        WTI[Workflow Trigger Integration - Trigger Framework]
+    end
+    
+    WCT --> CIP[CI/CD Pipeline - Jenkins/GitHub Actions]
+    
+    classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+    classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+    classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
+    classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
+    classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+    
+    class WTR blue
+    class TMF green
+    class WTE orange
+    class WCT purple
+    class WVM,WST,WCD,CIP tech
 ```
 
 #### Key Functional Characteristics:
@@ -2178,80 +2178,80 @@ The Workflow Template Repository provides reusable workflow templates for common
 #### Workflow Template Repository Use Case Diagram
 
 ```mermaid
-   graph LR
-       %% Define actors
-       designer((Workflow Designer))
-       developer((Product Developer))
-       admin((Administrator))
-       
-       %% Define use cases
-       UC1[Create Workflow Template]
-       UC2[Version Workflow Template]
-       UC3[Test Workflow Template]
-       UC4[Search for Templates]
-       UC5[Customize Template]
-       UC6[Deploy Template]
-       
-       %% Actor relationships with use cases
-       designer --> UC1
-       designer --> UC2
-       designer --> UC3
-       developer --> UC4
-       developer --> UC5
-       admin --> UC6
-       
-       %% Dependencies between use cases
-       UC1 --> UC2
-       UC2 --> UC3
-       UC3 --> UC6
-       UC4 --> UC5
-       UC5 --> UC6
-       
-       %% Add container to represent the Workflow Template Repository
-       subgraph WorkflowTemplateRepository[Workflow Template Repository]
-           UC1
-           UC2
-           UC3
-           UC4
-           UC5
-           UC6
-       end
-       
-       %% Styling
-       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-       
-       class designer,developer,admin actor
-       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-       style WorkflowTemplateRepository fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+graph LR
+    %% Define actors
+    designer((Workflow Designer))
+    developer((Product Developer))
+    admin((Administrator))
+    
+    %% Define use cases
+    UC1[Create Workflow Template]
+    UC2[Version Workflow Template]
+    UC3[Test Workflow Template]
+    UC4[Search for Templates]
+    UC5[Customize Template]
+    UC6[Deploy Template]
+    
+    %% Actor relationships with use cases
+    designer --> UC1
+    designer --> UC2
+    designer --> UC3
+    developer --> UC4
+    developer --> UC5
+    admin --> UC6
+    
+    %% Dependencies between use cases
+    UC1 --> UC2
+    UC2 --> UC3
+    UC3 --> UC6
+    UC4 --> UC5
+    UC5 --> UC6
+    
+    %% Add container to represent the Workflow Template Repository
+    subgraph WorkflowTemplateRepository[Workflow Template Repository]
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+    end
+    
+    %% Styling
+    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+    
+    class designer,developer,admin actor
+    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+    style WorkflowTemplateRepository fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Workflow Template Repository Data Flow Diagram
 
 ```mermaid
-      flowchart TD
-          designer["Workflow Designer"]
-          catalog["Template Catalog"]
-          version["Version Manager"]
-          library["Template Library"]
-          testing["Testing Environment"]
-          customization["Customization Tools"]
-          cicd["CI/CD Pipeline"]
-          deployment["Deployment Target"]
-          
-          designer --> |Template Registration| catalog
-          designer --> |Version Management| version
-          version --> |Template Storage| library
-          library --> |Template Validation| testing
-          testing --> |Test Results| version
-          library --> |Template Retrieval| customization
-          customization --> |Customized Template| version
-          version --> |Deployment Request| cicd
-          cicd --> |Template Deployment| deployment
-          catalog --> |Template Search| designer
-          
-          classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-          class designer,catalog,version,library,testing,customization,cicd,deployment component
+flowchart TD
+    designer["Workflow Designer"]
+    catalog["Template Catalog"]
+    version["Version Manager"]
+    library["Template Library"]
+    testing["Testing Environment"]
+    customization["Customization Tools"]
+    cicd["CI/CD Pipeline"]
+    deployment["Deployment Target"]
+    
+    designer --> |Template Registration| catalog
+    designer --> |Version Management| version
+    version --> |Template Storage| library
+    library --> |Template Validation| testing
+    testing --> |Test Results| version
+    library --> |Template Retrieval| customization
+    customization --> |Customized Template| version
+    version --> |Deployment Request| cicd
+    cicd --> |Template Deployment| deployment
+    catalog --> |Template Search| designer
+    
+    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+    class designer,catalog,version,library,testing,customization,cicd,deployment component
 ```
 
 ## 7. Database Architecture
@@ -2261,80 +2261,80 @@ The Workflow Template Repository provides reusable workflow templates for common
 The Workflow State Database maintains the state of active and historical workflows.
 
 ```mermaid
-         erDiagram
-          WorkflowDefinition ||--o{ WorkflowInstance : instantiates
-          WorkflowInstance ||--o{ WorkflowTaskExecution : contains
-          WorkflowInstance ||--o{ WorkflowStateTransition : records
-          WorkflowInstance ||--o{ WorkflowVariable : uses
-          WorkflowInstance ||--o{ WorkflowEvent : generates
-          
-          WorkflowDefinition {
-              string DefinitionID PK
-              string Name
-              string Version
-              json Definition
-              date CreatedDate
-              string CreatedBy
-              boolean IsActive
-              array Tags
-              string Description
-          }
-          
-          WorkflowInstance {
-              string InstanceID PK
-              string DefinitionID FK
-              string Status
-              date StartTime
-              date EndTime
-              string InitiatedBy
-              string Priority
-              json Context
-              string ConversationID
-          }
-          
-          WorkflowTaskExecution {
-              string ExecutionID PK
-              string InstanceID FK
-              string TaskName
-              string TaskType
-              string Status
-              date StartTime
-              date EndTime
-              string AssignedAgent
-              json Parameters
-              json Result
-              string ErrorDetails
-          }
-          
-          WorkflowStateTransition {
-              string TransitionID PK
-              string InstanceID FK
-              string FromState
-              string ToState
-              date TransitionTime
-              string Trigger
-              json ContextSnapshot
-          }
-          
-          WorkflowVariable {
-              string VariableID PK
-              string InstanceID FK
-              string Name
-              string DataType
-              json Value
-              date LastUpdated
-              string Scope
-          }
-          
-          WorkflowEvent {
-              string EventID PK
-              string InstanceID FK
-              string EventType
-              date Timestamp
-              json Payload
-              boolean Processed
-              string SourceComponent
-          }
+   erDiagram
+    WorkflowDefinition ||--o{ WorkflowInstance : instantiates
+    WorkflowInstance ||--o{ WorkflowTaskExecution : contains
+    WorkflowInstance ||--o{ WorkflowStateTransition : records
+    WorkflowInstance ||--o{ WorkflowVariable : uses
+    WorkflowInstance ||--o{ WorkflowEvent : generates
+    
+    WorkflowDefinition {
+        string DefinitionID PK
+        string Name
+        string Version
+        json Definition
+        date CreatedDate
+        string CreatedBy
+        boolean IsActive
+        array Tags
+        string Description
+    }
+    
+    WorkflowInstance {
+        string InstanceID PK
+        string DefinitionID FK
+        string Status
+        date StartTime
+        date EndTime
+        string InitiatedBy
+        string Priority
+        json Context
+        string ConversationID
+    }
+    
+    WorkflowTaskExecution {
+        string ExecutionID PK
+        string InstanceID FK
+        string TaskName
+        string TaskType
+        string Status
+        date StartTime
+        date EndTime
+        string AssignedAgent
+        json Parameters
+        json Result
+        string ErrorDetails
+    }
+    
+    WorkflowStateTransition {
+        string TransitionID PK
+        string InstanceID FK
+        string FromState
+        string ToState
+        date TransitionTime
+        string Trigger
+        json ContextSnapshot
+    }
+    
+    WorkflowVariable {
+        string VariableID PK
+        string InstanceID FK
+        string Name
+        string DataType
+        json Value
+        date LastUpdated
+        string Scope
+    }
+    
+    WorkflowEvent {
+        string EventID PK
+        string InstanceID FK
+        string EventType
+        date Timestamp
+        json Payload
+        boolean Processed
+        string SourceComponent
+    }
 ```
 
 #### Key Functional Characteristics:
