@@ -2229,29 +2229,29 @@ The Workflow Template Repository provides reusable workflow templates for common
 #### Workflow Template Repository Data Flow Diagram
 
 ```mermaid
-   flowchart TD
-       designer["Workflow Designer"]
-       catalog["Template Catalog"]
-       version["Version Manager"]
-       library["Template Library"]
-       testing["Testing Environment"]
-       customization["Customization Tools"]
-       cicd["CI/CD Pipeline"]
-       deployment["Deployment Target"]
-       
-       designer --> |Template Registration| catalog
-       designer --> |Version Management| version
-       version --> |Template Storage| library
-       library --> |Template Validation| testing
-       testing --> |Test Results| version
-       library --> |Template Retrieval| customization
-       customization --> |Customized Template| version
-       version --> |Deployment Request| cicd
-       cicd --> |Template Deployment| deployment
-       catalog --> |Template Search| designer
-       
-       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-       class designer,catalog,version,library,testing,customization,cicd,deployment component
+      flowchart TD
+          designer["Workflow Designer"]
+          catalog["Template Catalog"]
+          version["Version Manager"]
+          library["Template Library"]
+          testing["Testing Environment"]
+          customization["Customization Tools"]
+          cicd["CI/CD Pipeline"]
+          deployment["Deployment Target"]
+          
+          designer --> |Template Registration| catalog
+          designer --> |Version Management| version
+          version --> |Template Storage| library
+          library --> |Template Validation| testing
+          testing --> |Test Results| version
+          library --> |Template Retrieval| customization
+          customization --> |Customized Template| version
+          version --> |Deployment Request| cicd
+          cicd --> |Template Deployment| deployment
+          catalog --> |Template Search| designer
+          
+          classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+          class designer,catalog,version,library,testing,customization,cicd,deployment component
 ```
 
 ## 7. Database Architecture
