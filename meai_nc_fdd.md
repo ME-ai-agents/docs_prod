@@ -1927,49 +1927,49 @@ Each Agentic Product operates in isolation with its own domain-specific capabili
 Each Agentic Product integrates with the Neural Core and other products through standardized interfaces.
 
 ```mermaid
-   flowchart TD
-       subgraph II["INTEGRATION INTERFACES"]
-           SI[Semantic Interface - Knowledge API]
-           CI[Conversation Interface - Conversation API]
-           CTI[Context Interface - Context API]
-           AI[Authentication Interface - Auth API]
-           PI[Product Interface - Product API]
-           UI[User Interface - UI Components]
-       end
-       
-       II --> DS
-       
-       subgraph DS["DATA SYNCHRONIZATION"]
-           CDC[Change Data Capture - Debezium/Kafka Connect]
-           ES[Event Streaming - Kafka/Kinesis]
-           PS[Periodic Synchronization - Batch Processing]
-           CR[Conflict Resolution - CRDT/OT]
-           TM[Transaction Management - Distributed Transactions]
-           CI2[Cache Invalidation - Cache Invalidation Patterns]
-       end
-       
-       DS --> SI2
-       
-       subgraph SI2["SERVICE INTEGRATION"]
-           AG[API Gateway - Kong/Ambassador]
-           SM[Service Mesh - Istio/Linkerd]
-           SP[Sidecar Proxies - Envoy]
-           CB[Circuit Breaker - Hystrix/Resilience4j]
-           LB[Load Balancing - Client-side/Server-side]
-           RM[Retry Mechanisms - Exponential Backoff]
-       end
-       
-       SI2 --> APV[API Versioning - Semantic Versioning]
-       
-       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-       classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
-       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-       
-       class II blue
-       class DS green
-       class SI2 orange
-       class CDC,ES,AG,SM,APV tech
+      flowchart TD
+          subgraph II["INTEGRATION INTERFACES"]
+              SI[Semantic Interface - Knowledge API]
+              CI[Conversation Interface - Conversation API]
+              CTI[Context Interface - Context API]
+              AI[Authentication Interface - Auth API]
+              PI[Product Interface - Product API]
+              UI[User Interface - UI Components]
+          end
+          
+          II --> DS
+          
+          subgraph DS["DATA SYNCHRONIZATION"]
+              CDC[Change Data Capture - Debezium/Kafka Connect]
+              ES[Event Streaming - Kafka/Kinesis]
+              PS[Periodic Synchronization - Batch Processing]
+              CR[Conflict Resolution - CRDT/OT]
+              TM[Transaction Management - Distributed Transactions]
+              CI2[Cache Invalidation - Cache Invalidation Patterns]
+          end
+          
+          DS --> SI2
+          
+          subgraph SI2["SERVICE INTEGRATION"]
+              AG[API Gateway - Kong/Ambassador]
+              SM[Service Mesh - Istio/Linkerd]
+              SP[Sidecar Proxies - Envoy]
+              CB[Circuit Breaker - Hystrix/Resilience4j]
+              LB[Load Balancing - Client-side/Server-side]
+              RM[Retry Mechanisms - Exponential Backoff]
+          end
+          
+          SI2 --> APV[API Versioning - Semantic Versioning]
+          
+          classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+          classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+          classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
+          classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+          
+          class II blue
+          class DS green
+          class SI2 orange
+          class CDC,ES,AG,SM,APV tech
 ```
 
 #### Product Integration Technical Stack
