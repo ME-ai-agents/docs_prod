@@ -2178,52 +2178,52 @@ The Workflow Template Repository provides reusable workflow templates for common
 #### Workflow Template Repository Use Case Diagram
 
 ```mermaid
-   graph LR
-       %% Define actors
-       designer((Workflow Designer))
-       developer((Product Developer))
-       admin((Administrator))
-       
-       %% Define use cases
-       UC1[Create Workflow Template]
-       UC2[Version Workflow Template]
-       UC3[Test Workflow Template]
-       UC4[Search for Templates]
-       UC5[Customize Template]
-       UC6[Deploy Template]
-       
-       %% Actor relationships with use cases
-       designer --> UC1
-       designer --> UC2
-       designer --> UC3
-       developer --> UC4
-       developer --> UC5
-       admin --> UC6
-       
-       %% Dependencies between use cases
-       UC1 --> UC2
-       UC2 --> UC3
-       UC3 --> UC6
-       UC4 --> UC5
-       UC5 --> UC6
-       
-       %% Add container to represent the Workflow Template Repository
-       subgraph WorkflowTemplateRepository[Workflow Template Repository]
-           UC1
-           UC2
-           UC3
-           UC4
-           UC5
-           UC6
-       end
-       
-       %% Styling
-       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-       
-       class designer,developer,admin actor
-       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-       style WorkflowTemplateRepository fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+      graph LR
+          %% Define actors
+          designer((Workflow Designer))
+          developer((Product Developer))
+          admin((Administrator))
+          
+          %% Define use cases
+          UC1[Create Workflow Template]
+          UC2[Version Workflow Template]
+          UC3[Test Workflow Template]
+          UC4[Search for Templates]
+          UC5[Customize Template]
+          UC6[Deploy Template]
+          
+          %% Actor relationships with use cases
+          designer --> UC1
+          designer --> UC2
+          designer --> UC3
+          developer --> UC4
+          developer --> UC5
+          admin --> UC6
+          
+          %% Dependencies between use cases
+          UC1 --> UC2
+          UC2 --> UC3
+          UC3 --> UC6
+          UC4 --> UC5
+          UC5 --> UC6
+          
+          %% Add container to represent the Workflow Template Repository
+          subgraph WorkflowTemplateRepository[Workflow Template Repository]
+              UC1
+              UC2
+              UC3
+              UC4
+              UC5
+              UC6
+          end
+          
+          %% Styling
+          classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+          classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+          
+          class designer,developer,admin actor
+          class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+          style WorkflowTemplateRepository fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Workflow Template Repository Data Flow Diagram
