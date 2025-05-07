@@ -1769,59 +1769,59 @@ sequenceDiagram
 Each Agentic Product operates in isolation with its own domain-specific capabilities and databases.
 
 ```mermaid
-flowchart TD
-    subgraph AOL["AGENT ORCHESTRATION LAYER"]
-        TP[Task Planner - Planning Algorithm]
-        AS[Agent Selector - Capability Matching]
-        EC[Execution Coordinator - Workflow Engine]
-    end
-    
-    AOL --> SA
-    
-    subgraph SA["SPECIALIZED AGENTS"]
-        IRA[Information Retrieval Agents - Vector Search]
-        TPA[Transaction Processing Agents - ACID Compliance]
-        IA[Integration Agents - API Adapters]
-        DSA[Domain-Specific Agents - Expert Systems]
-        DMA[Decision-Making Agents - Logic/Rules Engine]
-        NA[Notification Agents - Message Dispatchers]
-    end
-    
-    SA --> AC
-    
-    subgraph AC["AGENT CAPABILITIES"]
-        BAI[Backend API Integration - API Gateway]
-        DQE[Database Query Execution - Query Processor]
-        ESI[External Service Integration - Service Connectors]
-        DG[Document Generation - Template Engine]
-        WA[Workflow Automation - Process Automation]
-        LA[Learning & Adaptation - Reinforcement Learning]
-    end
-    
-    AC --> AO
-    
-    subgraph AO["AGENT OVERSIGHT"]
-        SC[Security Controls - Policy Enforcement]
-        CR[Compliance Rules - Regulatory Framework]
-        PM[Performance Monitoring - Metrics Collection]
-        LA2[Logging & Auditing - Audit Trail]
-        ET[Explainability Tools - Explanation Generation]
-        HS[Human Supervision - Human-in-the-loop]
-    end
-    
-    AC --> NSB[Namespace Boundary - Kubernetes Namespace]
-    
-    classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-    classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-    classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
-    classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
-    classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-    
-    class AOL blue
-    class SA green
-    class AC orange
-    class AO purple
-    class IRA,BAI,SC,NSB tech
+   flowchart TD
+       subgraph AOL["AGENT ORCHESTRATION LAYER"]
+           TP[Task Planner - Planning Algorithm]
+           AS[Agent Selector - Capability Matching]
+           EC[Execution Coordinator - Workflow Engine]
+       end
+       
+       AOL --> SA
+       
+       subgraph SA["SPECIALIZED AGENTS"]
+           IRA[Information Retrieval Agents - Vector Search]
+           TPA[Transaction Processing Agents - ACID Compliance]
+           IA[Integration Agents - API Adapters]
+           DSA[Domain-Specific Agents - Expert Systems]
+           DMA[Decision-Making Agents - Logic/Rules Engine]
+           NA[Notification Agents - Message Dispatchers]
+       end
+       
+       SA --> AC
+       
+       subgraph AC["AGENT CAPABILITIES"]
+           BAI[Backend API Integration - API Gateway]
+           DQE[Database Query Execution - Query Processor]
+           ESI[External Service Integration - Service Connectors]
+           DG[Document Generation - Template Engine]
+           WA[Workflow Automation - Process Automation]
+           LA[Learning & Adaptation - Reinforcement Learning]
+       end
+       
+       AC --> AO
+       
+       subgraph AO["AGENT OVERSIGHT"]
+           SC[Security Controls - Policy Enforcement]
+           CR[Compliance Rules - Regulatory Framework]
+           PM[Performance Monitoring - Metrics Collection]
+           LA2[Logging & Auditing - Audit Trail]
+           ET[Explainability Tools - Explanation Generation]
+           HS[Human Supervision - Human-in-the-loop]
+       end
+       
+       AC --> NSB[Namespace Boundary - Kubernetes Namespace]
+       
+       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+       classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
+       classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
+       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+       
+       class AOL blue
+       class SA green
+       class AC orange
+       class AO purple
+       class IRA,BAI,SC,NSB tech
 ```
 
 #### Product Isolation Technical Stack
@@ -1845,81 +1845,81 @@ flowchart TD
 #### Product Isolation Use Case Diagram
 
 ```mermaid
-graph LR
-    %% Actors
-    mcp((MCP))
-    system((System))
-    external((External System))
-    admin((Administrator))
-    
-    %% Use Cases
-    UC1[Receive Task]
-    UC2[Select Agent]
-    UC3[Execute Capability]
-    UC4[Access Domain Knowledge]
-    UC5[Integrate External System]
-    UC6[Monitor Performance]
-    
-    %% Relationships
-    mcp --> UC1
-    system --> UC2
-    system --> UC3
-    system --> UC4
-    external --> UC5
-    admin --> UC6
-    
-    %% Use Case Relationships
-    UC1 --> UC2
-    UC2 --> UC3
-    UC3 --> UC4
-    UC3 --> UC5
-    UC3 --> UC6
-    
-    %% Title and styling
-    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-    
-    class mcp,system,external,admin actor
-    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-    
-    %% Add container to represent the Agentic Product
-    subgraph AgenticProduct[Agentic Product]
-        UC1
-        UC2
-        UC3
-        UC4
-        UC5
-        UC6
-    end
-    
-    style AgenticProduct fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+   graph LR
+       %% Actors
+       mcp((MCP))
+       system((System))
+       external((External System))
+       admin((Administrator))
+       
+       %% Use Cases
+       UC1[Receive Task]
+       UC2[Select Agent]
+       UC3[Execute Capability]
+       UC4[Access Domain Knowledge]
+       UC5[Integrate External System]
+       UC6[Monitor Performance]
+       
+       %% Relationships
+       mcp --> UC1
+       system --> UC2
+       system --> UC3
+       system --> UC4
+       external --> UC5
+       admin --> UC6
+       
+       %% Use Case Relationships
+       UC1 --> UC2
+       UC2 --> UC3
+       UC3 --> UC4
+       UC3 --> UC5
+       UC3 --> UC6
+       
+       %% Title and styling
+       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+       
+       class mcp,system,external,admin actor
+       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+       
+       %% Add container to represent the Agentic Product
+       subgraph AgenticProduct[Agentic Product]
+           UC1
+           UC2
+           UC3
+           UC4
+           UC5
+           UC6
+       end
+       
+       style AgenticProduct fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Product Isolation Data Flow Diagram
 
 ```mermaid
-flowchart LR
-    mcp["MCP"]
-    planner["Task Planner"]
-    selector["Agent Selector"]
-    agents["Agent Pool"]
-    knowledge["Domain Knowledge"]
-    database["Product Database"]
-    external["External Systems"]
-    monitoring["Monitoring Service"]
-    
-    mcp --> |Task Request| planner
-    planner --> |Task Plan| selector
-    selector --> |Agent Selection| agents
-    agents --> |Knowledge Query| knowledge
-    agents --> |Data Operations| database
-    agents --> |Integration Calls| external
-    agents --> |Task Results| mcp
-    agents --> |Performance Metrics| monitoring
-    monitoring --> |Status Reports| mcp
-    
-    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-    class mcp,planner,selector,agents,knowledge,database,external,monitoring component
+   flowchart LR
+       mcp["MCP"]
+       planner["Task Planner"]
+       selector["Agent Selector"]
+       agents["Agent Pool"]
+       knowledge["Domain Knowledge"]
+       database["Product Database"]
+       external["External Systems"]
+       monitoring["Monitoring Service"]
+       
+       mcp --> |Task Request| planner
+       planner --> |Task Plan| selector
+       selector --> |Agent Selection| agents
+       agents --> |Knowledge Query| knowledge
+       agents --> |Data Operations| database
+       agents --> |Integration Calls| external
+       agents --> |Task Results| mcp
+       agents --> |Performance Metrics| monitoring
+       monitoring --> |Status Reports| mcp
+       
+       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+       class mcp,planner,selector,agents,knowledge,database,external,monitoring component
 ```
 
 ### 6.2 Product Integration
@@ -1927,49 +1927,49 @@ flowchart LR
 Each Agentic Product integrates with the Neural Core and other products through standardized interfaces.
 
 ```mermaid
-flowchart TD
-    subgraph II["INTEGRATION INTERFACES"]
-        SI[Semantic Interface - Knowledge API]
-        CI[Conversation Interface - Conversation API]
-        CTI[Context Interface - Context API]
-        AI[Authentication Interface - Auth API]
-        PI[Product Interface - Product API]
-        UI[User Interface - UI Components]
-    end
-    
-    II --> DS
-    
-    subgraph DS["DATA SYNCHRONIZATION"]
-        CDC[Change Data Capture - Debezium/Kafka Connect]
-        ES[Event Streaming - Kafka/Kinesis]
-        PS[Periodic Synchronization - Batch Processing]
-        CR[Conflict Resolution - CRDT/OT]
-        TM[Transaction Management - Distributed Transactions]
-        CI2[Cache Invalidation - Cache Invalidation Patterns]
-    end
-    
-    DS --> SI2
-    
-    subgraph SI2["SERVICE INTEGRATION"]
-        AG[API Gateway - Kong/Ambassador]
-        SM[Service Mesh - Istio/Linkerd]
-        SP[Sidecar Proxies - Envoy]
-        CB[Circuit Breaker - Hystrix/Resilience4j]
-        LB[Load Balancing - Client-side/Server-side]
-        RM[Retry Mechanisms - Exponential Backoff]
-    end
-    
-    SI2 --> APV[API Versioning - Semantic Versioning]
-    
-    classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-    classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-    classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
-    classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-    
-    class II blue
-    class DS green
-    class SI2 orange
-    class CDC,ES,AG,SM,APV tech
+   flowchart TD
+       subgraph II["INTEGRATION INTERFACES"]
+           SI[Semantic Interface - Knowledge API]
+           CI[Conversation Interface - Conversation API]
+           CTI[Context Interface - Context API]
+           AI[Authentication Interface - Auth API]
+           PI[Product Interface - Product API]
+           UI[User Interface - UI Components]
+       end
+       
+       II --> DS
+       
+       subgraph DS["DATA SYNCHRONIZATION"]
+           CDC[Change Data Capture - Debezium/Kafka Connect]
+           ES[Event Streaming - Kafka/Kinesis]
+           PS[Periodic Synchronization - Batch Processing]
+           CR[Conflict Resolution - CRDT/OT]
+           TM[Transaction Management - Distributed Transactions]
+           CI2[Cache Invalidation - Cache Invalidation Patterns]
+       end
+       
+       DS --> SI2
+       
+       subgraph SI2["SERVICE INTEGRATION"]
+           AG[API Gateway - Kong/Ambassador]
+           SM[Service Mesh - Istio/Linkerd]
+           SP[Sidecar Proxies - Envoy]
+           CB[Circuit Breaker - Hystrix/Resilience4j]
+           LB[Load Balancing - Client-side/Server-side]
+           RM[Retry Mechanisms - Exponential Backoff]
+       end
+       
+       SI2 --> APV[API Versioning - Semantic Versioning]
+       
+       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+       classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
+       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+       
+       class II blue
+       class DS green
+       class SI2 orange
+       class CDC,ES,AG,SM,APV tech
 ```
 
 #### Product Integration Technical Stack
