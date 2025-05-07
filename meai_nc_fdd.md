@@ -1898,28 +1898,28 @@ Each Agentic Product operates in isolation with its own domain-specific capabili
 #### Product Isolation Data Flow Diagram
 
 ```mermaid
-   flowchart LR
-       mcp["MCP"]
-       planner["Task Planner"]
-       selector["Agent Selector"]
-       agents["Agent Pool"]
-       knowledge["Domain Knowledge"]
-       database["Product Database"]
-       external["External Systems"]
-       monitoring["Monitoring Service"]
-       
-       mcp --> |Task Request| planner
-       planner --> |Task Plan| selector
-       selector --> |Agent Selection| agents
-       agents --> |Knowledge Query| knowledge
-       agents --> |Data Operations| database
-       agents --> |Integration Calls| external
-       agents --> |Task Results| mcp
-       agents --> |Performance Metrics| monitoring
-       monitoring --> |Status Reports| mcp
-       
-       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-       class mcp,planner,selector,agents,knowledge,database,external,monitoring component
+      flowchart LR
+          mcp["MCP"]
+          planner["Task Planner"]
+          selector["Agent Selector"]
+          agents["Agent Pool"]
+          knowledge["Domain Knowledge"]
+          database["Product Database"]
+          external["External Systems"]
+          monitoring["Monitoring Service"]
+          
+          mcp --> |Task Request| planner
+          planner --> |Task Plan| selector
+          selector --> |Agent Selection| agents
+          agents --> |Knowledge Query| knowledge
+          agents --> |Data Operations| database
+          agents --> |Integration Calls| external
+          agents --> |Task Results| mcp
+          agents --> |Performance Metrics| monitoring
+          monitoring --> |Status Reports| mcp
+          
+          classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+          class mcp,planner,selector,agents,knowledge,database,external,monitoring component
 ```
 
 ### 6.2 Product Integration
