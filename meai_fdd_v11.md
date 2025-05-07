@@ -1,4 +1,4 @@
-# ME.AI Neural Core Mesh Architecture
+# ME.AI Mesh Architecture
 
 ## Functional Architecture Design Document
 
