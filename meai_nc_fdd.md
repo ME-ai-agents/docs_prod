@@ -2261,7 +2261,7 @@ graph LR
 The Workflow State Database maintains the state of active and historical workflows.
 
 ```mermaid
-   workflowDiagram
+    erDiagram
        WorkflowDefinition ||--o{ WorkflowInstance : instantiates
        WorkflowInstance ||--o{ WorkflowTaskExecution : contains
        WorkflowInstance ||--o{ WorkflowStateTransition : records
@@ -2269,71 +2269,71 @@ The Workflow State Database maintains the state of active and historical workflo
        WorkflowInstance ||--o{ WorkflowEvent : generates
        
        WorkflowDefinition {
-           string DefinitionID PK "UUID - Primary Key"
-           string Name "Indexed"
-           string Version "Semantic version"
-           json Definition "JSONB"
-           date CreatedDate "Timestamp with timezone"
-           string CreatedBy "User reference"
-           boolean IsActive "Indexed"
-           array Tags "String array"
-           string Description "Text"
+           string DefinitionID PK
+           string Name
+           string Version
+           json Definition
+           date CreatedDate
+           string CreatedBy
+           boolean IsActive
+           array Tags
+           string Description
        }
        
        WorkflowInstance {
-           string InstanceID PK "UUID - Primary Key"
-           string DefinitionID FK "Indexed"
-           string Status "Enum, Indexed"
-           date StartTime "Timestamp with timezone"
-           date EndTime "Timestamp with timezone, Nullable"
-           string InitiatedBy "User reference"
-           string Priority "Enum, Indexed"
-           json Context "JSONB"
-           string ConversationID "Conversation reference, Indexed"
+           string InstanceID PK
+           string DefinitionID FK
+           string Status
+           date StartTime
+           date EndTime
+           string InitiatedBy
+           string Priority
+           json Context
+           string ConversationID
        }
        
        WorkflowTaskExecution {
-           string ExecutionID PK "UUID - Primary Key"
-           string InstanceID FK "Indexed"
-           string TaskName "Task reference"
-           string TaskType "Enum"
-           string Status "Enum, Indexed"
-           date StartTime "Timestamp with timezone"
-           date EndTime "Timestamp with timezone, Nullable"
-           string AssignedAgent "Agent reference"
-           json Parameters "JSONB"
-           json Result "JSONB, Nullable"
-           string ErrorDetails "Text, Nullable"
+           string ExecutionID PK
+           string InstanceID FK
+           string TaskName
+           string TaskType
+           string Status
+           date StartTime
+           date EndTime
+           string AssignedAgent
+           json Parameters
+           json Result
+           string ErrorDetails
        }
        
        WorkflowStateTransition {
-           string TransitionID PK "UUID - Primary Key"
-           string InstanceID FK "Indexed"
-           string FromState "State reference"
-           string ToState "State reference"
-           date TransitionTime "Timestamp with timezone, Indexed"
-           string Trigger "Trigger reference"
-           json ContextSnapshot "JSONB"
+           string TransitionID PK
+           string InstanceID FK
+           string FromState
+           string ToState
+           date TransitionTime
+           string Trigger
+           json ContextSnapshot
        }
        
        WorkflowVariable {
-           string VariableID PK "UUID - Primary Key"
-           string InstanceID FK "Indexed"
-           string Name "Variable name, Indexed"
-           string DataType "Data type enum"
-           json Value "JSONB"
-           date LastUpdated "Timestamp with timezone"
-           string Scope "Variable scope"
+           string VariableID PK
+           string InstanceID FK
+           string Name
+           string DataType
+           json Value
+           date LastUpdated
+           string Scope
        }
        
        WorkflowEvent {
-           string EventID PK "UUID - Primary Key"
-           string InstanceID FK "Indexed"
-           string EventType "Event type enum, Indexed"
-           date Timestamp "Timestamp with timezone, Indexed"
-           json Payload "JSONB"
-           boolean Processed "Indexed"
-           string SourceComponent "Component reference"
+           string EventID PK
+           string InstanceID FK
+           string EventType
+           date Timestamp
+           json Payload
+           boolean Processed
+           string SourceComponent
        }
 ```
 
