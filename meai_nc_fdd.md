@@ -2606,52 +2606,52 @@ flowchart TD
 #### Conversation Processing Use Case Diagram
 
 ```mermaid
-   graph LR
-       %% Define actors
-       user((User))
-       system((System))
-       
-       %% Define use cases
-       UC1[Process User Input]
-       UC2[Extract Information]
-       UC3[Execute Agent Actions]
-       UC4[Manage Memory]
-       UC5[Generate Response]
-       UC6[Trigger Workflows]
-       
-       %% Actor relationships with use cases
-       user --> UC1
-       system --> UC2
-       system --> UC3
-       system --> UC4
-       system --> UC5
-       system --> UC6
-       
-       %% Dependencies between use cases
-       UC1 --> UC2
-       UC2 --> UC3
-       UC2 --> UC6
-       UC3 --> UC4
-       UC4 --> UC5
-       UC5 --> user
-       
-       %% Add container to represent the Conversation Processing
-       subgraph ConversationProcessing[Conversation Processing]
-           UC1
-           UC2
-           UC3
-           UC4
-           UC5
-           UC6
-       end
-       
-       %% Styling
-       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-       
-       class user,system actor
-       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-       style ConversationProcessing fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+      graph LR
+          %% Define actors
+          user((User))
+          system((System))
+          
+          %% Define use cases
+          UC1[Process User Input]
+          UC2[Extract Information]
+          UC3[Execute Agent Actions]
+          UC4[Manage Memory]
+          UC5[Generate Response]
+          UC6[Trigger Workflows]
+          
+          %% Actor relationships with use cases
+          user --> UC1
+          system --> UC2
+          system --> UC3
+          system --> UC4
+          system --> UC5
+          system --> UC6
+          
+          %% Dependencies between use cases
+          UC1 --> UC2
+          UC2 --> UC3
+          UC2 --> UC6
+          UC3 --> UC4
+          UC4 --> UC5
+          UC5 --> user
+          
+          %% Add container to represent the Conversation Processing
+          subgraph ConversationProcessing[Conversation Processing]
+              UC1
+              UC2
+              UC3
+              UC4
+              UC5
+              UC6
+          end
+          
+          %% Styling
+          classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+          classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+          
+          class user,system actor
+          class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+          style ConversationProcessing fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Conversation Processing Data Flow Diagram
