@@ -2178,52 +2178,52 @@ The Workflow Template Repository provides reusable workflow templates for common
 #### Workflow Template Repository Use Case Diagram
 
 ```mermaid
-graph LR
-    %% Define actors
-    designer((Workflow Designer))
-    developer((Product Developer))
-    admin((Administrator))
-    
-    %% Define use cases
-    UC1[Create Workflow Template]
-    UC2[Version Workflow Template]
-    UC3[Test Workflow Template]
-    UC4[Search for Templates]
-    UC5[Customize Template]
-    UC6[Deploy Template]
-    
-    %% Actor relationships with use cases
-    designer --> UC1
-    designer --> UC2
-    designer --> UC3
-    developer --> UC4
-    developer --> UC5
-    admin --> UC6
-    
-    %% Dependencies between use cases
-    UC1 --> UC2
-    UC2 --> UC3
-    UC3 --> UC6
-    UC4 --> UC5
-    UC5 --> UC6
-    
-    %% Add container to represent the Workflow Template Repository
-    subgraph WorkflowTemplateRepository[Workflow Template Repository]
-        UC1
-        UC2
-        UC3
-        UC4
-        UC5
-        UC6
-    end
-    
-    %% Styling
-    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-    
-    class designer,developer,admin actor
-    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-    style WorkflowTemplateRepository fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+   graph LR
+       %% Define actors
+       designer((Workflow Designer))
+       developer((Product Developer))
+       admin((Administrator))
+       
+       %% Define use cases
+       UC1[Create Workflow Template]
+       UC2[Version Workflow Template]
+       UC3[Test Workflow Template]
+       UC4[Search for Templates]
+       UC5[Customize Template]
+       UC6[Deploy Template]
+       
+       %% Actor relationships with use cases
+       designer --> UC1
+       designer --> UC2
+       designer --> UC3
+       developer --> UC4
+       developer --> UC5
+       admin --> UC6
+       
+       %% Dependencies between use cases
+       UC1 --> UC2
+       UC2 --> UC3
+       UC3 --> UC6
+       UC4 --> UC5
+       UC5 --> UC6
+       
+       %% Add container to represent the Workflow Template Repository
+       subgraph WorkflowTemplateRepository[Workflow Template Repository]
+           UC1
+           UC2
+           UC3
+           UC4
+           UC5
+           UC6
+       end
+       
+       %% Styling
+       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+       
+       class designer,developer,admin actor
+       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+       style WorkflowTemplateRepository fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Workflow Template Repository Data Flow Diagram
@@ -2261,80 +2261,80 @@ graph LR
 The Workflow State Database maintains the state of active and historical workflows.
 
 ```mermaid
-    erDiagram
-       WorkflowDefinition ||--o{ WorkflowInstance : instantiates
-       WorkflowInstance ||--o{ WorkflowTaskExecution : contains
-       WorkflowInstance ||--o{ WorkflowStateTransition : records
-       WorkflowInstance ||--o{ WorkflowVariable : uses
-       WorkflowInstance ||--o{ WorkflowEvent : generates
-       
-       WorkflowDefinition {
-           string DefinitionID PK
-           string Name
-           string Version
-           json Definition
-           date CreatedDate
-           string CreatedBy
-           boolean IsActive
-           array Tags
-           string Description
-       }
-       
-       WorkflowInstance {
-           string InstanceID PK
-           string DefinitionID FK
-           string Status
-           date StartTime
-           date EndTime
-           string InitiatedBy
-           string Priority
-           json Context
-           string ConversationID
-       }
-       
-       WorkflowTaskExecution {
-           string ExecutionID PK
-           string InstanceID FK
-           string TaskName
-           string TaskType
-           string Status
-           date StartTime
-           date EndTime
-           string AssignedAgent
-           json Parameters
-           json Result
-           string ErrorDetails
-       }
-       
-       WorkflowStateTransition {
-           string TransitionID PK
-           string InstanceID FK
-           string FromState
-           string ToState
-           date TransitionTime
-           string Trigger
-           json ContextSnapshot
-       }
-       
-       WorkflowVariable {
-           string VariableID PK
-           string InstanceID FK
-           string Name
-           string DataType
-           json Value
-           date LastUpdated
-           string Scope
-       }
-       
-       WorkflowEvent {
-           string EventID PK
-           string InstanceID FK
-           string EventType
-           date Timestamp
-           json Payload
-           boolean Processed
-           string SourceComponent
-       }
+ erDiagram
+    WorkflowDefinition ||--o{ WorkflowInstance : instantiates
+    WorkflowInstance ||--o{ WorkflowTaskExecution : contains
+    WorkflowInstance ||--o{ WorkflowStateTransition : records
+    WorkflowInstance ||--o{ WorkflowVariable : uses
+    WorkflowInstance ||--o{ WorkflowEvent : generates
+    
+    WorkflowDefinition {
+        string DefinitionID PK
+        string Name
+        string Version
+        json Definition
+        date CreatedDate
+        string CreatedBy
+        boolean IsActive
+        array Tags
+        string Description
+    }
+    
+    WorkflowInstance {
+        string InstanceID PK
+        string DefinitionID FK
+        string Status
+        date StartTime
+        date EndTime
+        string InitiatedBy
+        string Priority
+        json Context
+        string ConversationID
+    }
+    
+    WorkflowTaskExecution {
+        string ExecutionID PK
+        string InstanceID FK
+        string TaskName
+        string TaskType
+        string Status
+        date StartTime
+        date EndTime
+        string AssignedAgent
+        json Parameters
+        json Result
+        string ErrorDetails
+    }
+    
+    WorkflowStateTransition {
+        string TransitionID PK
+        string InstanceID FK
+        string FromState
+        string ToState
+        date TransitionTime
+        string Trigger
+        json ContextSnapshot
+    }
+    
+    WorkflowVariable {
+        string VariableID PK
+        string InstanceID FK
+        string Name
+        string DataType
+        json Value
+        date LastUpdated
+        string Scope
+    }
+    
+    WorkflowEvent {
+        string EventID PK
+        string InstanceID FK
+        string EventType
+        date Timestamp
+        json Payload
+        boolean Processed
+        string SourceComponent
+    }
 ```
 
 #### Key Functional Characteristics:
@@ -2393,94 +2393,94 @@ The Workflow State Database maintains the state of active and historical workflo
 #### Workflow State Database Use Case Diagram
 
 ```mermaid
-graph LR
-    %% Define actors
-    engine((Workflow Engine))
-    monitoring((Monitoring System))
-    admin((Administrator))
-    
-    %% Define use cases
-    UC1[Store Workflow Definition]
-    UC2[Track Workflow Instance]
-    UC3[Record Task Execution]
-    UC4[Manage State Transitions]
-    UC5[Store Workflow Variables]
-    UC6[Analyze Workflow Patterns]
-    
-    %% Actor relationships with use cases
-    engine --> UC1
-    engine --> UC2
-    engine --> UC3
-    engine --> UC4
-    engine --> UC5
-    monitoring --> UC2
-    monitoring --> UC3
-    admin --> UC6
-    
-    %% Dependencies between use cases
-    UC1 --> UC2
-    UC2 --> UC3
-    UC2 --> UC4
-    UC2 --> UC5
-    UC4 --> UC6
-    UC3 --> UC6
-    
-    %% Add container to represent the Workflow State Database
-    subgraph WorkflowStateDatabase[Workflow State Database]
-        UC1
-        UC2
-        UC3
-        UC4
-        UC5
-        UC6
-    end
-    
-    %% Styling
-    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-    
-    class engine,monitoring,admin actor
-    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-    style WorkflowStateDatabase fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+   graph LR
+       %% Define actors
+       engine((Workflow Engine))
+       monitoring((Monitoring System))
+       admin((Administrator))
+       
+       %% Define use cases
+       UC1[Store Workflow Definition]
+       UC2[Track Workflow Instance]
+       UC3[Record Task Execution]
+       UC4[Manage State Transitions]
+       UC5[Store Workflow Variables]
+       UC6[Analyze Workflow Patterns]
+       
+       %% Actor relationships with use cases
+       engine --> UC1
+       engine --> UC2
+       engine --> UC3
+       engine --> UC4
+       engine --> UC5
+       monitoring --> UC2
+       monitoring --> UC3
+       admin --> UC6
+       
+       %% Dependencies between use cases
+       UC1 --> UC2
+       UC2 --> UC3
+       UC2 --> UC4
+       UC2 --> UC5
+       UC4 --> UC6
+       UC3 --> UC6
+       
+       %% Add container to represent the Workflow State Database
+       subgraph WorkflowStateDatabase[Workflow State Database]
+           UC1
+           UC2
+           UC3
+           UC4
+           UC5
+           UC6
+       end
+       
+       %% Styling
+       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+       
+       class engine,monitoring,admin actor
+       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+       style WorkflowStateDatabase fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Workflow State Database Data Flow Diagram
 
 ```mermaid
-flowchart TD
-    engine["Workflow Engine"]
-    definition["Definition Store"]
-    instance["Instance Store"]
-    task["Task Store"]
-    state["State Store"]
-    variable["Variable Store"]
-    event["Event Store"]
-    monitoring["Monitoring System"]
-    analytics["Analytics System"]
-    
-    engine --> |Store Definition| definition
-    engine --> |Create/Update Instance| instance
-    engine --> |Record Task Execution| task
-    engine --> |Record State Transition| state
-    engine --> |Store/Update Variables| variable
-    engine --> |Record Events| event
-    
-    definition --> |Definition Reference| instance
-    instance --> |Instance Reference| task
-    instance --> |Instance Reference| state
-    instance --> |Instance Reference| variable
-    instance --> |Instance Reference| event
-    
-    monitoring --> |Query Status| instance
-    monitoring --> |Query Execution| task
-    monitoring --> |Query Transitions| state
-    
-    analytics --> |Historical Data| instance
-    analytics --> |Performance Data| task
-    analytics --> |Transition Patterns| state
-    
-    classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
-    class engine,definition,instance,task,state,variable,event,monitoring,analytics component
+   flowchart TD
+       engine["Workflow Engine"]
+       definition["Definition Store"]
+       instance["Instance Store"]
+       task["Task Store"]
+       state["State Store"]
+       variable["Variable Store"]
+       event["Event Store"]
+       monitoring["Monitoring System"]
+       analytics["Analytics System"]
+       
+       engine --> |Store Definition| definition
+       engine --> |Create/Update Instance| instance
+       engine --> |Record Task Execution| task
+       engine --> |Record State Transition| state
+       engine --> |Store/Update Variables| variable
+       engine --> |Record Events| event
+       
+       definition --> |Definition Reference| instance
+       instance --> |Instance Reference| task
+       instance --> |Instance Reference| state
+       instance --> |Instance Reference| variable
+       instance --> |Instance Reference| event
+       
+       monitoring --> |Query Status| instance
+       monitoring --> |Query Execution| task
+       monitoring --> |Query Transitions| state
+       
+       analytics --> |Historical Data| instance
+       analytics --> |Performance Data| task
+       analytics --> |Transition Patterns| state
+       
+       classDef component fill:#f5f5f5,stroke:#333,stroke-width:1px,rx:5px,ry:5px
+       class engine,definition,instance,task,state,variable,event,monitoring,analytics component
 ```
 
 ## 8. Key Functional Flows
@@ -2490,97 +2490,97 @@ flowchart TD
 The complete flow from user input to response generation.
 
 ```mermaid
-flowchart TD
-    CI[Conversation Input - User Interface] --> AAA[Authentication & Authorization - OAuth/OIDC]
-    AAA --> PPF
-    
-    subgraph PPF["PRE-PROCESSING FLOW"]
-        STT[Speech-to-Text - Whisper/Google STT]
-        LD[Language Detection - FastText/CLD3]
-        ICP[Initial Context Preparation - Context Builder]
-        STT --> LD --> ICP
-    end
-    
-    PPF --> PF
-    
-    subgraph PF["PARALLEL PROCESSING FLOW"]
-        subgraph UEB["USER EXPERIENCE BRANCH"]
-            IE[Information Extraction - NER/Entity Recognition]
-            SE[Semantic Enrichment - Knowledge Graph]
-            UNS[UX Negotiation Service - User Preferences]
-            IE --> SE --> UNS
-        end
-        
-        subgraph AEB["AGENT EXECUTION BRANCH"]
-            TP[Task Planning - Planning Algorithm]
-            AE[Action Execution - Agent Framework]
-            ST[Status Tracking - Status Monitor]
-            TP --> AE --> ST
-        end
-    end
-    
-    PF --> MMF
-    
-    subgraph MMF["MEMORY MANAGEMENT FLOW"]
-        MR[Memory Router - Memory Dispatcher]
-        WM[Working Memory - Redis/In-Memory]
-        TD[Transactional Database - PostgreSQL]
-        EM[Episodic Memory - MongoDB/Document Store]
-        SM[Semantic Memory - Vector Database]
-        PD[Proprietary Database - Tenant DB]
-        MR --> WM & TD
-        TD --> EM & SM & PD
-    end
-    
-    MMF --> RGF
-    
-    subgraph RGF["RESPONSE GENERATION FLOW"]
-        CA[Context Assembly - Context Builder]
-        RG[Response Generation - LLM/NLG]
-        CSF[Channel-specific Formatting - Response Formatters]
-        CA --> RG --> CSF
-    end
-    
-    RGF --> CC
-    
-    subgraph CC["CONVERSATION CONTINUITY"]
-        CSP[Conversation State Persistence - State Store]
-        CM[Context Maintenance - Context Manager]
-        AI[Analytics & Improvement - Analytics Pipeline]
-        FB[Feedback - Feedback System]
-        CSP --> CM --> AI --> FB
-    end
-    
-    CC --> DWF
-    
-    subgraph DWF["DYNAMIC WORKFLOW FLOW"]
-        ITA[Intent Analysis - Intent Classifier]
-        WTS[Workflow Template Selection - Template Matcher]
-        WI[Workflow Instantiation - Instance Creator]
-        WE[Workflow Execution - Workflow Engine]
-        ITA --> WTS --> WI --> WE
-    end
-    
-    DWF --> UO[User Output - Response Delivery]
-    
-    RGF --> EH[Error Handling - Error Management]
-    EH --> FR[Fallback Responses - Degraded Service]
-    
-    classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-    classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-    classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
-    classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
-    classDef red fill:#e74c3c,stroke:#000,stroke-width:1px,color:#fff
-    classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-    
-    class PPF blue
-    class UEB green
-    class AEB orange
-    class MMF purple
-    class RGF orange
-    class CC green
-    class DWF red
-    class STT,LD,IE,SE,WM,SM,RG,ITA tech
+   flowchart TD
+       CI[Conversation Input - User Interface] --> AAA[Authentication & Authorization - OAuth/OIDC]
+       AAA --> PPF
+       
+       subgraph PPF["PRE-PROCESSING FLOW"]
+           STT[Speech-to-Text - Whisper/Google STT]
+           LD[Language Detection - FastText/CLD3]
+           ICP[Initial Context Preparation - Context Builder]
+           STT --> LD --> ICP
+       end
+       
+       PPF --> PF
+       
+       subgraph PF["PARALLEL PROCESSING FLOW"]
+           subgraph UEB["USER EXPERIENCE BRANCH"]
+               IE[Information Extraction - NER/Entity Recognition]
+               SE[Semantic Enrichment - Knowledge Graph]
+               UNS[UX Negotiation Service - User Preferences]
+               IE --> SE --> UNS
+           end
+           
+           subgraph AEB["AGENT EXECUTION BRANCH"]
+               TP[Task Planning - Planning Algorithm]
+               AE[Action Execution - Agent Framework]
+               ST[Status Tracking - Status Monitor]
+               TP --> AE --> ST
+           end
+       end
+       
+       PF --> MMF
+       
+       subgraph MMF["MEMORY MANAGEMENT FLOW"]
+           MR[Memory Router - Memory Dispatcher]
+           WM[Working Memory - Redis/In-Memory]
+           TD[Transactional Database - PostgreSQL]
+           EM[Episodic Memory - MongoDB/Document Store]
+           SM[Semantic Memory - Vector Database]
+           PD[Proprietary Database - Tenant DB]
+           MR --> WM & TD
+           TD --> EM & SM & PD
+       end
+       
+       MMF --> RGF
+       
+       subgraph RGF["RESPONSE GENERATION FLOW"]
+           CA[Context Assembly - Context Builder]
+           RG[Response Generation - LLM/NLG]
+           CSF[Channel-specific Formatting - Response Formatters]
+           CA --> RG --> CSF
+       end
+       
+       RGF --> CC
+       
+       subgraph CC["CONVERSATION CONTINUITY"]
+           CSP[Conversation State Persistence - State Store]
+           CM[Context Maintenance - Context Manager]
+           AI[Analytics & Improvement - Analytics Pipeline]
+           FB[Feedback - Feedback System]
+           CSP --> CM --> AI --> FB
+       end
+       
+       CC --> DWF
+       
+       subgraph DWF["DYNAMIC WORKFLOW FLOW"]
+           ITA[Intent Analysis - Intent Classifier]
+           WTS[Workflow Template Selection - Template Matcher]
+           WI[Workflow Instantiation - Instance Creator]
+           WE[Workflow Execution - Workflow Engine]
+           ITA --> WTS --> WI --> WE
+       end
+       
+       DWF --> UO[User Output - Response Delivery]
+       
+       RGF --> EH[Error Handling - Error Management]
+       EH --> FR[Fallback Responses - Degraded Service]
+       
+       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+       classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
+       classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
+       classDef red fill:#e74c3c,stroke:#000,stroke-width:1px,color:#fff
+       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+       
+       class PPF blue
+       class UEB green
+       class AEB orange
+       class MMF purple
+       class RGF orange
+       class CC green
+       class DWF red
+       class STT,LD,IE,SE,WM,SM,RG,ITA tech
 ```
 
 #### Conversation Processing Technical Stack
