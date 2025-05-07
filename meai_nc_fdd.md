@@ -505,32 +505,38 @@ flowchart TD
 
 #### Adaptive Communication Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "User" as user
-actor "System" as system
-
-rectangle "Adaptive Communication System" {
-  usecase "Select Communication Style" as UC1
-  usecase "Adjust Technical Level" as UC2
-  usecase "Apply Cultural Context" as UC3
-  usecase "Generate Personalized Response" as UC4
-  usecase "Learn from Feedback" as UC5
-  usecase "Update User Profile" as UC6
-}
-
-user --> UC4
-system --> UC1
-system --> UC2
-system --> UC3
-UC1 --> UC4
-UC2 --> UC4
-UC3 --> UC4
-user --> UC5
-UC5 --> UC6
-UC6 --> UC1
-@enduml
+```mermaid
+sequenceDiagram
+    participant User
+    participant System
+    participant CS as Communication Style Service
+    participant TL as Technical Level Service
+    participant CC as Cultural Context Service
+    participant PR as Personalized Response Generator
+    participant FB as Feedback Analysis Service
+    participant UP as User Profile Service
+    
+    Note over System: Initiation Phase
+    System->>CS: Select Communication Style (UC1)
+    System->>TL: Adjust Technical Level (UC2)
+    System->>CC: Apply Cultural Context (UC3)
+    
+    Note over PR: Response Generation Phase
+    CS->>PR: Provide Style Parameters
+    TL->>PR: Provide Technical Level Parameters
+    CC->>PR: Provide Cultural Context Parameters
+    
+    User->>PR: Request Response
+    PR->>User: Generate Personalized Response (UC4)
+    
+    Note over User, FB: Feedback Loop
+    User->>FB: Provide Feedback (UC5)
+    FB->>UP: Process Feedback
+    UP->>UP: Update User Profile (UC6)
+    UP->>CS: Update Communication Style Preferences
+    
+    Note over System, User: Next Interaction Cycle
+    CS-->>System: Updated Style Selection
 ```
 
 #### Adaptive Communication Data Flow Diagram
