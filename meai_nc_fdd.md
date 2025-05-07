@@ -201,24 +201,59 @@ sequenceDiagram
 
 #### System Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "Client Interfaces" as client
-RECTANGLE "Neural Core" as core
-RECTANGLE "MCP" as mcp
-RECTANGLE "Agentic Products" as products
-RECTANGLE "External Systems" as external
-
-client --> core : User Inputs
-core --> client : Responses
-core --> mcp : Agent Requests
-mcp --> core : Agent Responses
-mcp --> products : Task Execution
-products --> mcp : Results
-products --> external : Integration Calls
-external --> products : Data & Operations
-@enduml
+```mermaid
+sequenceDiagram
+    participant User
+    participant Client as Client Interface
+    participant NC as Neural Core
+    participant MCP as Master Control Protocol
+    participant AP as Agentic Products
+    participant ES as External Systems
+    
+    User->>Client: User Input
+    Client->>NC: Forward Input
+    
+    Note over NC: Pre-processing Flow
+    NC->>NC: Authenticate user
+    NC->>NC: Process input (STT, language detection)
+    NC->>NC: Prepare initial context
+    
+    Note over NC: Parallel Processing
+    par Information Processing
+        NC->>NC: Extract information
+        NC->>NC: Enrich semantically
+        NC->>NC: Apply user preferences
+    and Task Execution
+        NC->>MCP: Send agent requests
+        MCP->>AP: Route tasks to agents
+        AP->>AP: Execute domain-specific tasks
+        opt External Integration
+            AP->>ES: Integration calls
+            ES->>AP: Return data & operations
+        end
+        AP->>MCP: Return results
+        MCP->>NC: Forward agent responses
+    end
+    
+    Note over NC: Memory Management
+    NC->>NC: Route memory operations
+    NC->>NC: Update working memory
+    NC->>NC: Store in appropriate memory types
+    
+    Note over NC: Response Generation
+    NC->>NC: Assemble context
+    NC->>NC: Generate response
+    NC->>NC: Format for channel
+    
+    Note over NC: Workflow Processing
+    NC->>NC: Analyze intent
+    NC->>MCP: Trigger workflow (if applicable)
+    MCP->>AP: Instantiate & execute workflow
+    AP->>MCP: Return workflow status
+    MCP->>NC: Update workflow status
+    
+    NC->>Client: Return response
+    Client->>User: Display/play response
 ```
 
 ### 3.2 Key Components
