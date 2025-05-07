@@ -541,27 +541,39 @@ sequenceDiagram
 
 #### Adaptive Communication Data Flow Diagram
 
-```
-@startuml
-!define RECTANGLE class
-RECTANGLE "User Input" as input
-RECTANGLE "Context Analysis" as context
-RECTANGLE "User Profile" as profile
-RECTANGLE "Style Selection" as style
-RECTANGLE "Content Generation" as generation
-RECTANGLE "Response Delivery" as delivery
-RECTANGLE "Feedback Analysis" as feedback
-RECTANGLE "Profile Updates" as updates
-
-input --> context : Text/Speech
-profile --> style : Preferences
-context --> style : Context Factors
-style --> generation : Style Parameters
-generation --> delivery : Response Content
-delivery --> feedback : User Reaction
-feedback --> updates : Learning Signal
-updates --> profile : Profile Modifications
-@enduml
+```mermaid
+sequenceDiagram
+    participant UI as User Interface
+    participant CA as Context Analysis
+    participant UP as User Profile
+    participant SS as Style Selection
+    participant CG as Content Generation
+    participant RD as Response Delivery
+    participant FA as Feedback Analysis
+    participant PU as Profile Updates
+    
+    Note over UI: Interaction begins
+    UI->>CA: Send user input (Text/Speech)
+    
+    par Context and Profile Retrieval
+        CA->>SS: Provide context factors
+        UP->>SS: Provide user preferences
+    end
+    
+    Note over SS: Communication Adaptation
+    SS->>CG: Forward style parameters
+    
+    Note over CG: Response Creation
+    CG->>RD: Deliver response content
+    
+    Note over RD: User Interaction
+    RD->>FA: Capture user reaction
+    
+    Note over FA: Learning Cycle
+    FA->>PU: Send learning signals
+    PU->>UP: Apply profile modifications
+    
+    Note over UP: Updated for next interaction
 ```
 
 ### 4.3 Multilingual Support
