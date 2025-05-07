@@ -2261,80 +2261,80 @@ The Workflow Template Repository provides reusable workflow templates for common
 The Workflow State Database maintains the state of active and historical workflows.
 
 ```mermaid
- erDiagram
-    WorkflowDefinition ||--o{ WorkflowInstance : instantiates
-    WorkflowInstance ||--o{ WorkflowTaskExecution : contains
-    WorkflowInstance ||--o{ WorkflowStateTransition : records
-    WorkflowInstance ||--o{ WorkflowVariable : uses
-    WorkflowInstance ||--o{ WorkflowEvent : generates
-    
-    WorkflowDefinition {
-        string DefinitionID PK
-        string Name
-        string Version
-        json Definition
-        date CreatedDate
-        string CreatedBy
-        boolean IsActive
-        array Tags
-        string Description
-    }
-    
-    WorkflowInstance {
-        string InstanceID PK
-        string DefinitionID FK
-        string Status
-        date StartTime
-        date EndTime
-        string InitiatedBy
-        string Priority
-        json Context
-        string ConversationID
-    }
-    
-    WorkflowTaskExecution {
-        string ExecutionID PK
-        string InstanceID FK
-        string TaskName
-        string TaskType
-        string Status
-        date StartTime
-        date EndTime
-        string AssignedAgent
-        json Parameters
-        json Result
-        string ErrorDetails
-    }
-    
-    WorkflowStateTransition {
-        string TransitionID PK
-        string InstanceID FK
-        string FromState
-        string ToState
-        date TransitionTime
-        string Trigger
-        json ContextSnapshot
-    }
-    
-    WorkflowVariable {
-        string VariableID PK
-        string InstanceID FK
-        string Name
-        string DataType
-        json Value
-        date LastUpdated
-        string Scope
-    }
-    
-    WorkflowEvent {
-        string EventID PK
-        string InstanceID FK
-        string EventType
-        date Timestamp
-        json Payload
-        boolean Processed
-        string SourceComponent
-    }
+    erDiagram
+       WorkflowDefinition ||--o{ WorkflowInstance : instantiates
+       WorkflowInstance ||--o{ WorkflowTaskExecution : contains
+       WorkflowInstance ||--o{ WorkflowStateTransition : records
+       WorkflowInstance ||--o{ WorkflowVariable : uses
+       WorkflowInstance ||--o{ WorkflowEvent : generates
+       
+       WorkflowDefinition {
+           string DefinitionID PK
+           string Name
+           string Version
+           json Definition
+           date CreatedDate
+           string CreatedBy
+           boolean IsActive
+           array Tags
+           string Description
+       }
+       
+       WorkflowInstance {
+           string InstanceID PK
+           string DefinitionID FK
+           string Status
+           date StartTime
+           date EndTime
+           string InitiatedBy
+           string Priority
+           json Context
+           string ConversationID
+       }
+       
+       WorkflowTaskExecution {
+           string ExecutionID PK
+           string InstanceID FK
+           string TaskName
+           string TaskType
+           string Status
+           date StartTime
+           date EndTime
+           string AssignedAgent
+           json Parameters
+           json Result
+           string ErrorDetails
+       }
+       
+       WorkflowStateTransition {
+           string TransitionID PK
+           string InstanceID FK
+           string FromState
+           string ToState
+           date TransitionTime
+           string Trigger
+           json ContextSnapshot
+       }
+       
+       WorkflowVariable {
+           string VariableID PK
+           string InstanceID FK
+           string Name
+           string DataType
+           json Value
+           date LastUpdated
+           string Scope
+       }
+       
+       WorkflowEvent {
+           string EventID PK
+           string InstanceID FK
+           string EventType
+           date Timestamp
+           json Payload
+           boolean Processed
+           string SourceComponent
+       }
 ```
 
 #### Key Functional Characteristics:
