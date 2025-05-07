@@ -654,33 +654,43 @@ flowchart TD
 
 #### Multilingual Support Use Case Diagram
 
-```
-@startuml
-left to right direction
-actor "User" as user
-actor "System" as system
-
-rectangle "Multilingual Support System" {
-  usecase "Detect Input Language" as UC1
-  usecase "Select Response Language" as UC2
-  usecase "Apply Cultural Context" as UC3
-  usecase "Manage Translation" as UC4
-  usecase "Adapt to Proficiency" as UC5
-  usecase "Handle Code-Switching" as UC6
-}
-
-user --> UC1
-system --> UC2
-system --> UC3
-system --> UC4
-UC1 --> UC2
-UC2 --> UC3
-UC3 --> UC4
-UC1 --> UC5
-UC5 --> UC4
-UC1 --> UC6
-UC6 --> UC4
-@enduml
+```mermaid
+sequenceDiagram
+    participant User
+    participant System
+    participant LD as Language Detection Service
+    participant LRS as Language Response Selector
+    participant CCS as Cultural Context Service
+    participant PS as Proficiency Service
+    participant CS as Code-Switching Service
+    participant TS as Translation Service
+    
+    User->>LD: Provide input (UC1)
+    Note over LD: Detect Input Language
+    
+    par Language Detection Triggers Multiple Processes
+        LD->>LRS: Forward detected language
+        LD->>PS: Assess language proficiency (UC5)
+        LD->>CS: Detect code-switching patterns (UC6)
+    end
+    
+    System->>LRS: Set response language preferences (UC2)
+    
+    LRS->>CCS: Forward language selection
+    System->>CCS: Provide cultural parameters
+    
+    Note over CCS: Apply Cultural Context (UC3)
+    
+    par Translation Management
+        CCS->>TS: Forward culturally adapted content
+        PS->>TS: Forward proficiency adaptations
+        CS->>TS: Forward code-switching handling
+    end
+    
+    System->>TS: Control translation process (UC4)
+    
+    Note over TS: Manage Translation
+    TS->>User: Deliver multilingual response
 ```
 
 #### Multilingual Support Data Flow Diagram
