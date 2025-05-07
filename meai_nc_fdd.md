@@ -3807,6 +3807,8 @@ gantt
     Enhanced cross-product coordination :h3, after h2, 30d
     Advanced agent capabilities :h4, after h3, 30d
     User experience refinement :h5, after h4, 30d
+```
+
 
 #### Implementation Roadmap Technical Considerations
 
