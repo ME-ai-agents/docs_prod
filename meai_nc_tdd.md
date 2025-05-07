@@ -51,7 +51,6 @@ This document focuses on the technical implementation of the Dynamic Workflow En
 The Dynamic Workflow Engine operates within the broader ME.AI Neural Core Platform architecture, interacting with multiple components to enable orchestrated processes across the system.
 
 ```mermaid
-```mermaid
 flowchart TD
     User["👤 End User\n(Interacts with the system)"]
     
