@@ -2081,54 +2081,54 @@ graph LR
 The Workflow Template Repository provides reusable workflow templates for common business processes.
 
 ```mermaid
-   flowchart TD
-       subgraph WTR["WORKFLOW TEMPLATE REPOSITORY"]
-           WTC[Workflow Template Catalog - Template Registry]
-           WVM[Workflow Version Manager - Git/Version Control]
-           WTL[Workflow Template Library - Template Store]
-           DWB[Domain Workflow Builder - Workflow Composer]
-       end
-       
-       WTR --> TMF
-       
-       subgraph TMF["TEMPLATE METADATA FRAMEWORK"]
-           PD[Parameter Definitions - Schema Definitions]
-           ID[Integration Descriptors - Integration Specs]
-           CD[Compatibility Descriptors - Compatibility Matrix]
-           RM[Resource Manifests - Resource Requirements]
-       end
-       
-       TMF --> WTE
-       
-       subgraph WTE["WORKFLOW TESTING ENVIRONMENT"]
-           WVT[Workflow Validation Tests - Test Suites]
-           WST[Workflow Simulation Tool - Simulation Engine]
-           WDT[Workflow Debugging Tools - Debug Tooling]
-           WPT[Workflow Performance Tests - Performance Testing]
-       end
-       
-       WTE --> WCT
-       
-       subgraph WCT["WORKFLOW CUSTOMIZATION TOOLS"]
-           WCD[Workflow Cloning & Derivation - Template Forking]
-           WEW[Workflow Extension Wizard - Extension Framework]
-           WPS[Workflow Parameter Settings - Parameter Configuration]
-           WTI[Workflow Trigger Integration - Trigger Framework]
-       end
-       
-       WCT --> CIP[CI/CD Pipeline - Jenkins/GitHub Actions]
-       
-       classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
-       classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
-       classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
-       classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
-       classDef tech fill:#f9f,stroke:#333,stroke-width:1px
-       
-       class WTR blue
-       class TMF green
-       class WTE orange
-       class WCT purple
-       class WVM,WST,WCD,CIP tech
+      flowchart TD
+          subgraph WTR["WORKFLOW TEMPLATE REPOSITORY"]
+              WTC[Workflow Template Catalog - Template Registry]
+              WVM[Workflow Version Manager - Git/Version Control]
+              WTL[Workflow Template Library - Template Store]
+              DWB[Domain Workflow Builder - Workflow Composer]
+          end
+          
+          WTR --> TMF
+          
+          subgraph TMF["TEMPLATE METADATA FRAMEWORK"]
+              PD[Parameter Definitions - Schema Definitions]
+              ID[Integration Descriptors - Integration Specs]
+              CD[Compatibility Descriptors - Compatibility Matrix]
+              RM[Resource Manifests - Resource Requirements]
+          end
+          
+          TMF --> WTE
+          
+          subgraph WTE["WORKFLOW TESTING ENVIRONMENT"]
+              WVT[Workflow Validation Tests - Test Suites]
+              WST[Workflow Simulation Tool - Simulation Engine]
+              WDT[Workflow Debugging Tools - Debug Tooling]
+              WPT[Workflow Performance Tests - Performance Testing]
+          end
+          
+          WTE --> WCT
+          
+          subgraph WCT["WORKFLOW CUSTOMIZATION TOOLS"]
+              WCD[Workflow Cloning & Derivation - Template Forking]
+              WEW[Workflow Extension Wizard - Extension Framework]
+              WPS[Workflow Parameter Settings - Parameter Configuration]
+              WTI[Workflow Trigger Integration - Trigger Framework]
+          end
+          
+          WCT --> CIP[CI/CD Pipeline - Jenkins/GitHub Actions]
+          
+          classDef blue fill:#2374ab,stroke:#000,stroke-width:1px,color:#fff
+          classDef green fill:#41b883,stroke:#000,stroke-width:1px,color:#fff
+          classDef orange fill:#ff8c00,stroke:#000,stroke-width:1px,color:#fff
+          classDef purple fill:#8e44ad,stroke:#000,stroke-width:1px,color:#fff
+          classDef tech fill:#f9f,stroke:#333,stroke-width:1px
+          
+          class WTR blue
+          class TMF green
+          class WTE orange
+          class WCT purple
+          class WVM,WST,WCD,CIP tech
 ```
 
 #### Key Functional Characteristics:
