@@ -51,53 +51,36 @@ This document focuses on the technical implementation of the Dynamic Workflow En
 The Dynamic Workflow Engine operates within the broader ME.AI Neural Core Platform architecture, interacting with multiple components to enable orchestrated processes across the system.
 
 ```mermaid
-C4 Context
-    title System Context Diagram - Dynamic Workflow Engine
-    Person(user, "End User", "Interacts with the system")
+flowchart TD
+    User["👤 End User\n(Interacts with the system)"]
     
-    System_Boundary(meai, "ME.AI Neural Core Platform") {
-        System(neural_core, "Neural Core", "Conversation intelligence and processing")
-        System(mcp, "Master Control Protocol", "Orchestration and communication layer")
-        System(workflow_engine, "Dynamic Workflow Engine", "Workflow orchestration and automation")
-        System(agentic_products, "Agentic Products", "Domain-specific capabilities")
-        System(memory_management, "Memory Management", "Conversation memory across time spans")
-    }
+    subgraph MEAI["ME.AI Neural Core Platform"]
+        NC["Neural Core\n(Conversation intelligence and processing)"]
+        MCP["Master Control Protocol\n(Orchestration and communication layer)"]
+        DWE["Dynamic Workflow Engine\n(Workflow orchestration and automation)"]
+        AP["Agentic Products\n(Domain-specific capabilities)"]
+        MM["Memory Management\n(Conversation memory across time spans)"]
+    end
     
-    System_Ext(external_systems, "External Enterprise Systems", "CRM, ERP, Knowledge Bases, etc.")
+    EXT["External Enterprise Systems\n(CRM, ERP, Knowledge Bases, etc.)"]
     
-    Rel(user, neural_core, "Interacts with")
-    Rel(neural_core, workflow_engine, "Triggers workflows, Receives workflow status")
-    Rel(workflow_engine, mcp, "Coordinates via")
-    Rel(workflow_engine, memory_management, "Persists & retrieves context")
-    Rel(mcp, agentic_products, "Dispatches tasks")
-    Rel(workflow_engine, external_systems, "Integrates with")
+    User -->|"Interacts with"| NC
+    NC -->|"Triggers workflows,\nReceives workflow status"| DWE
+    DWE -->|"Coordinates via"| MCP
+    DWE -->|"Persists &\nretrieves context"| MM
+    MCP -->|"Dispatches tasks"| AP
+    DWE -->|"Integrates with"| EXT
     
-    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
-```
-
-```mermaid
-C4 Context
-    title System Context Diagram - Dynamic Workflow Engine
-    Person(user, "End User", "Interacts with the system")
+    %% Styling
+    classDef person fill:#08427B,stroke:#052E56,color:#fff
+    classDef external fill:#999999,stroke:#666666,color:#fff
+    classDef system fill:#1168BD,stroke:#0B4884,color:#fff
+    classDef boundary fill:#ffffff,stroke:#cccccc,stroke-width:1px,color:#000
     
-    System_Boundary(meai, "ME.AI Neural Core Platform") {
-        System(neural_core, "Neural Core", "Conversation intelligence and processing")
-        System(mcp, "Master Control Protocol", "Orchestration and communication layer")
-        System(workflow_engine, "Dynamic Workflow Engine", "Workflow orchestration and automation")
-        System(agentic_products, "Agentic Products", "Domain-specific capabilities")
-        System(memory_management, "Memory Management", "Conversation memory across time spans")
-    }
-    
-    System_Ext(external_systems, "External Enterprise Systems", "CRM, ERP, Knowledge Bases, etc.")
-    
-    Rel(user, neural_core, "Interacts with")
-    Rel(neural_core, workflow_engine, "Triggers workflows, Receives workflow status")
-    Rel(workflow_engine, mcp, "Coordinates via")
-    Rel(workflow_engine, memory_management, "Persists & retrieves context")
-    Rel(mcp, agentic_products, "Dispatches tasks")
-    Rel(workflow_engine, external_systems, "Integrates with")
-    
-    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
+    class User person
+    class EXT external
+    class NC,MCP,DWE,AP,MM system
+    class MEAI boundary
 ```
 ### 2.1 Key Interactions
 
