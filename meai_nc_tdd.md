@@ -75,7 +75,30 @@ C4 Context
     UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
 ```
 
-
+```mermaid
+C4 Context
+    title System Context Diagram - Dynamic Workflow Engine
+    Person(user, "End User", "Interacts with the system")
+    
+    System_Boundary(meai, "ME.AI Neural Core Platform") {
+        System(neural_core, "Neural Core", "Conversation intelligence and processing")
+        System(mcp, "Master Control Protocol", "Orchestration and communication layer")
+        System(workflow_engine, "Dynamic Workflow Engine", "Workflow orchestration and automation")
+        System(agentic_products, "Agentic Products", "Domain-specific capabilities")
+        System(memory_management, "Memory Management", "Conversation memory across time spans")
+    }
+    
+    System_Ext(external_systems, "External Enterprise Systems", "CRM, ERP, Knowledge Bases, etc.")
+    
+    Rel(user, neural_core, "Interacts with")
+    Rel(neural_core, workflow_engine, "Triggers workflows, Receives workflow status")
+    Rel(workflow_engine, mcp, "Coordinates via")
+    Rel(workflow_engine, memory_management, "Persists & retrieves context")
+    Rel(mcp, agentic_products, "Dispatches tasks")
+    Rel(workflow_engine, external_systems, "Integrates with")
+    
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
+```
 ### 2.1 Key Interactions
 
 The Dynamic Workflow Engine:
