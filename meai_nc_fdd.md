@@ -2261,7 +2261,7 @@ The Workflow Template Repository provides reusable workflow templates for common
 The Workflow State Database maintains the state of active and historical workflows.
 
 ```mermaid
-    erDiagram
+      erDiagram
        WorkflowDefinition ||--o{ WorkflowInstance : instantiates
        WorkflowInstance ||--o{ WorkflowTaskExecution : contains
        WorkflowInstance ||--o{ WorkflowStateTransition : records
