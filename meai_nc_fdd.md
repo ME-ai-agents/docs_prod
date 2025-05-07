@@ -1845,54 +1845,54 @@ flowchart TD
 #### Product Isolation Use Case Diagram
 
 ```mermaid
-graph LR
-    %% Actors
-    mcp((MCP))
-    system((System))
-    external((External System))
-    admin((Administrator))
-    
-    %% Use Cases
-    UC1[Receive Task]
-    UC2[Select Agent]
-    UC3[Execute Capability]
-    UC4[Access Domain Knowledge]
-    UC5[Integrate External System]
-    UC6[Monitor Performance]
-    
-    %% Relationships
-    mcp --> UC1
-    system --> UC2
-    system --> UC3
-    system --> UC4
-    external --> UC5
-    admin --> UC6
-    
-    %% Use Case Relationships
-    UC1 --> UC2
-    UC2 --> UC3
-    UC3 --> UC4
-    UC3 --> UC5
-    UC3 --> UC6
-    
-    %% Title and styling
-    classDef actor fill:#f9f,stroke:#333,stroke-width:2px
-    classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
-    
-    class mcp,system,external,admin actor
-    class UC1,UC2,UC3,UC4,UC5,UC6 usecase
-    
-    %% Add container to represent the Agentic Product
-    subgraph AgenticProduct[Agentic Product]
-        UC1
-        UC2
-        UC3
-        UC4
-        UC5
-        UC6
-    end
-    
-    style AgenticProduct fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
+   graph LR
+       %% Actors
+       mcp((MCP))
+       system((System))
+       external((External System))
+       admin((Administrator))
+       
+       %% Use Cases
+       UC1[Receive Task]
+       UC2[Select Agent]
+       UC3[Execute Capability]
+       UC4[Access Domain Knowledge]
+       UC5[Integrate External System]
+       UC6[Monitor Performance]
+       
+       %% Relationships
+       mcp --> UC1
+       system --> UC2
+       system --> UC3
+       system --> UC4
+       external --> UC5
+       admin --> UC6
+       
+       %% Use Case Relationships
+       UC1 --> UC2
+       UC2 --> UC3
+       UC3 --> UC4
+       UC3 --> UC5
+       UC3 --> UC6
+       
+       %% Title and styling
+       classDef actor fill:#f9f,stroke:#333,stroke-width:2px
+       classDef usecase fill:#bbf,stroke:#333,stroke-width:1px,rx:10px,ry:10px
+       
+       class mcp,system,external,admin actor
+       class UC1,UC2,UC3,UC4,UC5,UC6 usecase
+       
+       %% Add container to represent the Agentic Product
+       subgraph AgenticProduct[Agentic Product]
+           UC1
+           UC2
+           UC3
+           UC4
+           UC5
+           UC6
+       end
+       
+       style AgenticProduct fill:#f5f5f5,stroke:#666,stroke-width:2px,rx:5px,ry:5px
 ```
 
 #### Product Isolation Data Flow Diagram
