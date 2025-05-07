@@ -181,7 +181,7 @@ flowchart TD
 
 #### System Use Case Diagram
 
-```
+```plantuml
 @startuml
 left to right direction
 actor "End User" as user
