@@ -182,34 +182,21 @@ flowchart TD
 ## Neural Core Platform Use Case Diagram
 
 ```mermaid
-flowchart LR
-    user((End User))
-    system((Enterprise System))
-    admin((Administrator))
+sequenceDiagram
+    participant EU as End User
+    participant NCP as Neural Core Platform
+    participant ES as Enterprise System
+    participant A as Administrator
     
-    subgraph NCP["Neural Core Platform"]
-        UC1["Engage in Natural Conversation"]
-        UC2["Execute Dynamic Workflows"]
-        UC3["Access Enterprise Systems"]
-        UC4["Provide Multilingual Support"]
-        UC5["Deliver Empathetic Responses"]
-        UC6["Maintain User-Specific Semantics"]
-        UC7["Manage Memory Across Sessions"]
-        UC8["Configure System"]
-    end
-    
-    user --> UC1
-    user --> UC2
-    user --> UC4
-    user --> UC5
-    system --> UC3
-    admin --> UC8
-    UC1 --> UC6
-    UC1 --> UC7
-    UC2 --> UC3
-    
-    classDef actor fill:#f9f,stroke:#333,stroke-width:1px
-    class user,system,admin actor
+    EU->>NCP: Engage in Natural Conversation
+    NCP->>NCP: Maintain User-Specific Semantics
+    NCP->>NCP: Manage Memory Across Sessions
+    EU->>NCP: Execute Dynamic Workflows
+    NCP->>ES: Access Enterprise Systems
+    ES->>NCP: Return Enterprise Data
+    EU->>NCP: Request Multilingual Support
+    NCP->>EU: Deliver Empathetic Responses
+    A->>NCP: Configure System
 ```
 
 #### System Data Flow Diagram
