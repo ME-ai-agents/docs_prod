@@ -31,46 +31,6 @@ gantt
 
 The implementation roadmap delivers five major releases over a two-year period using a distributed development team:
 
-### Global Development Team Structure
-
-```mermaid
-flowchart TD
-    subgraph TEAM["GLOBAL DEVELOPMENT TEAM"]
-        subgraph EU["EUROPE TEAM"]
-            SA1[Senior Associate 1<br>Architecture & Design]
-            SA2[Senior Associate 2<br>Product Management]
-            SA3[Senior Associate 3<br>AI/ML Engineering]
-        end
-        
-        subgraph IN["INDIA TEAM"]
-            A1[Associate 1<br>Frontend Development]
-            A2[Associate 2<br>Backend Development]
-            A3[Associate 3<br>Integration]
-            A4[Associate 4<br>Testing & QA]
-            A5[Associate 5<br>DevOps]
-        end
-        
-        EU -->|"Architecture & Design Direction"| IN
-        IN -->|"Implementation & Feedback"| EU
-    end
-    
-    classDef europeTeam fill:#D6EAF8,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
-    classDef indiaTeam fill:#D5F5E3,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
-    
-    class EU,SA1,SA2,SA3 europeTeam
-    class IN,A1,A2,A3,A4,A5 indiaTeam
-```
-
-### Development Model Advantages
-
-The distributed development model provides several advantages:
-
-1. **Cost Optimization**: Leveraging lower development costs in India while maintaining strategic direction from Europe
-2. **24x7 Development Cycle**: Overlapping time zones enable continuous progress
-3. **Specialized Expertise**: Senior associates in Europe focus on architecture, design, and product strategy
-4. **Implementation Efficiency**: Associates in India focus on development, testing, and operations
-5. **Scalable Resources**: Ability to scale the India team for intensive development phases
-
 ### Year 1 (2025): Core Platform & IT Support
 
 Year 1 establishes the Neural Core Mesh foundation and delivers comprehensive IT support automation through three strategic releases:
