@@ -3299,7 +3299,7 @@ flowchart TD
      - Processing activity recording
      - Cross-border transfer monitoring
 
-## 7. Implementation Roadmap for Database Architecture (continued)
+## 7. Implementation Roadmap for Database Architecture
 
 ### 7.4 Database Implementation Critical Path
 
