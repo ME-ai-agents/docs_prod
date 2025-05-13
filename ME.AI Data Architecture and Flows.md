@@ -10,7 +10,55 @@ The ME.AI database architecture consists of multiple interconnected database sys
 
 ```mermaid
 flowchart TD
-    subgraph DL["DATABASE LAYER"]
+    subgraph CS["CACHING STRATEGY"]
+        subgraph AC["APPLICATION-LEVEL CACHING"]
+            LC[Local Cache]
+            SC[Session Cache]
+            PC[Process Cache]
+            TC[Thread Cache]
+        end
+        
+        subgraph DC["DISTRIBUTED CACHE LAYER"]
+            DM[Distributed Memory]
+            GC[Geo-distributed Cache]
+            NC[Near Cache]
+            RC[Remote Cache]
+        end
+        
+        subgraph DNC["DATABASE-NATIVE CACHING"]
+            BC[Buffer Cache]
+            QC[Query Cache]
+            RC2[Result Cache]
+            PC2[Procedure Cache]
+        end
+        
+        subgraph CM["CACHE MANAGEMENT"]
+            CI[Cache Invalidation]
+            CS2[Cache Synchronization]
+            CP[Cache Partitioning]
+            CM2[Cache Metrics]
+        end
+    end
+    
+    AC --> WF[Workflow Engine]
+    AC --> CP[Conversation Processing]
+    DC --> MS[Mesh Services]
+    DC --> AG[Agentic Products]
+    DNC --> DB[(Database Layer)]
+    CM --> ALL[All Caching Layers]
+    
+    classDef ac fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef dc fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef dnc fill:#F9E79F,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef cm fill:#FADBD8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef comp fill:#D2B4DE,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    
+    class AC,LC,SC,PC,TC ac
+    class DC,DM,GC,NC,RC dc
+    class DNC,BC,QC,RC2,PC2 dnc
+    class CM,CI,CS2,CP,CM2 cm
+    class WF,CP,MS,AG,DB,ALL comp
+subgraph DL["DATABASE LAYER"]
         DSDB[(Distributed State Database)]
         SCDB[(Security & Compliance Database)]
         USPDB[(User Semantic Profile Database)]
@@ -940,33 +988,30 @@ The IT Support MVP focuses on four primary use cases as defined in the implement
 3. Basic Software Installation
 4. Basic Device Authentication & Diagnostics
 
-### 2.1 UI Screens and Data Flow - Password Reset Automation
+### 2.1 Conversation-Based Data Flow - Password Reset Automation
 
-This use case enables self-service password reset for common systems with identity verification and success confirmation.
+This use case enables self-service password reset for common systems with identity verification and success confirmation through a conversational interface.
 
-#### 2.1.1 UI Screen Flow
+#### 2.1.1 Conversation Flow Overview
 
 ```mermaid
 flowchart TD
-    subgraph UI_FLOW["UI SCREENS - PASSWORD RESET"]
-        S1[Home Screen]
-        S2[Password Reset Request Screen]
-        S3[Identity Verification Screen]
-        S4[Verification Processing Screen]
-        S5[Password Selection Screen]
-        S6[Reset Confirmation Screen]
-        S7[Success Screen]
-        
-        S1 -->|"Select 'Reset Password'"| S2
-        S2 -->|"Submit Account Info"| S3
-        S3 -->|"Provide Verification"| S4
-        S4 -->|"Verification Successful"| S5
-        S5 -->|"Submit New Password"| S6
-        S6 -->|"Confirm Reset"| S7
-        S6 -->|"Cancel"| S2
+    subgraph CF["CONVERSATION FLOW - PASSWORD RESET"]
+        I1[User Initiates Conversation] --> I2[User Requests Password Reset]
+        I2 --> I3[System Requests Account Information]
+        I3 --> I4[User Provides Account Details]
+        I4 --> I5[System Verifies User Identity]
+        I5 --> I6[User Provides Verification]
+        I6 --> I7[System Processes Verification]
+        I7 --> I8[System Requests New Password]
+        I8 --> I9[User Submits New Password]
+        I9 --> I10[System Confirms Reset Request]
+        I10 --> I11[User Confirms Reset]
+        I11 --> I12[System Executes Reset]
+        I12 --> I13[System Confirms Success]
     end
     
-    subgraph DATA_FLOW["DATA ENTITIES TOUCHED"]
+    subgraph DF["DATA ENTITIES TOUCHED"]
         D1[(ConversationSession)]
         D2[(Message)]
         D3[(DevicePassport)]
@@ -975,31 +1020,39 @@ flowchart TD
         D6[(AccessGrant)]
         D7[(UserProfile)]
         
-        S2 -.->|"Creates"| D1
-        S2 -.->|"Stores"| D2
-        S2 -.->|"Verifies"| D3
-        S2 -.->|"Creates"| D4
+        I1 -.->|"Creates"| D1
+        I2 -.->|"Stores"| D2
+        I3 -.->|"Stores"| D2
+        I4 -.->|"Stores"| D2
+        I4 -.->|"Verifies"| D3
+        I4 -.->|"Creates"| D4
         
-        S3 -.->|"Stores"| D2
-        S3 -.->|"Creates"| D5
+        I5 -.->|"Stores"| D2
+        I6 -.->|"Stores"| D2
+        I6 -.->|"Creates"| D5
         
-        S4 -.->|"Updates"| D4
-        S4 -.->|"Updates"| D5
+        I7 -.->|"Updates"| D4
+        I7 -.->|"Updates"| D5
         
-        S5 -.->|"Stores"| D2
-        S5 -.->|"Creates"| D6
+        I8 -.->|"Stores"| D2
+        I9 -.->|"Stores"| D2
         
-        S6 -.->|"Updates"| D4
-        S6 -.->|"Updates"| D5
+        I10 -.->|"Stores"| D2
+        I11 -.->|"Stores"| D2
+        I11 -.->|"Creates"| D6
         
-        S7 -.->|"Updates"| D4
-        S7 -.->|"Updates"| D7
+        I12 -.->|"Updates"| D4
+        I12 -.->|"Updates"| D5
+        
+        I13 -.->|"Updates"| D4
+        I13 -.->|"Updates"| D7
+        I13 -.->|"Stores"| D2
     end
     
-    classDef uiScreen fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef convStep fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
     classDef dataEntity fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
     
-    class S1,S2,S3,S4,S5,S6,S7 uiScreen
+    class I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13 convStep
     class D1,D2,D3,D4,D5,D6,D7 dataEntity
 ```
 
@@ -1008,7 +1061,7 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant User
-    participant UI as UI Agent Framework
+    participant Channel as Chat/Voice Channel
     participant CP as Conversation Processing
     participant PRM as Password Reset Manager
     participant DWE as Dynamic Workflow Engine
@@ -1018,8 +1071,8 @@ sequenceDiagram
     participant USPDB as User Semantic Profile DB
     participant ES as External Systems
 
-    User->>UI: Request password reset (Home Screen)
-    UI->>CP: Process request
+    User->>Channel: Request password reset
+    Channel->>CP: Process request
     CP->>CMDB: Create conversation session
     CP->>CMDB: Store user message
     CP->>USPDB: Retrieve user semantic profile
@@ -1034,35 +1087,34 @@ sequenceDiagram
     
     DWE->>DSDB: Update workflow state (identity verification)
     DWE->>CP: Request identity verification
-    CP->>UI: Ask for verification information (Identity Verification Screen)
-    UI->>User: Display verification screen
+    CP->>Channel: Ask for verification information
+    Channel->>User: Present verification request
     
-    User->>UI: Provide verification info
-    UI->>CP: Forward verification info
+    User->>Channel: Provide verification info
+    Channel->>CP: Forward verification info
     CP->>CMDB: Store verification message
     CP->>DWE: Pass verification data
     
     DWE->>DSDB: Update workflow state (verification processing)
     DWE->>ES: Verify identity with authentication system
-    Note right of ES: Verification Processing Screen shown during this step
     ES->>DWE: Confirm identity verification
     
     DWE->>DSDB: Update workflow state (password reset)
     DWE->>CP: Request new password
-    CP->>UI: Present password creation screen (Password Selection Screen)
-    UI->>User: Display password creation form
+    CP->>Channel: Ask for new password
+    Channel->>User: Request new password
 
-    User->>UI: Enter and submit new password
-    UI->>CP: Forward new password
+    User->>Channel: Enter and submit new password
+    Channel->>CP: Forward new password
     CP->>CMDB: Store password submission (securely)
     CP->>DWE: Pass new password
     
     DWE->>CP: Request confirmation
-    CP->>UI: Display confirmation screen (Reset Confirmation Screen)
-    UI->>User: Show confirmation screen
+    CP->>Channel: Ask for confirmation
+    Channel->>User: Request confirmation
     
-    User->>UI: Confirm password reset
-    UI->>CP: Forward confirmation
+    User->>Channel: Confirm password reset
+    Channel->>CP: Forward confirmation
     CP->>CMDB: Store confirmation message
     CP->>DWE: Pass confirmation
     
@@ -1077,57 +1129,55 @@ sequenceDiagram
     CP->>CMDB: Store outcome message
     CP->>USPDB: Update user knowledge (password reset familiarity)
     
-    CP->>UI: Present completion message (Success Screen)
-    UI->>User: Display reset confirmation and instructions
+    CP->>Channel: Present completion message
+    Channel->>User: Display/announce success
 ```
 
 #### 2.1.3 Database Operations for Password Reset
 
-| Step | UI Screen | Database | Operation | Description |
-|------|-----------|----------|-----------|-------------|
-| 1 | Password Reset Request | CMDB | Insert | Create `ConversationSession` for password reset interaction |
+| Step | Conversation Stage | Database | Operation | Description |
+|------|-------------------|----------|-----------|-------------|
+| 1 | Conversation Initiation | CMDB | Insert | Create `ConversationSession` for password reset interaction |
 | 2 | Password Reset Request | CMDB | Insert | Store initial `Message` with password reset request |
 | 3 | Password Reset Request | USPDB | Select | Retrieve `UserSemanticProfile` for personalized interaction |
 | 4 | Password Reset Request | DSDB | Insert | Create `DistributedWorkflowInstance` for password reset |
-| 5 | Password Reset Request | SCDB | Select | Verify `DevicePassport` and `DeviceAttestation` |
+| 5 | Identity Verification | SCDB | Select | Verify `DevicePassport` and `DeviceAttestation` |
 | 6 | Identity Verification | DSDB | Update | Update workflow state to identity verification |
 | 7 | Identity Verification | CMDB | Insert | Store verification request `Message` |
-| 8 | Verification Processing | CMDB | Insert | Store user verification response `Message` |
+| 8 | Verification Response | CMDB | Insert | Store user verification response `Message` |
 | 9 | Verification Processing | DSDB | Update | Update workflow state to verification processing |
-| 10 | Password Selection | DSDB | Update | Update workflow state to password reset execution |
-| 11 | Password Selection | CMDB | Insert | Store password submission `Message` (securely) |
-| 12 | Reset Confirmation | CMDB | Insert | Store confirmation `Message` |
-| 13 | Reset Confirmation | DSDB | Update | Update workflow state to executing reset |
-| 14 | Success | DSDB | Update | Update workflow state to completed |
-| 15 | Success | CMDB | Insert | Store outcome `Message` |
-| 16 | Success | USPDB | Update | Update `EntityFamiliarity` for password reset concepts |
-| 17 | Success | DSDB | Insert | Create `DistributedEvent` for successful completion |
+| 10 | Password Entry | DSDB | Update | Update workflow state to password reset execution |
+| 11 | Password Entry | CMDB | Insert | Store password submission `Message` (securely) |
+| 12 | Reset Confirmation | CMDB | Insert | Store confirmation request `Message` |
+| 13 | Reset Confirmation | CMDB | Insert | Store user confirmation `Message` |
+| 14 | Reset Execution | DSDB | Update | Update workflow state to executing reset |
+| 15 | Reset Completion | DSDB | Update | Update workflow state to completed |
+| 16 | Reset Completion | CMDB | Insert | Store outcome `Message` |
+| 17 | Reset Completion | USPDB | Update | Update `EntityFamiliarity` for password reset concepts |
+| 18 | Reset Completion | DSDB | Insert | Create `DistributedEvent` for successful completion |
 
-### 2.2 UI Screens and Data Flow - Account Unlock Automation
+### 2.2 Conversation-Based Data Flow - Account Unlock Automation
 
-This use case enables self-service account unlock with security verification and access restoration.
+This use case enables self-service account unlock with security verification and access restoration through a conversational interface.
 
-#### 2.2.1 UI Screen Flow
+#### 2.2.1 Conversation Flow Overview
 
 ```mermaid
 flowchart TD
-    subgraph UI_FLOW["UI SCREENS - ACCOUNT UNLOCK"]
-        S1[Home Screen]
-        S2[Account Unlock Request Screen]
-        S3[Security Verification Screen]
-        S4[Verification Processing Screen]
-        S5[Unlock Confirmation Screen]
-        S6[Success Screen]
-        
-        S1 -->|"Select 'Unlock Account'"| S2
-        S2 -->|"Submit Account Info"| S3
-        S3 -->|"Provide Security Answers"| S4
-        S4 -->|"Verification Successful"| S5
-        S5 -->|"Confirm Unlock"| S6
-        S5 -->|"Cancel"| S2
+    subgraph CF["CONVERSATION FLOW - ACCOUNT UNLOCK"]
+        I1[User Initiates Conversation] --> I2[User Requests Account Unlock]
+        I2 --> I3[System Requests Account Information]
+        I3 --> I4[User Provides Account Details]
+        I4 --> I5[System Requests Security Verification]
+        I5 --> I6[User Provides Security Answers]
+        I6 --> I7[System Processes Verification]
+        I7 --> I8[System Requests Unlock Confirmation]
+        I8 --> I9[User Confirms Unlock]
+        I9 --> I10[System Executes Unlock]
+        I10 --> I11[System Confirms Success]
     end
     
-    subgraph DATA_FLOW["DATA ENTITIES TOUCHED"]
+    subgraph DF["DATA ENTITIES TOUCHED"]
         D1[(ConversationSession)]
         D2[(Message)]
         D3[(DevicePassport)]
@@ -1136,29 +1186,36 @@ flowchart TD
         D6[(AccessGrant)]
         D7[(UserProfile)]
         
-        S2 -.->|"Creates"| D1
-        S2 -.->|"Stores"| D2
-        S2 -.->|"Verifies"| D3
-        S2 -.->|"Creates"| D4
+        I1 -.->|"Creates"| D1
+        I2 -.->|"Stores"| D2
+        I3 -.->|"Stores"| D2
+        I4 -.->|"Stores"| D2
+        I4 -.->|"Verifies"| D3
+        I4 -.->|"Creates"| D4
         
-        S3 -.->|"Stores"| D2
-        S3 -.->|"Creates"| D5
+        I5 -.->|"Stores"| D2
+        I6 -.->|"Stores"| D2
+        I6 -.->|"Creates"| D5
         
-        S4 -.->|"Updates"| D4
-        S4 -.->|"Updates"| D5
+        I7 -.->|"Updates"| D4
+        I7 -.->|"Updates"| D5
         
-        S5 -.->|"Updates"| D4
-        S5 -.->|"Updates"| D5
-        S5 -.->|"Creates"| D6
+        I8 -.->|"Stores"| D2
+        I9 -.->|"Stores"| D2
         
-        S6 -.->|"Updates"| D4
-        S6 -.->|"Updates"| D7
+        I10 -.->|"Updates"| D4
+        I10 -.->|"Updates"| D5
+        I10 -.->|"Creates"| D6
+        
+        I11 -.->|"Updates"| D4
+        I11 -.->|"Updates"| D7
+        I11 -.->|"Stores"| D2
     end
     
-    classDef uiScreen fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef convStep fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
     classDef dataEntity fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
     
-    class S1,S2,S3,S4,S5,S6 uiScreen
+    class I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11 convStep
     class D1,D2,D3,D4,D5,D6,D7 dataEntity
 ```
 
@@ -1167,7 +1224,7 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant User
-    participant UI as UI Agent Framework
+    participant Channel as Chat/Voice Channel
     participant CP as Conversation Processing
     participant ALM as Account Unlock Manager
     participant DWE as Dynamic Workflow Engine
@@ -1177,8 +1234,8 @@ sequenceDiagram
     participant USPDB as User Semantic Profile DB
     participant ES as External Systems
 
-    User->>UI: Request account unlock (Home Screen)
-    UI->>CP: Process unlock request
+    User->>Channel: Request account unlock
+    Channel->>CP: Process unlock request
     CP->>CMDB: Create conversation session
     CP->>CMDB: Store user message
     CP->>USPDB: Retrieve user semantic profile
@@ -1193,26 +1250,25 @@ sequenceDiagram
     
     DWE->>DSDB: Update workflow state (security verification)
     DWE->>CP: Request security verification
-    CP->>UI: Ask for verification information (Security Verification Screen)
-    UI->>User: Display security question screen
+    CP->>Channel: Ask for verification information
+    Channel->>User: Present security questions
     
-    User->>UI: Provide security answers
-    UI->>CP: Forward security answers
+    User->>Channel: Provide security answers
+    Channel->>CP: Forward security answers
     CP->>CMDB: Store verification message
     CP->>DWE: Pass verification data
     
     DWE->>DSDB: Update workflow state (verification processing)
     DWE->>ES: Verify security answers
-    Note right of ES: Verification Processing Screen shown during this step
     ES->>DWE: Confirm verification
     
     DWE->>DSDB: Update workflow state (account unlock)
     DWE->>CP: Request unlock confirmation
-    CP->>UI: Present confirmation screen (Unlock Confirmation Screen)
-    UI->>User: Display confirmation screen
+    CP->>Channel: Ask for confirmation
+    Channel->>User: Request confirmation
     
-    User->>UI: Confirm account unlock
-    UI->>CP: Forward confirmation
+    User->>Channel: Confirm account unlock
+    Channel->>CP: Forward confirmation
     CP->>CMDB: Store confirmation message
     CP->>DWE: Pass confirmation
     
@@ -1227,61 +1283,55 @@ sequenceDiagram
     CP->>CMDB: Store outcome message
     CP->>USPDB: Update user knowledge (account unlock familiarity)
     
-    CP->>UI: Present completion message (Success Screen)
-    UI->>User: Display unlock confirmation
+    CP->>Channel: Present completion message
+    Channel->>User: Display/announce success
 ```
 
 #### 2.2.3 Database Operations for Account Unlock
 
-| Step | UI Screen | Database | Operation | Description |
-|------|-----------|----------|-----------|-------------|
-| 1 | Account Unlock Request | CMDB | Insert | Create `ConversationSession` for account unlock interaction |
+| Step | Conversation Stage | Database | Operation | Description |
+|------|-------------------|----------|-----------|-------------|
+| 1 | Conversation Initiation | CMDB | Insert | Create `ConversationSession` for account unlock interaction |
 | 2 | Account Unlock Request | CMDB | Insert | Store initial `Message` with account unlock request |
 | 3 | Account Unlock Request | USPDB | Select | Retrieve `UserSemanticProfile` for personalized interaction |
 | 4 | Account Unlock Request | DSDB | Insert | Create `DistributedWorkflowInstance` for account unlock |
-| 5 | Account Unlock Request | SCDB | Select | Verify `DevicePassport` and `DeviceAttestation` |
+| 5 | Security Verification | SCDB | Select | Verify `DevicePassport` and `DeviceAttestation` |
 | 6 | Security Verification | DSDB | Update | Update workflow state to security verification |
 | 7 | Security Verification | CMDB | Insert | Store verification request `Message` |
-| 8 | Verification Processing | CMDB | Insert | Store user verification response `Message` |
+| 8 | Verification Response | CMDB | Insert | Store user verification response `Message` |
 | 9 | Verification Processing | DSDB | Update | Update workflow state to verification processing |
 | 10 | Unlock Confirmation | DSDB | Update | Update workflow state to account unlock execution |
-| 11 | Unlock Confirmation | CMDB | Insert | Store confirmation `Message` |
-| 12 | Unlock Confirmation | DSDB | Update | Update workflow state to executing unlock |
-| 13 | Success | DSDB | Update | Update workflow state to completed |
-| 14 | Success | CMDB | Insert | Store outcome `Message` |
-| 15 | Success | USPDB | Update | Update `EntityFamiliarity` for account unlock concepts |
-| 16 | Success | DSDB | Insert | Create `DistributedEvent` for successful completion |
-| 17 | Success | SCDB | Insert | Create `AccessGrant` for restored access |
+| 11 | Unlock Confirmation | CMDB | Insert | Store confirmation request `Message` |
+| 12 | Unlock Confirmation | CMDB | Insert | Store user confirmation `Message` |
+| 13 | Unlock Execution | DSDB | Update | Update workflow state to executing unlock |
+| 14 | Unlock Completion | DSDB | Update | Update workflow state to completed |
+| 15 | Unlock Completion | CMDB | Insert | Store outcome `Message` |
+| 16 | Unlock Completion | USPDB | Update | Update `EntityFamiliarity` for account unlock concepts |
+| 17 | Unlock Completion | DSDB | Insert | Create `DistributedEvent` for successful completion |
+| 18 | Unlock Completion | SCDB | Insert | Create `AccessGrant` for restored access |
 
-### 2.3 UI Screens and Data Flow - Basic Software Installation
+### 2.3 Conversation-Based Data Flow - Basic Software Installation
 
-This use case provides guidance for common application installation and deployment automation.
+This use case provides guidance for common application installation and deployment automation through a conversational interface.
 
-#### 2.3.1 UI Screen Flow
+#### 2.3.1 Conversation Flow Overview
 
 ```mermaid
 flowchart TD
-    subgraph UI_FLOW["UI SCREENS - SOFTWARE INSTALLATION"]
-        S1[Home Screen]
-        S2[Software Installation Request Screen]
-        S3[Software Selection Screen]
-        S4[Eligibility Check Screen]
-        S5[Installation Confirmation Screen]
-        S6[Installation Progress Screen]
-        S7[Installation Verification Screen]
-        S8[Success Screen]
-        
-        S1 -->|"Select 'Install Software'"| S2
-        S2 -->|"Submit Request"| S3
-        S3 -->|"Select Software"| S4
-        S4 -->|"Eligibility Confirmed"| S5
-        S5 -->|"Confirm Installation"| S6
-        S6 -->|"Installation Complete"| S7
-        S7 -->|"Verification Successful"| S8
-        S5 -->|"Cancel"| S2
+    subgraph CF["CONVERSATION FLOW - SOFTWARE INSTALLATION"]
+        I1[User Initiates Conversation] --> I2[User Requests Software Installation]
+        I2 --> I3[System Requests Software Details]
+        I3 --> I4[User Selects Software]
+        I4 --> I5[System Checks Eligibility]
+        I5 --> I6[System Confirms Installation Options]
+        I6 --> I7[User Confirms Installation]
+        I7 --> I8[System Executes Installation]
+        I8 --> I9[System Reports Progress]
+        I9 --> I10[System Verifies Installation]
+        I10 --> I11[System Confirms Success]
     end
     
-    subgraph DATA_FLOW["DATA ENTITIES TOUCHED"]
+    subgraph DF["DATA ENTITIES TOUCHED"]
         D1[(ConversationSession)]
         D2[(Message)]
         D3[(DevicePassport)]
@@ -1292,35 +1342,45 @@ flowchart TD
         D8[(UserProfile)]
         D9[(KnowledgeNode)]
         
-        S2 -.->|"Creates"| D1
-        S2 -.->|"Stores"| D2
-        S2 -.->|"Reads"| D3
-        S2 -.->|"Reads"| D4
+        I1 -.->|"Creates"| D1
+        I2 -.->|"Stores"| D2
+        I3 -.->|"Stores"| D2
+        I3 -.->|"Reads"| D3
+        I3 -.->|"Reads"| D4
         
-        S3 -.->|"Stores"| D2
-        S3 -.->|"Reads"| D9
+        I4 -.->|"Stores"| D2
+        I4 -.->|"Reads"| D9
         
-        S4 -.->|"Creates"| D5
-        S4 -.->|"Creates"| D6
+        I5 -.->|"Creates"| D5
+        I5 -.->|"Creates"| D6
+        I5 -.->|"Stores"| D2
         
-        S5 -.->|"Stores"| D2
-        S5 -.->|"Updates"| D5
+        I6 -.->|"Stores"| D2
+        I7 -.->|"Stores"| D2
+        I7 -.->|"Updates"| D5
         
-        S6 -.->|"Updates"| D5
-        S6 -.->|"Updates"| D6
-        S6 -.->|"Updates"| D7
+        I8 -.->|"Updates"| D5
+        I8 -.->|"Updates"| D6
+        I8 -.->|"Stores"| D2
         
-        S7 -.->|"Updates"| D5
-        S7 -.->|"Updates"| D6
+        I9 -.->|"Updates"| D5
+        I9 -.->|"Updates"| D6
+        I9 -.->|"Updates"| D7
+        I9 -.->|"Stores"| D2
         
-        S8 -.->|"Updates"| D5
-        S8 -.->|"Updates"| D8
+        I10 -.->|"Updates"| D5
+        I10 -.->|"Updates"| D6
+        I10 -.->|"Stores"| D2
+        
+        I11 -.->|"Updates"| D5
+        I11 -.->|"Updates"| D8
+        I11 -.->|"Stores"| D2
     end
     
-    classDef uiScreen fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef convStep fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
     classDef dataEntity fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
     
-    class S1,S2,S3,S4,S5,S6,S7,S8 uiScreen
+    class I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11 convStep
     class D1,D2,D3,D4,D5,D6,D7,D8,D9 dataEntity
 ```
 
@@ -1329,7 +1389,7 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant User
-    participant UI as UI Agent Framework
+    participant Channel as Chat/Voice Channel
     participant CP as Conversation Processing
     participant SIM as Software Installation Manager
     participant DWE as Dynamic Workflow Engine
@@ -1340,8 +1400,8 @@ sequenceDiagram
     participant KGDB as Knowledge Graph DB
     participant ES as External Systems
 
-    User->>UI: Request software installation (Home Screen)
-    UI->>CP: Process installation request
+    User->>Channel: Request software installation
+    Channel->>CP: Process installation request
     CP->>CMDB: Create conversation session
     CP->>CMDB: Store user message
     CP->>USPDB: Retrieve user semantic profile
@@ -1353,11 +1413,11 @@ sequenceDiagram
     SIM->>CP: Request software selection
     CP->>KGDB: Retrieve available software
     KGDB->>CP: Return software options
-    CP->>UI: Present software options (Software Selection Screen)
-    UI->>User: Display software options
+    CP->>Channel: Present software options
+    Channel->>User: Present software choices
     
-    User->>UI: Select software
-    UI->>CP: Forward software selection
+    User->>Channel: Select software
+    Channel->>CP: Forward software selection
     CP->>CMDB: Store selection message
     CP->>SIM: Pass software selection
     
@@ -1366,16 +1426,15 @@ sequenceDiagram
     
     DWE->>DSDB: Update workflow state (eligibility check)
     DWE->>ES: Verify software eligibility for user/device
-    Note right of ES: Eligibility Check Screen shown during this step
     ES->>DWE: Return eligibility status
     
     DWE->>DSDB: Update workflow state (preparation)
     DWE->>CP: Request installation confirmation
-    CP->>UI: Present installation details (Installation Confirmation Screen)
-    UI->>User: Display installation information
+    CP->>Channel: Present installation details
+    Channel->>User: Show installation information
     
-    User->>UI: Confirm installation
-    UI->>CP: Forward confirmation
+    User->>Channel: Confirm installation
+    Channel->>CP: Forward confirmation
     CP->>CMDB: Store confirmation message
     CP->>DWE: Pass confirmation
     
@@ -1385,27 +1444,24 @@ sequenceDiagram
         DWE->>ES: Trigger remote software installation
         ES->>DWE: Report installation progress
         DWE->>DSDB: Update workflow variables (progress)
-        CP->>UI: Update progress display (Installation Progress Screen)
-        UI->>User: Show installation progress
+        DWE->>CP: Send progress updates
+        CP->>Channel: Update progress display
+        Channel->>User: Show installation progress
         ES->>DWE: Confirm installation complete
     else Manual Guidance
         DWE->>CP: Generate installation instructions
-        CP->>UI: Present step-by-step guide (Installation Progress Screen)
-        UI->>User: Display installation steps
+        CP->>Channel: Present step-by-step guide
+        Channel->>User: Show installation steps
         
         loop For each step
-            User->>UI: Confirm step completion
-            UI->>CP: Forward step completion
+            User->>Channel: Confirm step completion
+            Channel->>CP: Forward step completion
             CP->>DWE: Update step status
             DWE->>DSDB: Update workflow variables (progress)
         end
     end
     
     DWE->>DSDB: Update workflow state (verification)
-    DWE->>CP: Request verification
-    CP->>UI: Present verification screen (Installation Verification Screen)
-    UI->>User: Show verification instructions
-    
     DWE->>ES: Verify successful installation
     ES->>DWE: Confirm installation verification
     
@@ -1416,15 +1472,15 @@ sequenceDiagram
     CP->>CMDB: Store outcome message
     CP->>USPDB: Update user knowledge (software installation familiarity)
     
-    CP->>UI: Present completion message (Success Screen)
-    UI->>User: Display installation success confirmation
+    CP->>Channel: Present completion message
+    Channel->>User: Display/announce installation success
 ```
 
 #### 2.3.3 Database Operations for Software Installation
 
-| Step | UI Screen | Database | Operation | Description |
-|------|-----------|----------|-----------|-------------|
-| 1 | Software Installation Request | CMDB | Insert | Create `ConversationSession` for software installation |
+| Step | Conversation Stage | Database | Operation | Description |
+|------|-------------------|----------|-----------|-------------|
+| 1 | Conversation Initiation | CMDB | Insert | Create `ConversationSession` for software installation |
 | 2 | Software Installation Request | CMDB | Insert | Store initial `Message` with installation request |
 | 3 | Software Installation Request | USPDB | Select | Retrieve `UserSemanticProfile` for personalized interaction |
 | 4 | Software Installation Request | SCDB | Select | Check `DeviceCapability` for installation eligibility |
@@ -1435,43 +1491,41 @@ sequenceDiagram
 | 9 | Installation Confirmation | DSDB | Update | Update workflow state to preparation |
 | 10 | Installation Confirmation | CMDB | Insert | Store installation confirmation request `Message` |
 | 11 | Installation Confirmation | CMDB | Insert | Store user confirmation response `Message` |
-| 12 | Installation Progress | DSDB | Update | Update workflow state to installation |
+| 12 | Installation Execution | DSDB | Update | Update workflow state to installation |
 | 13 | Installation Progress | DSDB | Update | Update `DistributedVariable` for installation progress |
-| 14 | Installation Verification | DSDB | Update | Update workflow state to verification |
-| 15 | Success | DSDB | Update | Update workflow state to completed |
-| 16 | Success | CMDB | Insert | Store outcome `Message` |
-| 17 | Success | USPDB | Update | Update `EntityFamiliarity` for software installation concepts |
-| 18 | Success | DSDB | Insert | Create `DistributedEvent` for successful completion |
+| 14 | Installation Progress | CMDB | Insert | Store progress update `Message` |
+| 15 | Installation Verification | DSDB | Update | Update workflow state to verification |
+| 16 | Installation Completion | DSDB | Update | Update workflow state to completed |
+| 17 | Installation Completion | CMDB | Insert | Store outcome `Message` |
+| 18 | Installation Completion | USPDB | Update | Update `EntityFamiliarity` for software installation concepts |
+| 19 | Installation Completion | DSDB | Insert | Create `DistributedEvent` for successful completion |
 
-### 2.4 UI Screens and Data Flow - Basic Device Authentication & Diagnostics
+### 2.4 Conversation-Based Data Flow - Basic Device Authentication & Diagnostics
 
-This use case enables secure device identification, verification, and basic hardware diagnostics.
+This use case enables secure device identification, verification, and basic hardware diagnostics through a conversational interface.
 
-#### 2.4.1 UI Screen Flow
+#### 2.4.1 Conversation Flow Overview
 
 ```mermaid
 flowchart TD
-    subgraph UI_FLOW["UI SCREENS - DEVICE DIAGNOSTICS"]
-        S1[Home Screen]
-        S2[Device Diagnostics Request Screen]
-        S3[Device Authentication Screen]
-        S4[Diagnostics Permission Screen]
-        S5[Diagnostics Running Screen]
-        S6[Diagnostics Results Screen]
-        S7[Issue Resolution Screen]
-        S8[Resolution Complete Screen]
+    subgraph CF["CONVERSATION FLOW - DEVICE DIAGNOSTICS"]
+        I1[User Initiates Conversation] --> I2[User Requests Device Diagnostics]
+        I2 --> I3[System Authenticates Device]
+        I3 --> I4[System Requests Diagnostic Permission]
+        I4 --> I5[User Grants Permission]
+        I5 --> I6[System Runs Diagnostics]
+        I6 --> I7[System Provides Progress Updates]
+        I7 --> I8[System Presents Diagnostic Results]
+        I8 --> I9[System Offers Resolution Options]
         
-        S1 -->|"Select 'Device Diagnostics'"| S2
-        S2 -->|"Submit Request"| S3
-        S3 -->|"Authentication Successful"| S4
-        S4 -->|"Grant Permission"| S5
-        S5 -->|"Diagnostics Complete"| S6
-        S6 -->|"Issues Found - Select 'Resolve'"| S7
-        S7 -->|"Resolution Complete"| S8
-        S6 -->|"No Issues - Select 'Done'"| S1
+        I9 -->|"Issues Found"| I10[User Requests Issue Resolution]
+        I10 --> I11[System Executes Resolution]
+        I11 --> I12[System Confirms Resolution]
+        
+        I9 -->|"No Issues"| I13[User Acknowledges Results]
     end
     
-    subgraph DATA_FLOW["DATA ENTITIES TOUCHED"]
+    subgraph DF["DATA ENTITIES TOUCHED"]
         D1[(ConversationSession)]
         D2[(Message)]
         D3[(DevicePassport)]
@@ -1482,36 +1536,53 @@ flowchart TD
         D8[(AccessGrant)]
         D9[(SecurityAudit)]
         
-        S2 -.->|"Creates"| D1
-        S2 -.->|"Stores"| D2
+        I1 -.->|"Creates"| D1
+        I2 -.->|"Stores"| D2
         
-        S3 -.->|"Reads"| D3
-        S3 -.->|"Updates"| D9
+        I3 -.->|"Reads"| D3
+        I3 -.->|"Updates"| D9
+        I3 -.->|"Stores"| D2
         
-        S4 -.->|"Stores"| D2
-        S4 -.->|"Creates"| D5
-        S4 -.->|"Creates"| D6
+        I4 -.->|"Stores"| D2
+        I5 -.->|"Stores"| D2
+        I5 -.->|"Creates"| D5
+        I5 -.->|"Creates"| D6
         
-        S5 -.->|"Creates"| D8
-        S5 -.->|"Updates"| D5
-        S5 -.->|"Updates"| D6
-        S5 -.->|"Updates"| D7
+        I6 -.->|"Creates"| D8
+        I6 -.->|"Updates"| D5
+        I6 -.->|"Updates"| D6
+        I6 -.->|"Stores"| D2
         
-        S6 -.->|"Updates"| D5
-        S6 -.->|"Updates"| D6
-        S6 -.->|"Stores"| D2
+        I7 -.->|"Updates"| D5
+        I7 -.->|"Updates"| D6
+        I7 -.->|"Updates"| D7
+        I7 -.->|"Stores"| D2
         
-        S7 -.->|"Creates"| D5
-        S7 -.->|"Reads"| D4
+        I8 -.->|"Updates"| D5
+        I8 -.->|"Updates"| D6
+        I8 -.->|"Stores"| D2
         
-        S8 -.->|"Updates"| D5
-        S8 -.->|"Updates"| D9
+        I9 -.->|"Stores"| D2
+        
+        I10 -.->|"Creates"| D5
+        I10 -.->|"Stores"| D2
+        I10 -.->|"Reads"| D4
+        
+        I11 -.->|"Updates"| D5
+        I11 -.->|"Stores"| D2
+        
+        I12 -.->|"Updates"| D5
+        I12 -.->|"Updates"| D9
+        I12 -.->|"Stores"| D2
+        
+        I13 -.->|"Updates"| D5
+        I13 -.->|"Stores"| D2
     end
     
-    classDef uiScreen fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef convStep fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
     classDef dataEntity fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
     
-    class S1,S2,S3,S4,S5,S6,S7,S8 uiScreen
+    class I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13 convStep
     class D1,D2,D3,D4,D5,D6,D7,D8,D9 dataEntity
 ```
 
@@ -1520,9 +1591,10 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant User
-    participant UI as UI Agent Framework
+    participant Channel as Chat/Voice Channel
     participant CP as Conversation Processing
     participant DDM as Device Diagnostics Manager
+    participant DOA as Device Operator Agent
     participant DWE as Dynamic Workflow Engine
     participant CMDB as Conversation Memory DB
     participant DSDB as Distributed State DB
@@ -1530,8 +1602,8 @@ sequenceDiagram
     participant USPDB as User Semantic Profile DB
     participant ES as External Systems
 
-    User->>UI: Request device diagnostics (Home Screen)
-    UI->>CP: Process diagnostics request
+    User->>Channel: Request device diagnostics
+    Channel->>CP: Process diagnostics request
     CP->>CMDB: Create conversation session
     CP->>CMDB: Store user message
     CP->>USPDB: Retrieve user semantic profile
@@ -1542,8 +1614,8 @@ sequenceDiagram
     SCDB->>DDM: Return device passport
     
     DDM->>CP: Display authentication status
-    CP->>UI: Show device authentication screen (Device Authentication Screen)
-    UI->>User: Display device authentication details
+    CP->>Channel: Present device authentication status
+    Channel->>User: Show authentication details
     
     DDM->>DWE: Initiate device diagnostics workflow
     
@@ -1551,11 +1623,11 @@ sequenceDiagram
     
     DWE->>DSDB: Update workflow state (permission request)
     DWE->>CP: Request diagnostics permission
-    CP->>UI: Ask user for permission (Diagnostics Permission Screen)
-    UI->>User: Request diagnostics permission
+    CP->>Channel: Ask user for permission
+    Channel->>User: Request diagnostics permission
     
-    User->>UI: Grant permission
-    UI->>CP: Forward permission grant
+    User->>Channel: Grant permission
+    Channel->>CP: Forward permission grant
     CP->>CMDB: Store permission message
     CP->>DWE: Pass permission confirmation
     
@@ -1565,11 +1637,13 @@ sequenceDiagram
     
     DWE->>DSDB: Update workflow state (running diagnostics)
     DWE->>CP: Update diagnostics status
-    CP->>UI: Show diagnostics running (Diagnostics Running Screen)
-    UI->>User: Display diagnostics progress
+    CP->>Channel: Show diagnostics running
+    Channel->>User: Display diagnostics progress
     
-    DWE->>ES: Execute system diagnostics
-    ES->>DWE: Return diagnostic results
+    DWE->>DOA: Execute device diagnostics
+    DOA->>ES: Perform system diagnostics
+    ES->>DOA: Return diagnostic results
+    DOA->>DWE: Forward diagnostic results
     
     DWE->>DSDB: Store diagnostic results in variables
     DWE->>DSDB: Update workflow state (analyzing results)
@@ -1583,12 +1657,12 @@ sequenceDiagram
     CP->>CMDB: Store diagnostic results message
     CP->>USPDB: Update user knowledge (device issues familiarity)
     
-    CP->>UI: Present diagnostic results (Diagnostics Results Screen)
-    UI->>User: Display diagnostic information
+    CP->>Channel: Present diagnostic results
+    Channel->>User: Display diagnostic information
     
     alt Issues Detected
-        User->>UI: Request issue resolution
-        UI->>CP: Forward resolution request
+        User->>Channel: Request issue resolution
+        Channel->>CP: Forward resolution request
         CP->>CMDB: Store resolution request message
         CP->>DDM: Request issue resolution
         DDM->>DWE: Initiate resolution workflow
@@ -1596,17 +1670,21 @@ sequenceDiagram
         DWE->>DSDB: Link to diagnostics workflow
         
         DWE->>CP: Present resolution steps
-        CP->>UI: Show resolution interface (Issue Resolution Screen)
-        UI->>User: Display resolution steps
+        CP->>Channel: Show resolution steps
+        Channel->>User: Display resolution instructions
         
-        User->>UI: Confirm resolution steps completed
-        UI->>CP: Forward completion confirmation
+        User->>Channel: Confirm resolution steps completed
+        Channel->>CP: Forward completion confirmation
         CP->>DWE: Update resolution status
         
         DWE->>DSDB: Update resolution workflow state (completed)
         DWE->>CP: Format resolution results
-        CP->>UI: Present resolution completion (Resolution Complete Screen)
-        UI->>User: Display resolution success
+        CP->>Channel: Present resolution completion
+        Channel->>User: Display resolution success
+    else No Issues
+        User->>Channel: Acknowledge results
+        Channel->>CP: Forward acknowledgment
+        CP->>CMDB: Store acknowledgment message
     end
     
     DWE->>DSDB: Update diagnostics workflow state (completed)
@@ -1616,30 +1694,237 @@ sequenceDiagram
 
 #### 2.4.3 Database Operations for Device Authentication & Diagnostics
 
-| Step | UI Screen | Database | Operation | Description |
-|------|-----------|----------|-----------|-------------|
-| 1 | Device Diagnostics Request | CMDB | Insert | Create `ConversationSession` for device diagnostics |
+| Step | Conversation Stage | Database | Operation | Description |
+|------|-------------------|----------|-----------|-------------|
+| 1 | Conversation Initiation | CMDB | Insert | Create `ConversationSession` for device diagnostics |
 | 2 | Device Diagnostics Request | CMDB | Insert | Store initial `Message` with diagnostics request |
 | 3 | Device Diagnostics Request | USPDB | Select | Retrieve `UserSemanticProfile` for personalized interaction |
 | 4 | Device Authentication | SCDB | Select | Authenticate device using `DevicePassport` |
 | 5 | Device Authentication | SCDB | Insert | Create `SecurityAudit` record for authentication |
-| 6 | Diagnostics Permission | DSDB | Insert | Create `DistributedWorkflowInstance` for device diagnostics |
-| 7 | Diagnostics Permission | DSDB | Update | Update workflow state to permission request |
-| 8 | Diagnostics Permission | CMDB | Insert | Store permission request `Message` |
-| 9 | Diagnostics Permission | CMDB | Insert | Store user permission response `Message` |
-| 10 | Diagnostics Running | DSDB | Update | Update workflow state to preparing diagnostics |
-| 11 | Diagnostics Running | SCDB | Insert | Create temporary `AccessGrant` for diagnostics |
-| 12 | Diagnostics Running | DSDB | Update | Update workflow state to running diagnostics |
-| 13 | Diagnostics Running | DSDB | Insert | Store diagnostic results in `DistributedVariable` |
-| 14 | Diagnostics Results | DSDB | Update | Update workflow state to analyzing results |
-| 15 | Diagnostics Results | DSDB | Update | Update workflow state to presenting results |
-| 16 | Diagnostics Results | CMDB | Insert | Store diagnostic results `Message` |
-| 17 | Diagnostics Results | USPDB | Update | Update `EntityFamiliarity` for device-related concepts |
-| 18 | Issue Resolution | DSDB | Insert | Create `DistributedWorkflowInstance` for issue resolution (if needed) |
-| 19 | Issue Resolution | SCDB | Select | Read `DeviceCapability` for resolution options |
-| 20 | Resolution Complete | DSDB | Update | Update workflow state to completed |
-| 21 | Resolution Complete | SCDB | Update | Update `SecurityAudit` with diagnostics results |
-| 22 | Resolution Complete | DSDB | Insert | Create `DistributedEvent` for successful completion |
+| 6 | Device Authentication | CMDB | Insert | Store authentication status `Message` |
+| 7 | Diagnostics Permission | CMDB | Insert | Store permission request `Message` |
+| 8 | Permission Grant | CMDB | Insert | Store user permission response `Message` |
+| 9 | Permission Grant | DSDB | Insert | Create `DistributedWorkflowInstance` for device diagnostics |
+| 10 | Diagnostics Preparation | DSDB | Update | Update workflow state to preparing diagnostics |
+| 11 | Diagnostics Preparation | SCDB | Insert | Create temporary `AccessGrant` for diagnostics |
+| 12 | Diagnostics Execution | DSDB | Update | Update workflow state to running diagnostics |
+| 13 | Diagnostics Execution | CMDB | Insert | Store diagnostics running `Message` |
+| 14 | Diagnostics Progress | DSDB | Update | Update `DistributedVariable` with progress |
+| 15 | Diagnostics Progress | CMDB | Insert | Store progress update `Message` |
+| 16 | Diagnostics Results | DSDB | Insert | Store diagnostic results in `DistributedVariable` |
+| 17 | Diagnostics Results | DSDB | Update | Update workflow state to analyzing results |
+| 18 | Diagnostics Results | DSDB | Update | Update workflow state to presenting results |
+| 19 | Diagnostics Results | CMDB | Insert | Store diagnostic results `Message` |
+| 20 | Issue Resolution (if needed) | DSDB | Insert | Create `DistributedWorkflowInstance` for issue resolution |
+| 21 | Issue Resolution (if needed) | SCDB | Select | Read `DeviceCapability` for resolution options |
+| 22 | Issue Resolution (if needed) | CMDB | Insert | Store resolution steps `Message` |
+| 23 | Resolution Completion (if needed) | DSDB | Update | Update workflow state to completed |
+| 24 | Resolution Completion (if needed) | CMDB | Insert | Store resolution completion `Message` |
+| 25 | Workflow Completion | DSDB | Update | Update workflow state to completed |
+| 26 | Workflow Completion | SCDB | Update | Update `SecurityAudit` with diagnostics results |
+| 27 | Workflow Completion | DSDB | Insert | Create `DistributedEvent` for successful completion |
+
+### 2.5 UI-Based Data Flow - Admin and Analytics
+
+This section covers the administrative UI data flows for platform configuration, monitoring, and analytics.
+
+#### 2.5.1 Admin Console UI Flow
+
+```mermaid
+flowchart TD
+    subgraph AF["ADMIN CONSOLE FLOW"]
+        A1[Admin Login] --> A2[Dashboard View]
+        A2 --> A3[Profile Configuration]
+        A2 --> A4[Product Admin Console]
+        A2 --> A5[System Monitoring]
+        A2 --> A6[Analytics & Insights]
+        
+        A3 --> A3_1[User Profile Management]
+        A3 --> A3_2[Role Profile Management]
+        A3 --> A3_3[Default Profile Settings]
+        
+        A4 --> A4_1[IT Support Configuration]
+        A4 --> A4_2[Workflow Management]
+        A4 --> A4_3[Integration Settings]
+        
+        A5 --> A5_1[System Health Monitoring]
+        A5 --> A5_2[Performance Metrics]
+        A5 --> A5_3[Security Monitoring]
+        
+        A6 --> A6_1[Usage Analytics]
+        A6 --> A6_2[Business Value Metrics]
+        A6 --> A6_3[Custom Reports]
+    end
+    
+    subgraph DF["DATA ENTITIES TOUCHED"]
+        D1[(UserSemanticProfile)]
+        D2[(OrganizationSemanticProfile)]
+        D3[(WorkflowTemplateDefinition)]
+        D4[(SecurityPolicy)]
+        D5[(IntegrationConfiguration)]
+        D6[(SystemMetrics)]
+        D7[(AnalyticsData)]
+        D8[(SecurityAudit)]
+        
+        A3_1 -.->|"Reads/Updates"| D1
+        A3_2 -.->|"Reads/Updates"| D2
+        A3_3 -.->|"Reads/Updates"| D2
+        
+        A4_1 -.->|"Reads/Updates"| D3
+        A4_1 -.->|"Reads/Updates"| D4
+        A4_2 -.->|"Reads/Updates"| D3
+        A4_3 -.->|"Reads/Updates"| D5
+        
+        A5_1 -.->|"Reads"| D6
+        A5_2 -.->|"Reads"| D6
+        A5_3 -.->|"Reads"| D8
+        
+        A6_1 -.->|"Reads"| D7
+        A6_2 -.->|"Reads"| D7
+        A6_3 -.->|"Reads"| D7
+        A6_3 -.->|"Reads"| D6
+        A6_3 -.->|"Reads"| D8
+    end
+    
+    classDef adminStep fill:#FFC107,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef dataEntity fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    
+    class A1,A2,A3,A4,A5,A6,A3_1,A3_2,A3_3,A4_1,A4_2,A4_3,A5_1,A5_2,A5_3,A6_1,A6_2,A6_3 adminStep
+    class D1,D2,D3,D4,D5,D6,D7,D8 dataEntity
+```
+
+#### 2.5.2 Detailed Admin Console Data Flow
+
+```mermaid
+sequenceDiagram
+    participant Admin as Administrator
+    participant UI as Admin UI
+    participant USPDB as User Semantic Profile DB
+    participant OSDB as Organization Semantic DB
+    participant FWRDB as Federated Workflow Repository
+    participant SCDB as Security & Compliance DB
+    participant MTDB as Metrics & Telemetry DB
+    participant ANDB as Analytics DB
+    
+    Admin->>UI: Login to Admin Console
+    UI->>SCDB: Authenticate admin
+    SCDB->>UI: Return authentication result
+    
+    alt Profile Configuration
+        Admin->>UI: Access Profile Configuration
+        UI->>USPDB: Retrieve User Profiles
+        USPDB->>UI: Return User Profiles
+        UI->>OSDB: Retrieve Organization Profiles
+        OSDB->>UI: Return Organization Profiles
+        UI->>Admin: Display Profile Data
+        
+        Admin->>UI: Update Profile Configuration
+        UI->>OSDB: Save Organization Profile Updates
+        OSDB->>UI: Confirm Updates
+        UI->>Admin: Display Confirmation
+    end
+    
+    alt Workflow Management
+        Admin->>UI: Access Workflow Management
+        UI->>FWRDB: Retrieve Workflow Templates
+        FWRDB->>UI: Return Workflow Templates
+        UI->>Admin: Display Workflow Templates
+        
+        Admin->>UI: Edit Workflow Template
+        UI->>FWRDB: Save Template Updates
+        FWRDB->>UI: Confirm Updates
+        UI->>Admin: Display Confirmation
+    end
+    
+    alt System Monitoring
+        Admin->>UI: Access System Monitoring
+        UI->>MTDB: Retrieve System Metrics
+        MTDB->>UI: Return Current Metrics
+        UI->>SCDB: Retrieve Security Audit Logs
+        SCDB->>UI: Return Audit Logs
+        UI->>Admin: Display System Health Dashboard
+    end
+    
+    alt Analytics & Insights
+        Admin->>UI: Access Analytics & Insights
+        UI->>ANDB: Retrieve Usage Analytics
+        ANDB->>UI: Return Usage Data
+        UI->>ANDB: Retrieve Business Metrics
+        ANDB->>UI: Return Business Data
+        UI->>Admin: Display Analytics Dashboard
+        
+        Admin->>UI: Generate Custom Report
+        UI->>ANDB: Execute Custom Query
+        ANDB->>UI: Return Query Results
+        UI->>MTDB: Retrieve Supplementary Metrics
+        MTDB->>UI: Return Metrics
+        UI->>Admin: Display Custom Report
+    end
+```
+
+#### 2.5.3 Developer SDK UI Flow
+
+```mermaid
+flowchart TD
+    subgraph DF["DEVELOPER SDK FLOW"]
+        D1[Developer Login] --> D2[Developer Portal]
+        D2 --> D3[Agent Development]
+        D2 --> D4[Workflow Development]
+        D2 --> D5[UI Development]
+        D2 --> D6[API Management]
+        
+        D3 --> D3_1[Agent Authoring]
+        D3 --> D3_2[Agent Testing]
+        D3 --> D3_3[Agent Deployment]
+        
+        D4 --> D4_1[Workflow Builder]
+        D4 --> D4_2[Workflow Testing]
+        D4 --> D4_3[Workflow Publishing]
+        
+        D5 --> D5_1[UI Agent Builder]
+        D5 --> D5_2[UI Testing]
+        D5 --> D5_3[UI Distribution]
+        
+        D6 --> D6_1[API Documentation]
+        D6 --> D6_2[API Testing]
+        D6 --> D6_3[API Monitoring]
+    end
+    
+    subgraph DE["DATA ENTITIES TOUCHED"]
+        E1[(AgentDefinition)]
+        E2[(AgentTestCase)]
+        E3[(AgentDeployment)]
+        E4[(WorkflowTemplateDefinition)]
+        E5[(WorkflowTestData)]
+        E6[(UIAgentDefinition)]
+        E7[(UITestCase)]
+        E8[(APIDocumentation)]
+        E9[(APITestCase)]
+        E10[(APIMetrics)]
+        
+        D3_1 -.->|"Creates/Updates"| E1
+        D3_2 -.->|"Creates/Updates"| E2
+        D3_3 -.->|"Creates/Updates"| E3
+        
+        D4_1 -.->|"Creates/Updates"| E4
+        D4_2 -.->|"Creates/Updates"| E5
+        D4_3 -.->|"Updates"| E4
+        
+        D5_1 -.->|"Creates/Updates"| E6
+        D5_2 -.->|"Creates/Updates"| E7
+        D5_3 -.->|"Updates"| E6
+        
+        D6_1 -.->|"Reads/Updates"| E8
+        D6_2 -.->|"Creates/Updates"| E9
+        D6_3 -.->|"Reads"| E10
+    end
+    
+    classDef devStep fill:#4CAF50,stroke:#2C3E50,stroke-width:2px,color:#fff
+    classDef dataEntity fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    
+    class D1,D2,D3,D4,D5,D6,D3_1,D3_2,D3_3,D4_1,D4_2,D4_3,D5_1,D5_2,D5_3,D6_1,D6_2,D6_3 devStep
+    class E1,E2,E3,E4,E5,E6,E7,E8,E9,E10 dataEntity
+```
 
 ## 3. Database Cross-Component Data Flows
 
@@ -2534,548 +2819,3 @@ The database architecture incorporates multi-level caching to optimize performan
 
 ```mermaid
 flowchart TD
-    subgraph CS["CACHING STRATEGY"]
-        subgraph AC["APPLICATION-LEVEL CACHING"]
-            LC[Local Cache]
-            SC[Session Cache]
-            PC[Process Cache]
-            TC[Thread Cache]
-        end
-        
-        subgraph DC["DISTRIBUTED CACHE LAYER"]
-            DM[Distributed Memory]
-            GC[Geo-distributed Cache]
-            NC[Near Cache]
-            RC[Remote Cache]
-        end
-        
-        subgraph DNC["DATABASE-NATIVE CACHING"]
-            BC[Buffer Cache]
-            QC[Query Cache]
-            RC2[Result Cache]
-            PC2[Procedure Cache]
-        end
-        
-        subgraph CM["CACHE MANAGEMENT"]
-            CI[Cache Invalidation]
-            CS2[Cache Synchronization]
-            CP[Cache Partitioning]
-            CM2[Cache Metrics]
-        end
-    end
-    
-    AC --> WF[Workflow Engine]
-    AC --> CP[Conversation Processing]
-    DC --> MS[Mesh Services]
-    DC --> AG[Agentic Products]
-    DNC --> DB[(Database Layer)]
-    CM --> ALL[All Caching Layers]
-    
-    classDef ac fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef dc fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef dnc fill:#F9E79F,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef cm fill:#FADBD8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef comp fill:#D2B4DE,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    
-    class AC,LC,SC,PC,TC ac
-    class DC,DM,GC,NC,RC dc
-    class DNC,BC,QC,RC2,PC2 dnc
-    class CM,CI,CS2,CP,CM2 cm
-    class WF,CP,MS,AG,DB,ALL comp
-```
-
-Key caching implementations include:
-
-1. **Application-Level Caching**
-   - In-memory caching for active entities:
-     - Active workflow state during execution
-     - User semantic profiles during conversations
-     - Device passport information during sessions
-     - Conversation context for active interactions
-   - Thread-local caching for request-scoped data
-   - Process-level caching for shared components
-   - Session-scoped caching for user interactions
-
-2. **Distributed Cache Layer**
-   - Shared cache for frequently accessed data:
-     - Workflow templates and definitions
-     - Organization semantic profiles
-     - Security policies and access rules
-     - Knowledge graph core components
-   - Geo-distributed caching based on access locations
-   - Near caching for reduced latency
-   - Remote caching for shared resources
-
-3. **Database-Native Caching**
-   - Database buffer cache optimization:
-     - Right-sizing for workload patterns
-     - Prioritization for hot data paths
-     - Retention policies for cache entries
-   - Query result caching:
-     - Parameterized query plans
-     - Common aggregation results
-     - Lookup table results
-   - Stored procedure caching
-   - Adaptive buffer management
-
-4. **Cache Management**
-   - Event-based invalidation:
-     - Consistent hashing for distributed coordination
-     - Change data capture for update events
-     - Vector clock-based synchronization
-   - TTL-based expiration policies:
-     - Access-frequency adjusted TTLs
-     - Data-type specific policies
-     - Consistency-level dependent expiration
-   - Cache partitioning aligned with data sharding
-   - Performance metrics for cache effectiveness
-
-## 6. Data Security and Compliance
-
-### 6.1 Data Encryption Strategy
-
-The IT Support MVP implements comprehensive encryption to protect sensitive data:
-
-```mermaid
-flowchart TD
-    subgraph DES["DATA ENCRYPTION STRATEGY"]
-        subgraph DAR["DATA-AT-REST ENCRYPTION"]
-            FE[File Encryption]
-            VE[Volume Encryption]
-            DB[Database Encryption]
-            BU[Backup Encryption]
-        end
-        
-        subgraph DIT["DATA-IN-TRANSIT ENCRYPTION"]
-            TLS[TLS 1.3]
-            MTL[Mutual TLS]
-            SM[Secure Mesh]
-            PE[Payload Encryption]
-        end
-        
-        subgraph FLE["FIELD-LEVEL ENCRYPTION"]
-            CE[Credential Encryption]
-            PII[PII Protection]
-            TPE[Transparent Encryption]
-            ABE[Attribute-Based Encryption]
-        end
-        
-        subgraph KM["KEY MANAGEMENT"]
-            HSM[Hardware Security Modules]
-            KR[Key Rotation]
-            KV[Key Vaulting]
-            KP[Key Partitioning]
-        end
-    end
-    
-    DAR --> DL[Data Layer]
-    DIT --> CL[Communication Layer]
-    FLE --> AL[Application Layer]
-    KM --> SL[Security Layer]
-    
-    classDef dar fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef dit fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef fle fill:#F9E79F,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef km fill:#FADBD8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef layer fill:#D2B4DE,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    
-    class DAR,FE,VE,DB,BU dar
-    class DIT,TLS,MTL,SM,PE dit
-    class FLE,CE,PII,TPE,ABE fle
-    class KM,HSM,KR,KV,KP km
-    class DL,CL,AL,SL layer
-```
-
-Key encryption implementations include:
-
-1. **Data-at-Rest Encryption**
-   - Storage level encryption:
-     - AES-256 for all database storage
-     - Full-volume encryption for persistence layers
-     - Separate keys per database instance
-     - Backup encryption with independent key sets
-   - Transparent database encryption:
-     - Column-level encryption for sensitive fields
-     - Tablespace encryption for full dataset protection
-     - Index encryption for query confidentiality
-   - Key storage in hardware security modules
-   - Quarterly key rotation schedule
-
-2. **Data-in-Transit Encryption**
-   - TLS 1.3 for all network communication:
-     - Perfect forward secrecy for all connections
-     - Strong cipher suite configuration
-     - Certificate pinning for critical services
-   - Mutual TLS for service-to-service authentication:
-     - Client and server certificate validation
-     - Certificate authority controls
-     - Certificate lifecycle management
-   - Secure mesh communication protocols:
-     - End-to-end encryption for mesh traffic
-     - Post-quantum cryptography readiness
-   - Payload encryption for sensitive data channels
-
-3. **Field-Level Encryption**
-   - Application-level encryption for sensitive fields:
-     - Authentication credentials
-     - Personal identifiable information
-     - Financial data
-     - Health-related information
-   - Different encryption keys for different data categories:
-     - Data classification-based key assignment
-     - Purpose-limited encryption keys
-     - Context-dependent key selection
-   - Homomorphic encryption for specific operations:
-     - Privacy-preserving analytics
-     - Zero-knowledge workflow verification
-   - Format-preserving encryption for structured data
-
-4. **Key Management Infrastructure**
-   - Hardware Security Module integration:
-     - FIPS 140-2 Level 3 certified modules
-     - Cloud HSM services for distributed deployment
-     - On-premises HSM for sensitive environments
-   - Comprehensive key rotation procedures:
-     - Automated rotation for high-value keys
-     - Graceful key transition without downtime
-     - Historical key preservation for data recovery
-   - Secure key vaulting with access controls
-   - Hierarchical key management with domain separation
-
-### 6.2 Access Control Architecture
-
-The database architecture implements fine-grained access control:
-
-```mermaid
-flowchart TD
-    subgraph ACA["ACCESS CONTROL ARCHITECTURE"]
-        subgraph RBAC["ROLE-BASED ACCESS CONTROL"]
-            RM[Role Management]
-            RP[Role Permissions]
-            RH[Role Hierarchy]
-            RS[Role Separation]
-        end
-        
-        subgraph ABAC["ATTRIBUTE-BASED ACCESS CONTROL"]
-            AP[Attribute Policies]
-            AC[Attribute Collection]
-            AE[Attribute Evaluation]
-            AR[Attribute Rules]
-        end
-        
-        subgraph DBA["DEVICE-BASED AUTHENTICATION"]
-            DP[Device Passport]
-            DC[Device Credentials]
-            DCA[Device Capability Attestation]
-            DCI[Device Context Identification]
-        end
-        
-        subgraph CZ["CONTEXT-AWARE AUTHORIZATION"]
-            LB[Location-Based]
-            TB[Time-Based]
-            PB[Pattern-Based]
-            RB[Risk-Based]
-        end
-    end
-    
-    RBAC --> SL[Service Layer]
-    ABAC --> DL[Data Layer]
-    DBA --> DPL[Device Passport Layer]
-    CZ --> ML[Mesh Layer]
-    
-    classDef rbac fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef abac fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef dba fill:#F9E79F,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef cz fill:#FADBD8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef layer fill:#D2B4DE,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    
-    class RBAC,RM,RP,RH,RS rbac
-    class ABAC,AP,AC,AE,AR abac
-    class DBA,DP,DC,DCA,DCI dba
-    class CZ,LB,TB,PB,RB cz
-    class SL,DL,DPL,ML layer
-```
-
-Key access control implementations include:
-
-1. **Role-Based Access Control (RBAC)**
-   - Comprehensive role management:
-     - IT support agent roles
-     - System administrator roles
-     - DevOps roles
-     - User roles
-   - Fine-grained permission assignment:
-     - Operation-level permissions
-     - Resource-level access controls
-     - Time-bound authorizations
-   - Role hierarchy for inheritance:
-     - Base roles with common permissions
-     - Specialized roles with additional capabilities
-   - Separation of duties enforcement:
-     - Mutually exclusive role assignments
-     - Administrative separation controls
-
-2. **Attribute-Based Access Control (ABAC)**
-   - Dynamic access decisions based on attributes:
-     - User attributes (department, clearance)
-     - Resource attributes (classification, sensitivity)
-     - Environmental attributes (location, time)
-     - Action attributes (operation type, arguments)
-   - Context-aware permission evaluation:
-     - Policy evaluation engines
-     - Decision caching for performance
-     - Policy conflict resolution
-   - Policy-based access rules:
-     - Centralized policy administration
-     - Distributed policy enforcement
-     - Versioned policy management
-
-3. **Device-Based Authentication**
-   - Device Passport integration:
-     - Hardware-bound cryptographic identity
-     - Device capability verification
-     - Trust level assessment
-     - Continuous device attestation
-   - Multi-factor device authentication:
-     - Device certificates
-     - TPM/secure enclave integration
-     - Biometric factors where available
-   - Capability-based authorization:
-     - Device capability mapping to permitted operations
-     - Capability-based access tokens
-     - Granular capability verification
-
-4. **Context-Aware Authorization**
-   - Location-based authorization controls:
-     - Geofencing for sensitive operations
-     - Network context validation
-     - Location verification for critical tasks
-   - Time-based access restrictions:
-     - Time-of-day limitations
-     - Duration-based access windows
-     - Schedule-aware permissions
-   - Behavioral pattern analysis:
-     - Usage pattern matching
-     - Anomaly detection
-     - Continuous authorization assessment
-   - Risk-based access decisions:
-     - Real-time risk scoring
-     - Adaptive authentication requirements
-     - Progressive access elevation
-
-### 6.3 Audit and Compliance Framework
-
-The database architecture supports comprehensive auditing:
-
-```mermaid
-flowchart TD
-    subgraph ACF["AUDIT & COMPLIANCE FRAMEWORK"]
-        subgraph AL["AUDIT LOGGING"]
-            AE[Audit Events]
-            AM[Audit Metadata]
-            ACo[Audit Collection]
-            AS[Audit Storage]
-        end
-        
-        subgraph CR["COMPLIANCE REPORTING"]
-            CD[Compliance Dashboards]
-            CCh[Compliance Checks]
-            CCe[Compliance Certification]
-            CE[Compliance Evidence]
-        end
-        
-        subgraph DL["DATA LINEAGE"]
-            DO[Data Origin]
-            DT[Data Transformations]
-            DC[Data Custody]
-            DI[Data Impact]
-        end
-        
-        subgraph PT["PRIVACY TOOLS"]
-            DSAR[Data Subject Access Requests]
-            DP[Data Portability]
-            RtF[Right to Forget]
-            PIA[Privacy Impact Assessment]
-        end
-    end
-    
-    AL --> SCDB[(Security & Compliance DB)]
-    CR --> SCDB
-    DL --> KGDB[(Knowledge Graph DB)]
-    PT --> ALL[All Databases]
-    
-    classDef al fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef cr fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef dl fill:#F9E79F,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef pt fill:#FADBD8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef db fill:#D2B4DE,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    
-    class AL,AE,AM,ACo,AS al
-    class CR,CD,CCh,CCe,CE cr
-    class DL,DO,DT,DC,DI dl
-    class PT,DSAR,DP,RtF,PIA pt
-    class SCDB,KGDB,ALL db
-```
-
-Key audit and compliance implementations include:
-
-1. **Immutable Audit Logging**
-   - Comprehensive event capture:
-     - Data access and modification
-     - Authentication and authorization
-     - Administrative actions
-     - System configuration changes
-   - Rich metadata collection:
-     - Actor identity (user and device)
-     - Action details (what, when, how)
-     - Context information (where, why)
-     - Outcome recording
-   - Tamper-evident storage:
-     - Append-only logging
-     - Cryptographic chaining of records
-     - Distributed verification
-     - Independent witness nodes
-
-2. **Compliance Reporting**
-   - Automated compliance dashboards:
-     - Real-time compliance status
-     - Historical compliance trends
-     - Violation alerting
-     - Control effectiveness
-   - Continuous compliance checking:
-     - Policy adherence verification
-     - Configuration compliance
-     - Data handling practices
-     - Exception management
-   - Evidence collection and preservation:
-     - Audit trail packaging
-     - Control testing evidence
-     - Configuration snapshots
-     - Compliance artifacts
-
-3. **Data Lineage Tracking**
-   - Origin tracking:
-     - Source attribution
-     - Input validation records
-     - Original custody documentation
-   - Transformation documentation:
-     - Processing history
-     - Transformation rules
-     - Quality checks
-   - Chain of custody:
-     - Transfer records
-     - Access history
-     - Responsibility transitions
-   - Impact analysis capabilities:
-     - Upstream tracing
-     - Downstream tracking
-     - Cross-system dependencies
-
-4. **Privacy Tooling**
-   - Data subject access request handling:
-     - Data discovery across databases
-     - Subject data compilation
-     - Response generation
-   - Data portability implementation:
-     - Standardized export formats
-     - Complete dataset extraction
-     - Relationship preservation
-   - Right to forget mechanisms:
-     - Targeted data deletion
-     - Reference cleanup
-     - Verification of removal
-   - Privacy impact assessment support:
-     - Data processing inventory
-     - Risk evaluation tooling
-     - Mitigation tracking
-
-## 7. Implementation Roadmap for Database Architecture
-
-### 7.1 Phased Implementation Approach
-
-The database implementation follows a phased approach aligned with the overall ME.AI implementation strategy:
-
-```mermaid
-gantt
-    title Database Architecture Implementation Roadmap
-    dateFormat YYYY-MM
-    axisFormat %b %Y
-    
-    section Foundation Layer
-    Database Architecture Design      :a1, 2025-01, 2M
-    Core Schema Implementation        :a2, after a1, 3M
-    Basic Data Distribution           :a3, after a2, 2M
-    Release 1 Ready                   :milestone, m1, 2025-06, 0M
-    
-    section Enhanced Capabilities
-    Advanced CRDT Implementation      :b1, after a3, 2M
-    Coalition-Based Data Management   :b2, after b1, 2M
-    Extended Schema Implementation    :b3, after b1, 3M
-    Release 2 Ready                   :milestone, m2, 2025-09, 0M
-    
-    section Complete Architecture
-    Full Mesh Data Synchronization    :c1, after b2, 3M
-    Advanced Security Implementation  :c2, after b3, 2M
-    Comprehensive Auditing            :c3, after c2, 1M
-    Release 3 Ready                   :milestone, m3, 2026-01, 0M
-```
-
-### 7.2 Database Implementation Priorities by Release
-
-The following table outlines the progressive implementation of database components across the three primary releases:
-
-| Database Component | Release 1 (Jun 2025) | Release 2 (Sep 2025) | Release 3 (Jan 2026) |
-|-------------------|----------------------|----------------------|----------------------|
-| **Distributed State DB** | Basic workflow state tracking<br>Simple task execution<br>Local variable storage | Enhanced workflow state<br>Distributed task execution<br>CRDT-based variables | Full coalition support<br>Complete event system<br>Advanced state distribution |
-| **Security & Compliance DB** | Basic device passport<br>Simple capability tracking<br>Essential access grants | Enhanced device security<br>Advanced capability verification<br>Policy-based access control | Complete audit trails<br>Compliance reporting<br>Risk-based authorization |
-| **User Semantic DB** | Basic user profiles<br>Simple preferences<br>Initial knowledge tracking | Enhanced semantic profiles<br>Knowledge relationships<br>Learning event tracking | Complete semantic evolution<br>Advanced knowledge modeling<br>Full learning adaptation |
-| **Organization Semantic DB** | Basic organization profiles<br>Initial domains<br>Simple ontologies | Enhanced domain definitions<br>Improved ontologies<br>Basic semantic negotiation | Complete semantic negotiation<br>Advanced ontology alignment<br>Full contextual adaptation |
-| **Conversation Memory DB** | Session tracking<br>Message storage<br>Basic memory | Enhanced session context<br>Advanced memory types<br>Context maintenance | Full distributed memory<br>Cross-session continuity<br>Complete sentiment tracking |
-| **Knowledge Graph DB** | Basic entity definitions<br>Simple relationships<br>Core concepts | Enhanced relationships<br>Domain knowledge<br>Knowledge integration | Complete knowledge modeling<br>Advanced reasoning support<br>Full semantic graph |
-| **Federated Workflow DB** | Template storage<br>Basic metadata<br>Simple versioning | Enhanced templates<br>Improved metadata<br>Better versioning | Complete federation<br>Template exchange<br>Advanced workflow libraries |
-
-### 7.3 Technical Challenges and Mitigation Strategies
-
-| Challenge | Impact | Mitigation Strategy | Implementation Timing |
-|-----------|--------|---------------------|------------------------|
-| **Distributed Consistency** | Potential data inconsistencies across mesh | CRDT implementation for automatic conflict resolution<br>Vector clock synchronization<br>Eventual consistency with causality preservation | Phase 1: Basic consistency<br>Phase 2: Enhanced CRDTs<br>Phase 3: Full vector clocks |
-| **Performance at Scale** | Latency increase with data volume growth | Layered caching strategy<br>Data locality optimization<br>Query path optimization<br>Predictive prefetching | Phase 1: Local caching<br>Phase 2: Distributed cache<br>Phase 3: Predictive systems |
-| **Security Management** | Complex security in distributed environment | Zero-trust architecture<br>Attribute-based access control<br>Device passport integration<br>Continuous verification | Phase 1: Basic security<br>Phase 2: Enhanced controls<br>Phase 3: Continuous verification |
-| **Schema Evolution** | Managing schema changes without disruption | Schema versioning<br>Forward/backward compatibility<br>Schema migration utilities<br>Dual-write during transitions | Phase 1: Simple versioning<br>Phase 2: Compatibility layers<br>Phase 3: Seamless evolution |
-| **Query Complexity** | Complex queries across distributed data | Query decomposition<br>Distributed execution<br>Result aggregation<br>Query optimization | Phase 1: Basic queries<br>Phase 2: Enhanced patterns<br>Phase 3: Full optimization |
-
-## 8. Conclusion
-
-The ME.AI database architecture for the IT Support MVP provides a robust, scalable, and secure foundation for automated IT support capabilities. The distributed mesh design enables resilient operation while maintaining data consistency and providing the performance needed for real-time interaction.
-
-### 8.1 Key Architectural Strengths
-
-1. **Distributed Resilience**: The mesh-based architecture eliminates single points of failure and enables continued operation even when components are unavailable. The CRDT-based state management ensures data consistency without requiring centralized coordination.
-
-2. **Coalition-Based Data Management**: The architecture supports dynamic formation of agent coalitions with shared data contexts, enabling complex problem-solving through collaborative workflows without rigid, predefined processes.
-
-3. **Scalable Performance**: The horizontal scaling approach supports growth from small deployments to enterprise-scale operations without architectural changes. The multi-tier caching strategy ensures consistent performance across scales.
-
-4. **Secure by Design**: Comprehensive security controls embedded in the architecture at all levels ensure protection of sensitive IT support data, from device authentication through the Device Passport to field-level encryption and fine-grained access control.
-
-5. **Semantic Intelligence**: The combination of user semantic profiles and organization semantic databases enables increasingly personalized interactions as the system learns from user interactions, while maintaining organization-specific knowledge boundaries.
-
-6. **Workflow Flexibility**: The distributed workflow state management supports complex IT support processes while enabling dynamic adaptation to changing conditions, without requiring predefined process definitions for every scenario.
-
-7. **Future Extensibility**: The foundation established for the MVP readily supports the addition of new IT support capabilities in future releases without major architectural changes, through the modular, component-based design.
-
-### 8.2 Implementation Success Factors
-
-To ensure successful implementation of the database architecture, these critical factors must be addressed:
-
-1. **Expertise in Distributed Systems**: The team must include experts in distributed databases, CRDT implementation, and mesh architectures to handle the complexity of the distributed data layer.
-
-2. **Incremental Implementation**: Follow the phased approach to build capabilities progressively, validating each component before moving to more advanced features.
-
-3. **Comprehensive Testing**: Implement extensive testing for distributed scenarios, including chaos engineering approaches to validate resilience under various failure conditions.
-
-4. **Performance Monitoring**: Establish comprehensive observability from the start to ensure performance objectives are met and to quickly identify bottlenecks.
-
-5. **Security Validation**: Conduct regular security assessments of the database architecture to ensure the distributed nature doesn't introduce vulnerability gaps.
-
-This database architecture and data flow design provides a comprehensive blueprint for implementing the IT Support MVP while establishing the foundation for future expansion of the ME.AI platform, ensuring alignment with the mesh architecture principles defined in the original specification.
