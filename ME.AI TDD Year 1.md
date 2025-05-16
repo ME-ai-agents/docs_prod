@@ -57,55 +57,48 @@ The emphasis is on delivering a functional, reliable, and valuable system in Yea
 
 ```mermaid
 flowchart TD
-    subgraph UserInterfaces[User Interfaces (Year 1)]
-        direction LR
-        ChatWeb[Web Chat Client]
-        ChatMobile[Mobile Chat Client (PWA/Native Shell)]
-        MSTeams[MS Teams Integration (Basic)]
-    end
-
-    subgraph UILayer[UI Agentic Layer (Year 1)]
-        direction TB
-        UIAgentFramework[UI Agent Framework (Simplified)]
-        UIPersonalization[UI Personalization (Basic)]
-        MultiModal[Multi-Modal Input (Text, Basic Voice)]
-    end
-
-    subgraph NeuralCore[Neural Core (Year 1)]
-        direction TB
-        ConvProc[Conversation Processing Engine]
-        MemMgmt[Memory Management]
-        WorkflowEngine[Workflow Engine (Orchestration)]
-        SemanticEngine[Semantic Engine (User/Org Basics)]
-    end
-
-    subgraph MCP_Simplified[Mesh Control Protocol (Simplified - Year 1)]
-        direction TB
-        ServiceDiscovery[Service Discovery (e.g., Kubernetes DNS)]
-        APIGateway[API Gateway]
-        AsyncComm[Asynchronous Communication Bus]
-        BasicStateSync[Basic State Synchronization]
-    end
-
-    subgraph DataStores[Data Stores (Year 1)]
-        direction TB
-        UserDB[(User Profile DB)]
-        ConvDB[(Conversation DB)]
-        WorkflowDB[(Workflow State DB)]
-        VectorDB[(Vector DB - Semantic)]
-        KnowledgeGraphDB[(Knowledge Graph DB - IT Domain)]
-        DevicePassportDB[(Device Passport DB)]
-    end
-
-    subgraph Integrations[Integrations (Year 1)]
-        direction TB
-        ITSM_API[ITSM System API (e.g., ServiceNow, Jira)]
-        AD_API[Active Directory/IAM API]
-        ExternalAI[External AI Services (Optional, e.g., Translation)]
-    end
-
-    UserInterfaces --> UILayer
-    UILayer --> APIGateway
+    %% User Interfaces
+    ChatWeb[Web Chat Client]
+    ChatMobile[Mobile Chat Client]
+    MSTeams[MS Teams Integration]
+    
+    %% UI Layer
+    UIAgentFramework[UI Agent Framework]
+    UIPersonalization[UI Personalization]
+    MultiModal[Multi-Modal Input]
+    
+    %% Neural Core
+    ConvProc[Conversation Processing]
+    MemMgmt[Memory Management]
+    WorkflowEngine[Workflow Engine]
+    SemanticEngine[Semantic Engine]
+    
+    %% MCP Simplified
+    ServiceDiscovery[Service Discovery]
+    APIGateway[API Gateway]
+    AsyncComm[Async Communication Bus]
+    BasicStateSync[Basic State Sync]
+    
+    %% Data Stores
+    UserDB[(User Profile DB)]
+    ConvDB[(Conversation DB)]
+    WorkflowDB[(Workflow State DB)]
+    VectorDB[(Vector DB)]
+    KnowledgeGraphDB[(Knowledge Graph DB)]
+    DevicePassportDB[(Device Passport DB)]
+    
+    %% Integrations
+    ITSM_API[ITSM System API]
+    AD_API[Active Directory API]
+    ExternalAI[External AI Services]
+    
+    %% Connections between interfaces and layers
+    ChatWeb & ChatMobile & MSTeams --> UIAgentFramework
+    ChatWeb & ChatMobile & MSTeams --> UIPersonalization
+    ChatWeb & ChatMobile & MSTeams --> MultiModal
+    
+    UIAgentFramework & UIPersonalization & MultiModal --> APIGateway
+    
     APIGateway --> ConvProc
     APIGateway --> WorkflowEngine
     
@@ -113,44 +106,43 @@ flowchart TD
     ConvProc --> SemanticEngine
     ConvProc --> WorkflowEngine
     ConvProc --> AsyncComm
-
+    
     MemMgmt --> UserDB
     MemMgmt --> ConvDB
     MemMgmt --> VectorDB
     
     SemanticEngine --> VectorDB
     SemanticEngine --> KnowledgeGraphDB
-
+    
     WorkflowEngine --> WorkflowDB
     WorkflowEngine --> AsyncComm
-    WorkflowEngine --> Integrations
+    WorkflowEngine --> ITSM_API
+    WorkflowEngine --> AD_API
+    WorkflowEngine --> ExternalAI
     
-    MCP_Simplified --> ServiceDiscovery
-    MCP_Simplified --> BasicStateSync
-
+    ServiceDiscovery --- APIGateway
+    ServiceDiscovery --- AsyncComm
+    BasicStateSync --- ConvProc
+    BasicStateSync --- WorkflowEngine
+    
     ConvProc --> DevicePassportDB
     WorkflowEngine --> DevicePassportDB
-
-    UserDB <--> DataStores
-    ConvDB <--> DataStores
-    WorkflowDB <--> DataStores
-    VectorDB <--> DataStores
-    KnowledgeGraphDB <--> DataStores
-    DevicePassportDB <--> DataStores
-
-    classDef userInterfaces fill:#F9E79F,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef uiLayer fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef neuralCore fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef mcpLayer fill:#D2B4DE,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef dataStores fill:#FADBD8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef integrations fill:#F5CBA7,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-
-    class UserInterfaces,ChatWeb,ChatMobile,MSTeams userInterfaces
-    class UILayer,UIAgentFramework,UIPersonalization,MultiModal uiLayer
-    class NeuralCore,ConvProc,MemMgmt,WorkflowEngine,SemanticEngine neuralCore
-    class MCP_Simplified,ServiceDiscovery,APIGateway,AsyncComm,BasicStateSync mcpLayer
-    class DataStores,UserDB,ConvDB,WorkflowDB,VectorDB,KnowledgeGraphDB,DevicePassportDB dataStores
-    class Integrations,ITSM_API,AD_API,ExternalAI integrations
+    
+    %% Style classes
+    classDef interfaces fill:#F9E79F,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    classDef uiLayer fill:#D5F5E3,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    classDef neuralCore fill:#D6EAF8,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    classDef mcpLayer fill:#D2B4DE,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    classDef dataStores fill:#FADBD8,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    classDef integrations fill:#F5CBA7,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    
+    %% Apply classes
+    class ChatWeb,ChatMobile,MSTeams interfaces
+    class UIAgentFramework,UIPersonalization,MultiModal uiLayer
+    class ConvProc,MemMgmt,WorkflowEngine,SemanticEngine neuralCore
+    class ServiceDiscovery,APIGateway,AsyncComm,BasicStateSync mcpLayer
+    class UserDB,ConvDB,WorkflowDB,VectorDB,KnowledgeGraphDB,DevicePassportDB dataStores
+    class ITSM_API,AD_API,ExternalAI integrations
 ```
 
 ### 3.2 Key Core Platform Components (Year 1 Focus)
@@ -223,37 +215,50 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    subgraph ITSP[IT Support Product (Year 1)]
-        direction TB
-        ITSP_API[IT Support API Layer]
-        
-        subgraph Modules[IT Support Modules]
-            PasswordReset[Password Reset Module]
-            AccountUnlock[Account Unlock Module]
-            SWInstall[Software Installation Module (Basic)]
-            DeviceDiag[Device Diagnostics Module (Basic)]
-            NetworkTroubleshoot[Network Troubleshooting Module (Basic)]
-        end
-
-        ITSP_Workflows[IT Support Workflows]
-    end
-
-    ITSP_API --> Modules
-    Modules --> ITSP_Workflows
+    %% IT Support API Layer
+    ITSP_API[IT Support API Layer]
     
-    ITSP_Workflows --> Core_WorkflowEngine["Core Workflow Engine"]
-    ITSP_Workflows --> Core_Integrations["Core Integrations (AD, ITSM)"]
-    ITSP_Workflows --> Core_DevicePassportDB["Core Device Passport DB"]
-
-    ITSP_API --> Core_ConvProc["Core Conversation Processing"]
-    ITSP_API --> Core_MemMgmt["Core Memory Management"]
-
-    Core_ConvProc <--> ITSP_KnowledgeGraph["IT Support Knowledge Graph (via Core Semantic Engine)"]
-
-    classDef itsp fill:#A9DFBF,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef coreRef fill:#AED6F1,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-
-    class ITSP,ITSP_API,Modules,PasswordReset,AccountUnlock,SWInstall,DeviceDiag,NetworkTroubleshoot,ITSP_Workflows itsp
+    %% IT Support Modules
+    PasswordReset[Password Reset Module]
+    AccountUnlock[Account Unlock Module]
+    SWInstall[Software Installation Module]
+    DeviceDiag[Device Diagnostics Module]
+    NetworkTroubleshoot[Network Troubleshooting Module]
+    
+    %% IT Support Workflows
+    ITSP_Workflows[IT Support Workflows]
+    
+    %% Core Components
+    Core_WorkflowEngine[Core Workflow Engine]
+    Core_Integrations[Core Integrations]
+    Core_DevicePassportDB[Core Device Passport DB]
+    Core_ConvProc[Core Conversation Processing]
+    Core_MemMgmt[Core Memory Management]
+    ITSP_KnowledgeGraph[IT Support Knowledge Graph]
+    
+    %% Connections
+    ITSP_API --> PasswordReset
+    ITSP_API --> AccountUnlock
+    ITSP_API --> SWInstall
+    ITSP_API --> DeviceDiag
+    ITSP_API --> NetworkTroubleshoot
+    
+    PasswordReset & AccountUnlock & SWInstall & DeviceDiag & NetworkTroubleshoot --> ITSP_Workflows
+    
+    ITSP_Workflows --> Core_WorkflowEngine
+    ITSP_Workflows --> Core_Integrations
+    ITSP_Workflows --> Core_DevicePassportDB
+    
+    ITSP_API --> Core_ConvProc
+    ITSP_API --> Core_MemMgmt
+    
+    Core_ConvProc <--> ITSP_KnowledgeGraph
+    
+    %% Styling
+    classDef itsp fill:#A9DFBF,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    classDef coreRef fill:#AED6F1,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    
+    class ITSP_API,PasswordReset,AccountUnlock,SWInstall,DeviceDiag,NetworkTroubleshoot,ITSP_Workflows itsp
     class Core_WorkflowEngine,Core_Integrations,Core_DevicePassportDB,Core_ConvProc,Core_MemMgmt,ITSP_KnowledgeGraph coreRef
 ```
 
@@ -284,79 +289,71 @@ flowchart TD
 ## 5. Overall Year 1 System Architecture
 
 ```mermaid
-graph LR
-    User[End User] --> Browser[Web Browser / Mobile App / MS Teams]
-
-    subgraph ME_AI_Platform_Y1[ME.AI Platform (Year 1)]
-        direction TB
-        APIGateway_Y1[API Gateway]
-        
-        subgraph UILayer_Y1[UI Agentic Layer]
-            UIFramework_Y1[UI Framework]
-        end
-
-        APIGateway_Y1 --> CoreServices_Y1
-        UILayer_Y1 --> APIGateway_Y1
-
-        subgraph CoreServices_Y1[Core Platform Services]
-            direction LR
-            ConvProc_Y1[Conversation Processing]
-            MemMgmt_Y1[Memory Management]
-            WorkflowEng_Y1[Workflow Engine]
-            SemanticEng_Y1[Semantic Engine]
-        end
-
-        subgraph ITSupportProduct_Y1[IT Support Product Services]
-            direction LR
-            PasswordReset_Svc[Password Reset Svc]
-            AccountUnlock_Svc[Account Unlock Svc]
-            SWInstall_Svc[Software Install Svc]
-            DeviceDiag_Svc[Device Diagnostics Svc]
-            NetworkTrouble_Svc[Network Troubleshoot Svc]
-        end
-        
-        CoreServices_Y1 --> ITSupportProduct_Y1
-        ITSupportProduct_Y1 --> CoreServices_Y1
-        
-        AsyncBus_Y1[Async Communication Bus]
-        CoreServices_Y1 --> AsyncBus_Y1
-        ITSupportProduct_Y1 --> AsyncBus_Y1
-        AsyncBus_Y1 --> CoreServices_Y1
-        AsyncBus_Y1 --> ITSupportProduct_Y1
-
-        subgraph DataStores_Y1[Data Stores]
-            direction TB
-            UserDB_Y1[(User DB)]
-            ConvDB_Y1[(Conversation DB)]
-            WorkflowDB_Y1[(Workflow DB)]
-            VectorDB_Y1[(Vector DB)]
-            KG_DB_Y1[(Knowledge Graph DB)]
-            DeviceDB_Y1[(Device Passport DB)]
-        end
-        CoreServices_Y1 --> DataStores_Y1
-        ITSupportProduct_Y1 --> DataStores_Y1
+flowchart LR
+    %% Users and Entry Points
+    User([End User]) --> Browser([Web Browser / Mobile / MS Teams])
+    Browser --> APIGateway_Y1
+    
+    %% Main Platform Components
+    APIGateway_Y1[API Gateway] --> UIFramework_Y1[UI Framework]
+    APIGateway_Y1 --> CoreServices
+    
+    %% Core Services
+    subgraph CoreServices[Core Platform Services]
+        ConvProc_Y1[Conversation Processing]
+        MemMgmt_Y1[Memory Management]
+        WorkflowEng_Y1[Workflow Engine]
+        SemanticEng_Y1[Semantic Engine]
     end
-
-    subgraph ExternalSystems_Y1[External Systems]
-        direction TB
-        AD_IAM[Active Directory / IAM]
-        ITSM[ITSM Tool]
-        KnowledgeBases[Existing Knowledge Bases]
+    
+    %% IT Support Services
+    subgraph ITServices[IT Support Services]
+        PasswordReset_Svc[Password Reset]
+        AccountUnlock_Svc[Account Unlock]
+        SWInstall_Svc[Software Install]
+        DeviceDiag_Svc[Device Diagnostics]
+        NetworkTrouble_Svc[Network Troubleshoot]
     end
-
-    CoreServices_Y1 --> ExternalSystems_Y1
-
-    classDef user fill:#D5DBDB,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef platform fill:#EBF5FB,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef services fill:#D5F5E3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef datastores fill:#FADBD8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-    classDef external fill:#FEF9E7,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
-
+    
+    %% Async Communication
+    AsyncBus_Y1[Async Communication Bus]
+    
+    %% Data Stores
+    UserDB_Y1[(User DB)]
+    ConvDB_Y1[(Conversation DB)]
+    WorkflowDB_Y1[(Workflow DB)]
+    VectorDB_Y1[(Vector DB)]
+    KG_DB_Y1[(Knowledge Graph DB)]
+    DeviceDB_Y1[(Device Passport DB)]
+    
+    %% External Systems
+    AD_IAM[Active Directory / IAM]
+    ITSM[ITSM Tool]
+    KnowledgeBases[Knowledge Bases]
+    
+    %% Connections
+    CoreServices <--> ITServices
+    CoreServices <--> AsyncBus_Y1
+    ITServices <--> AsyncBus_Y1
+    
+    CoreServices --> UserDB_Y1 & ConvDB_Y1 & WorkflowDB_Y1 & VectorDB_Y1 & KG_DB_Y1 & DeviceDB_Y1
+    ITServices --> UserDB_Y1 & ConvDB_Y1 & WorkflowDB_Y1 & DeviceDB_Y1
+    
+    CoreServices --> AD_IAM & ITSM & KnowledgeBases
+    
+    %% Styling
+    classDef user fill:#D5DBDB,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    classDef platform fill:#EBF5FB,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    classDef services fill:#D5F5E3,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    classDef datastores fill:#FADBD8,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    classDef external fill:#FEF9E7,stroke:#2C3E50,stroke-width:1px,color:#2C3E50
+    
     class User,Browser user
-    class ME_AI_Platform_Y1 platform
-    class UILayer_Y1,CoreServices_Y1,ITSupportProduct_Y1,APIGateway_Y1,AsyncBus_Y1 services
-    class DataStores_Y1 datastores
-    class ExternalSystems_Y1 external
+    class APIGateway_Y1,UIFramework_Y1,AsyncBus_Y1 platform
+    class CoreServices,ConvProc_Y1,MemMgmt_Y1,WorkflowEng_Y1,SemanticEng_Y1 services
+    class ITServices,PasswordReset_Svc,AccountUnlock_Svc,SWInstall_Svc,DeviceDiag_Svc,NetworkTrouble_Svc services
+    class UserDB_Y1,ConvDB_Y1,WorkflowDB_Y1,VectorDB_Y1,KG_DB_Y1,DeviceDB_Y1 datastores
+    class AD_IAM,ITSM,KnowledgeBases external
 ```
 
 ## 6. Deployment Architecture (Year 1)
