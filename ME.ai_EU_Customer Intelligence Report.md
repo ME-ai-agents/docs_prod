@@ -1075,17 +1075,17 @@ graph LR
     A --> C[Municipalities]
     A --> D[Healthcare]
     A --> E[Education]
-    
+
     B --> B1[Logius (Government ICT) - 850 employees]
     B --> B2[Tax Administration - 28K employees]
     B --> B3[Social Insurance Bank - 6K employees]
-    
+
     C --> C1[Amsterdam Municipality - 17K employees]
     C --> C2[Rotterdam Municipality - 12K employees]
-    
+
     D --> D1[Amsterdam UMC - 19K employees]
     D --> D2[Erasmus MC Rotterdam - 15K employees]
-    
+
     E --> E1[University of Amsterdam - 7K employees]
     E --> E2[Delft University - 6K employees]
 ```
