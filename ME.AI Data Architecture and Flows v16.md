@@ -776,7 +776,499 @@ erDiagram
     }
 ```
 
-## 10. Key Data Flows and Functional Processes
+## 10. IT Support MVP Detailed Data Flows
+
+The IT Support MVP focuses on four primary use cases as defined in the implementation strategy, now enhanced with v16 cultural intelligence and System of Context capabilities:
+
+1. **Password Reset Automation** - Enhanced with cultural adaptation and cross-session context
+2. **Account Unlock Automation** - Enhanced with cultural security verification and context preservation
+3. **Basic Software Installation** - Enhanced with cultural guidance and multi-language support
+4. **Basic Device Authentication & Diagnostics** - Enhanced with cultural compliance and regional requirements
+
+### 10.1 Conversation-Based Data Flow - Password Reset Automation
+
+This use case enables self-service password reset for common systems with cultural adaptation, identity verification, and success confirmation through a conversational interface that preserves context across sessions.
+
+#### 10.1.1 Enhanced Conversation Flow Overview
+
+```mermaid
+flowchart TD
+    subgraph CF["CONVERSATION FLOW - PASSWORD RESET v16"]
+        I1[User Initiates Conversation] --> I2[System Detects Cultural Context]
+        I2 --> I3[User Requests Password Reset]
+        I3 --> I4[System Requests Account Information - Culturally Adapted]
+        I4 --> I5[User Provides Account Details]
+        I5 --> I6[System Verifies User Identity - Cultural Compliance]
+        I6 --> I7[User Provides Verification]
+        I7 --> I8[System Processes Verification - Cross-Session Context]
+        I8 --> I9[System Requests New Password - Cultural Guidelines]
+        I9 --> I10[User Submits New Password]
+        I10 --> I11[System Confirms Reset Request - Cultural Etiquette]
+        I11 --> I12[User Confirms Reset]
+        I12 --> I13[System Executes Reset - Compliance Framework]
+        I13 --> I14[System Confirms Success - Cultural Communication]
+        I14 --> I15[System Updates Cross-Session Context]
+    end
+    
+    subgraph DE["DATA ENTITIES TOUCHED - v16 ENHANCED"]
+        D1[(ConversationSession)]
+        D2[(Message)]
+        D3[(DevicePassport)]
+        D4[(WorkflowInstance)]
+        D5[(TaskExecution)]
+        D6[(AccessGrant)]
+        D7[(UserProfile)]
+        D8[(CulturalContextProfile)]
+        D9[(CrossSessionContext)]
+        D10[(GDPRComplianceProfile)]
+        
+        I1 -.->|"Creates"| D1
+        I2 -.->|"Loads"| D8
+        I3 -.->|"Stores"| D2
+        I4 -.->|"Adapts"| D8
+        I5 -.->|"Verifies"| D3
+        I5 -.->|"Creates"| D4
+        I6 -.->|"Checks"| D10
+        I8 -.->|"Updates"| D9
+        I13 -.->|"Logs"| D10
+        I15 -.->|"Enriches"| D9
+    end
+    
+    classDef convStep fill:#E8F6F3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef dataEntity fill:#D6EAF8,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    classDef newV16 fill:#FDEDEC,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    
+    class I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13,I14,I15 convStep
+    class D1,D2,D3,D4,D5,D6,D7 dataEntity
+    class D8,D9,D10 newV16
+```
+
+#### 10.1.2 Enhanced Detailed Data Flow with Cultural Intelligence
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Channel as Chat/Voice/Teams Channel
+    participant CP as Conversation Processing
+    participant CCA as Cultural Context Agent
+    participant PRM as Password Reset Manager
+    participant DWE as Dynamic Workflow Engine
+    participant CMDB as Conversation Memory DB
+    participant DSDB as Distributed State DB
+    participant SCDB as Security & Compliance DB
+    participant USPDB as User Semantic Profile DB
+    participant CCDB as Cultural Context DB
+    participant CSM as Cross-Session Memory
+    participant ES as External Systems
+
+    User->>Channel: Request password reset
+    Channel->>CP: Process password reset request
+    CP->>CCDB: Detect and load cultural context
+    CCDB->>CP: Return cultural adaptation rules
+    CP->>CSM: Load cross-session context
+    CSM->>CP: Return previous interaction context
+    CP->>CMDB: Create conversation session with cultural context
+    CP->>CMDB: Store user message with cultural markers
+    CP->>USPDB: Retrieve user semantic profile
+    
+    CP->>CCA: Request cultural adaptation for interaction
+    CCA->>CP: Return culturally-adapted communication style
+    CP->>PRM: Forward password reset intent with cultural context
+    
+    PRM->>SCDB: Check device passport and regional compliance
+    SCDB->>PRM: Return device capabilities and compliance status
+    
+    PRM->>CP: Request account information - culturally adapted
+    CP->>Channel: Present culturally-appropriate account request
+    Channel->>User: Request account details (cultural adaptation)
+    
+    User->>Channel: Provide account information
+    Channel->>CP: Forward account details
+    CP->>CMDB: Store account information with cultural context
+    CP->>PRM: Pass account information
+    
+    PRM->>DWE: Initiate password reset workflow with cultural context
+    DWE->>DSDB: Create workflow instance (PasswordReset_Cultural)
+    DWE->>CCDB: Log cultural workflow adaptation
+    
+    DWE->>DSDB: Update workflow state (identity verification)
+    DWE->>SCDB: Verify device passport with regional compliance
+    SCDB->>DWE: Return verification status
+    DWE->>ES: Verify identity with authentication system
+    ES->>DWE: Confirm identity verification
+    
+    DWE->>CSM: Update cross-session context (verification success)
+    DWE->>DSDB: Update workflow state (password reset)
+    DWE->>CCA: Request culturally-appropriate password guidance
+    CCA->>DWE: Return cultural password guidelines
+    DWE->>CP: Request new password with cultural guidelines
+    CP->>Channel: Ask for new password (culturally adapted)
+    Channel->>User: Request new password with cultural guidelines
+
+    User->>Channel: Enter and submit new password
+    Channel->>CP: Forward new password
+    CP->>CMDB: Store password submission (securely) with cultural context
+    CP->>DWE: Pass new password
+    
+    DWE->>CCA: Request cultural confirmation approach
+    CCA->>DWE: Return appropriate confirmation style
+    DWE->>CP: Request confirmation with cultural etiquette
+    CP->>Channel: Ask for confirmation (culturally appropriate)
+    Channel->>User: Request confirmation with proper etiquette
+    
+    User->>Channel: Confirm password reset
+    Channel->>CP: Forward confirmation
+    CP->>CMDB: Store confirmation message with cultural context
+    CP->>DWE: Pass confirmation
+    
+    DWE->>DSDB: Update workflow state (executing reset)
+    DWE->>SCDB: Log compliance activity for audit
+    DWE->>ES: Execute password reset with compliance logging
+    ES->>DWE: Confirm password reset
+    
+    DWE->>DSDB: Update workflow state (completed)
+    DWE->>CSM: Update cross-session context (successful reset)
+    DWE->>PRM: Notify completion with cultural success markers
+    PRM->>CCA: Request cultural success communication
+    CCA->>PRM: Return culturally-appropriate success message
+    PRM->>CP: Format success message with cultural adaptation
+    
+    CP->>CMDB: Store outcome message with cultural context
+    CP->>USPDB: Update user knowledge (password reset familiarity)
+    CP->>CSM: Enrich cross-session context (workflow completion)
+    
+    CP->>Channel: Present culturally-adapted completion message
+    Channel->>User: Display/announce success with cultural appropriateness
+```
+
+#### 10.1.3 Database Operations for Password Reset with Cultural Enhancement
+
+| Step | Conversation Stage | Database | Operation | Description |
+|------|-------------------|----------|-----------|-------------|
+| 1 | Conversation Initiation | CMDB | Insert | Create `ConversationSession` with cultural context markers |
+| 2 | Cultural Context Loading | CCDB | Select | Retrieve `CulturalContextProfile` for user adaptation |
+| 3 | Cross-Session Context | CSM | Select | Load `CrossSessionContext` for continuity |
+| 4 | Password Reset Request | CMDB | Insert | Store initial `Message` with cultural markers |
+| 5 | Password Reset Request | USPDB | Select | Retrieve `UserSemanticProfile` for personalized interaction |
+| 6 | Cultural Adaptation | CCDB | Select | Retrieve cultural communication patterns |
+| 7 | Device Verification | SCDB | Select | Verify `DevicePassport` with regional compliance |
+| 8 | Workflow Creation | DSDB | Insert | Create `DistributedWorkflowInstance` with cultural context |
+| 9 | Identity Verification | SCDB | Insert | Create `SecurityAudit` record with cultural compliance |
+| 10 | Identity Verification | DSDB | Update | Update workflow state to identity verification |
+| 11 | Verification Storage | CMDB | Insert | Store verification request `Message` with cultural adaptation |
+| 12 | Verification Response | CMDB | Insert | Store user verification response with cultural context |
+| 13 | Context Update | CSM | Update | Update `CrossSessionContext` with verification progress |
+| 14 | Verification Processing | DSDB | Update | Update workflow state to verification processing |
+| 15 | Cultural Password Guidelines | CCDB | Select | Retrieve cultural password requirements |
+| 16 | Password Entry Request | DSDB | Update | Update workflow state to password reset execution |
+| 17 | Password Entry | CMDB | Insert | Store password submission with cultural security |
+| 18 | Cultural Confirmation | CCDB | Select | Retrieve cultural confirmation etiquette |
+| 19 | Reset Confirmation | CMDB | Insert | Store confirmation request with cultural appropriateness |
+| 20 | Reset Confirmation | CMDB | Insert | Store user confirmation with cultural context |
+| 21 | Reset Execution | DSDB | Update | Update workflow state to executing reset |
+| 22 | Compliance Logging | SCDB | Insert | Log compliance activity in `GDPRComplianceProfile` |
+| 23 | Reset Completion | DSDB | Update | Update workflow state to completed |
+| 24 | Cultural Success Message | CCDB | Select | Retrieve cultural success communication patterns |
+| 25 | Reset Completion | CMDB | Insert | Store outcome `Message` with cultural success markers |
+| 26 | Knowledge Update | USPDB | Update | Update `EntityFamiliarity` for password reset concepts |
+| 27 | Context Enrichment | CSM | Update | Enrich `CrossSessionContext` with successful completion |
+| 28 | Reset Completion | DSDB | Insert | Create `DistributedEvent` for successful completion with cultural logging |
+
+### 10.2 Conversation-Based Data Flow - Account Unlock Automation
+
+This use case enables self-service account unlock with cultural security verification, regional compliance, and access restoration through a conversational interface that maintains cross-session context.
+
+#### 10.2.1 Enhanced Account Unlock Flow
+
+```mermaid
+flowchart TD
+    subgraph CF["CONVERSATION FLOW - ACCOUNT UNLOCK v16"]
+        I1[User Initiates Conversation] --> I2[System Detects Cultural Context]
+        I2 --> I3[User Requests Account Unlock]
+        I3 --> I4[System Requests Account Information - Culturally Adapted]
+        I4 --> I5[User Provides Account Details]
+        I5 --> I6[System Performs Cultural Security Verification]
+        I6 --> I7[User Provides Cultural-Appropriate Verification]
+        I7 --> I8[System Processes Verification - Regional Compliance]
+        I8 --> I9[System Confirms Unlock Request - Cultural Etiquette]
+        I9 --> I10[User Confirms Unlock]
+        I10 --> I11[System Executes Unlock - Compliance Framework]
+        I11 --> I12[System Confirms Success - Cultural Communication]
+        I12 --> I13[System Updates Cross-Session Security Context]
+    end
+    
+    classDef convStep fill:#E8F6F3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    class I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12,I13 convStep
+```
+
+#### 10.2.2 Database Operations for Account Unlock with Cultural Enhancement
+
+| Step | Conversation Stage | Database | Operation | Description |
+|------|-------------------|----------|-----------|-------------|
+| 1 | Conversation Initiation | CMDB | Insert | Create `ConversationSession` with cultural security context |
+| 2 | Cultural Context Loading | CCDB | Select | Retrieve `CulturalContextProfile` for security adaptation |
+| 3 | Cross-Session Security Context | CSM | Select | Load security-related `CrossSessionContext` |
+| 4 | Account Unlock Request | CMDB | Insert | Store initial `Message` with cultural security markers |
+| 5 | Account Unlock Request | USPDB | Select | Retrieve `UserSemanticProfile` for security personalization |
+| 6 | Cultural Security Adaptation | CCDB | Select | Retrieve cultural security verification patterns |
+| 7 | Account Unlock Request | DSDB | Insert | Create `DistributedWorkflowInstance` for account unlock with cultural context |
+| 8 | Security Verification | SCDB | Select | Verify `DevicePassport` and `DeviceAttestation` with regional compliance |
+| 9 | Cultural Security Check | CCDB | Select | Retrieve cultural security verification requirements |
+| 10 | Security Verification | DSDB | Update | Update workflow state to cultural security verification |
+| 11 | Security Verification | CMDB | Insert | Store verification request with cultural security adaptation |
+| 12 | Verification Response | CMDB | Insert | Store user verification response with cultural context |
+| 13 | Regional Compliance Check | SCDB | Select | Verify regional compliance requirements |
+| 14 | Verification Processing | DSDB | Update | Update workflow state to verification processing |
+| 15 | Cultural Unlock Confirmation | CCDB | Select | Retrieve cultural unlock confirmation etiquette |
+| 16 | Unlock Confirmation | DSDB | Update | Update workflow state to account unlock execution |
+| 17 | Unlock Confirmation | CMDB | Insert | Store confirmation request with cultural appropriateness |
+| 18 | Unlock Confirmation | CMDB | Insert | Store user confirmation with cultural context |
+| 19 | Unlock Execution | DSDB | Update | Update workflow state to executing unlock |
+| 20 | Compliance Logging | SCDB | Insert | Log security compliance activity |
+| 21 | Unlock Completion | DSDB | Update | Update workflow state to completed |
+| 22 | Cultural Success Communication | CCDB | Select | Retrieve cultural success communication patterns |
+| 23 | Unlock Completion | CMDB | Insert | Store outcome `Message` with cultural success markers |
+| 24 | Knowledge Update | USPDB | Update | Update `EntityFamiliarity` for account unlock concepts |
+| 25 | Security Context Update | CSM | Update | Update cross-session security context |
+| 26 | Unlock Completion | DSDB | Insert | Create `DistributedEvent` for successful completion |
+| 27 | Unlock Completion | SCDB | Insert | Create `AccessGrant` for restored access with cultural logging |
+
+### 10.3 Conversation-Based Data Flow - Basic Software Installation
+
+This use case provides culturally-adapted guidance for common application installation and deployment automation through a conversational interface with multi-language support.
+
+#### 10.3.1 Enhanced Software Installation Flow
+
+```mermaid
+flowchart TD
+    subgraph CF["CONVERSATION FLOW - SOFTWARE INSTALLATION v16"]
+        I1[User Initiates Conversation] --> I2[System Detects Cultural & Language Context]
+        I2 --> I3[User Requests Software Installation]
+        I3 --> I4[System Presents Cultural Software Options]
+        I4 --> I5[User Selects Software - Cultural Preferences]
+        I5 --> I6[System Checks Eligibility - Regional Compliance]
+        I6 --> I7[System Provides Cultural Installation Guidance]
+        I7 --> I8[User Confirms Installation - Cultural Communication]
+        I8 --> I9[System Executes Installation - Multi-Language Support]
+        I9 --> I10[System Provides Cultural Progress Updates]
+        I10 --> I11[System Verifies Installation - Cultural Validation]
+        I11 --> I12[System Updates Cross-Session Software Context]
+    end
+    
+    classDef convStep fill:#E8F6F3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    class I1,I2,I3,I4,I5,I6,I7,I8,I9,I10,I11,I12 convStep
+```
+
+#### 10.3.2 Enhanced Detailed Software Installation Data Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Channel as Multi-Language Channel
+    participant CP as Conversation Processing
+    participant CCA as Cultural Context Agent
+    participant SIM as Software Installation Manager
+    participant DWE as Dynamic Workflow Engine
+    participant CMDB as Conversation Memory DB
+    participant DSDB as Distributed State DB
+    participant SCDB as Security & Compliance DB
+    participant USPDB as User Semantic Profile DB
+    participant CCDB as Cultural Context DB
+    participant KGDB as Knowledge Graph DB
+    participant CSM as Cross-Session Memory
+    participant ES as External Systems
+
+    User->>Channel: Request software installation (in preferred language)
+    Channel->>CP: Process installation request with language detection
+    CP->>CCDB: Detect cultural and language context
+    CCDB->>CP: Return cultural and language adaptation rules
+    CP->>CSM: Load cross-session software context
+    CSM->>CP: Return previous software interaction context
+    CP->>CMDB: Create conversation session with cultural and language context
+    CP->>CMDB: Store user message with cultural and language markers
+    CP->>USPDB: Retrieve user semantic profile with software preferences
+    
+    CP->>CCA: Request cultural adaptation for software interaction
+    CCA->>CP: Return culturally-adapted communication style for software guidance
+    CP->>SIM: Forward software installation intent with cultural context
+    
+    SIM->>SCDB: Check device capabilities and regional software compliance
+    SCDB->>SIM: Return device capabilities and software compliance status
+    
+    SIM->>KGDB: Retrieve culturally-appropriate software options
+    KGDB->>SIM: Return filtered software options with cultural preferences
+    SIM->>CCA: Request cultural software presentation format
+    CCA->>SIM: Return cultural software selection guidance
+    SIM->>CP: Present software options with cultural adaptation
+    CP->>Channel: Present culturally-appropriate software choices
+    Channel->>User: Show software options (culturally and linguistically adapted)
+    
+    User->>Channel: Select software (in preferred language)
+    Channel->>CP: Forward software selection with language context
+    CP->>CMDB: Store selection message with cultural and language context
+    CP->>SIM: Pass software selection with cultural preferences
+    
+    SIM->>DWE: Initiate software installation workflow with cultural context
+    DWE->>DSDB: Create workflow instance (SoftwareInstall_Cultural)
+    DWE->>CCDB: Log cultural software workflow adaptation
+    
+    DWE->>DSDB: Update workflow state (eligibility check with cultural compliance)
+    DWE->>SCDB: Verify software eligibility with regional compliance
+    DWE->>ES: Verify software eligibility for user/device with cultural considerations
+    ES->>DWE: Return eligibility status with compliance information
+    
+    DWE->>CSM: Update cross-session context (software eligibility)
+    DWE->>DSDB: Update workflow state (preparation with cultural guidance)
+    DWE->>CCA: Request culturally-appropriate installation guidance
+    CCA->>DWE: Return cultural installation communication patterns
+    DWE->>CP: Request installation confirmation with cultural guidance
+    CP->>Channel: Present installation details (culturally and linguistically appropriate)
+    Channel->>User: Show installation information with cultural guidance
+    
+    User->>Channel: Confirm installation (in preferred language)
+    Channel->>CP: Forward confirmation with language context
+    CP->>CMDB: Store confirmation message with cultural context
+    CP->>DWE: Pass confirmation with cultural markers
+    
+    DWE->>DSDB: Update workflow state (installation with cultural monitoring)
+    
+    alt Direct Installation with Cultural Support
+        DWE->>ES: Trigger remote software installation with cultural settings
+        ES->>DWE: Report installation progress with cultural markers
+        DWE->>DSDB: Update workflow variables (progress with cultural context)
+        DWE->>CCA: Request cultural progress communication
+        CCA->>DWE: Return culturally-appropriate progress messaging
+        DWE->>CP: Send culturally-adapted progress updates
+        CP->>Channel: Update progress display (culturally appropriate)
+        Channel->>User: Show installation progress with cultural communication
+        ES->>DWE: Confirm installation complete with cultural validation
+    else Manual Guidance with Cultural Adaptation
+        DWE->>CCA: Request culturally-appropriate installation instructions
+        CCA->>DWE: Return cultural installation guidance patterns
+        DWE->>CP: Generate culturally-adapted installation instructions
+        CP->>Channel: Present step-by-step guide (culturally and linguistically appropriate)
+        Channel->>User: Show installation steps with cultural guidance
+        
+        loop For each step with cultural support
+            User->>Channel: Confirm step completion (in preferred language)
+            Channel->>CP: Forward step completion with language context
+            CP->>DWE: Update step status with cultural markers
+            DWE->>DSDB: Update workflow variables (progress with cultural context)
+            DWE->>CSM: Update cross-session software learning context
+        end
+    end
+    
+    DWE->>DSDB: Update workflow state (verification with cultural validation)
+    DWE->>ES: Verify successful installation with cultural compliance
+    ES->>DWE: Confirm installation verification with cultural markers
+    
+    DWE->>DSDB: Update workflow state (completed with cultural success)
+    DWE->>CSM: Update cross-session context (software installation success)
+    DWE->>SIM: Notify completion with cultural success markers
+    SIM->>CCA: Request cultural success communication
+    CCA->>SIM: Return culturally-appropriate success messaging
+    SIM->>CP: Format success message with cultural adaptation
+    
+    CP->>CMDB: Store outcome message with cultural and language context
+    CP->>USPDB: Update user knowledge (software installation familiarity with cultural context)
+    CP->>CSM: Enrich cross-session context (software workflow completion)
+    
+    CP->>Channel: Present culturally and linguistically adapted completion message
+    Channel->>User: Display/announce installation success with cultural appropriateness
+```
+
+#### 10.3.3 Database Operations for Software Installation with Cultural Enhancement
+
+| Step | Conversation Stage | Database | Operation | Description |
+|------|-------------------|----------|-----------|-------------|
+| 1 | Conversation Initiation | CMDB | Insert | Create `ConversationSession` with cultural and language context |
+| 2 | Cultural & Language Context | CCDB | Select | Retrieve `CulturalContextProfile` and `LanguageLocalizationProfile` |
+| 3 | Cross-Session Software Context | CSM | Select | Load software-related `CrossSessionContext` |
+| 4 | Software Installation Request | CMDB | Insert | Store initial `Message` with cultural and language markers |
+| 5 | Software Installation Request | USPDB | Select | Retrieve `UserSemanticProfile` with software preferences |
+| 6 | Cultural Software Adaptation | CCDB | Select | Retrieve cultural software guidance patterns |
+| 7 | Device Capability Check | SCDB | Select | Check `DeviceCapability` with regional software compliance |
+| 8 | Cultural Software Options | KGDB | Select | Retrieve culturally-appropriate software from `KnowledgeNode` |
+| 9 | Software Selection | CMDB | Insert | Store software selection with cultural and language context |
+| 10 | Workflow Creation | DSDB | Insert | Create `DistributedWorkflowInstance` with cultural software context |
+| 11 | Cultural Workflow Logging | CCDB | Insert | Log cultural software workflow adaptation |
+| 12 | Eligibility Check | DSDB | Update | Update workflow state to eligibility check with cultural compliance |
+| 13 | Regional Compliance Check | SCDB | Select | Verify regional software compliance requirements |
+| 14 | Installation Preparation | DSDB | Update | Update workflow state to preparation with cultural guidance |
+| 15 | Cultural Installation Guidance | CCDB | Select | Retrieve cultural installation communication patterns |
+| 16 | Installation Confirmation | CMDB | Insert | Store installation confirmation with cultural appropriateness |
+| 17 | Installation Confirmation | CMDB | Insert | Store user confirmation with cultural and language context |
+| 18 | Installation Execution | DSDB | Update | Update workflow state to installation with cultural monitoring |
+| 19 | Cultural Progress Updates | DSDB | Update | Update `DistributedVariable` for progress with cultural context |
+| 20 | Progress Communication | CMDB | Insert | Store culturally-adapted progress updates |
+| 21 | Cross-Session Learning | CSM | Update | Update software learning context across sessions |
+| 22 | Installation Verification | DSDB | Update | Update workflow state to verification with cultural validation |
+| 23 | Cultural Completion | DSDB | Update | Update workflow state to completed with cultural success |
+| 24 | Cultural Success Communication | CCDB | Select | Retrieve cultural success communication patterns |
+| 25 | Installation Completion | CMDB | Insert | Store outcome with cultural and language success markers |
+| 26 | Knowledge Update | USPDB | Update | Update `EntityFamiliarity` with cultural software installation context |
+| 27 | Context Enrichment | CSM | Update | Enrich cross-session software context |
+| 28 | Installation Completion | DSDB | Insert | Create `DistributedEvent` for successful completion with cultural logging |
+
+### 10.4 Conversation-Based Data Flow - Basic Device Authentication & Diagnostics
+
+This use case enables secure device identification, verification, and basic hardware diagnostics through a conversational interface with cultural compliance and regional requirements.
+
+#### 10.4.1 Enhanced Device Authentication & Diagnostics Flow
+
+```mermaid
+flowchart TD
+    subgraph CF["CONVERSATION FLOW - DEVICE AUTH & DIAGNOSTICS v16"]
+        I1[User Initiates Conversation] --> I2[System Detects Cultural & Regional Context]
+        I2 --> I3[User Requests Device Diagnostics]
+        I3 --> I4[System Performs Cultural Device Authentication]
+        I4 --> I5[System Requests Diagnostic Permission - Cultural Etiquette]
+        I5 --> I6[User Grants Permission - Cultural Communication]
+        I6 --> I7[System Executes Diagnostics - Regional Compliance]
+        I7 --> I8[System Analyzes Results - Cultural Interpretation]
+        I8 --> I9[System Provides Cultural Recommendations]
+        I9 --> I10[System Updates Cross-Session Device Context]
+    end
+    
+    classDef convStep fill:#E8F6F3,stroke:#2C3E50,stroke-width:2px,color:#2C3E50
+    class I1,I2,I3,I4,I5,I6,I7,I8,I9,I10 convStep
+```
+
+#### 10.4.2 Database Operations for Device Authentication & Diagnostics with Cultural Enhancement
+
+| Step | Conversation Stage | Database | Operation | Description |
+|------|-------------------|----------|-----------|-------------|
+| 1 | Conversation Initiation | CMDB | Insert | Create `ConversationSession` with cultural and regional context |
+| 2 | Cultural & Regional Context | CCDB | Select | Retrieve `CulturalContextProfile` and `RegionalComplianceProfile` |
+| 3 | Cross-Session Device Context | CSM | Select | Load device-related `CrossSessionContext` |
+| 4 | Device Diagnostics Request | CMDB | Insert | Store initial `Message` with cultural and regional markers |
+| 5 | Device Diagnostics Request | USPDB | Select | Retrieve `UserSemanticProfile` with device preferences |
+| 6 | Cultural Device Authentication | CCDB | Select | Retrieve cultural device authentication patterns |
+| 7 | Device Authentication | SCDB | Select | Authenticate device using `DevicePassport` with regional compliance |
+| 8 | Regional Compliance Check | SCDB | Select | Verify regional device compliance requirements |
+| 9 | Cultural Security Audit | SCDB | Insert | Create `SecurityAudit` record with cultural compliance markers |
+| 10 | Device Authentication Status | CMDB | Insert | Store authentication status with cultural context |
+| 11 | Cultural Permission Request | CCDB | Select | Retrieve cultural diagnostic permission etiquette |
+| 12 | Diagnostics Permission | CMDB | Insert | Store permission request with cultural appropriateness |
+| 13 | Permission Grant | CMDB | Insert | Store user permission response with cultural context |
+| 14 | Workflow Creation | DSDB | Insert | Create `DistributedWorkflowInstance` with cultural device context |
+| 15 | Cultural Workflow Logging | CCDB | Insert | Log cultural device workflow adaptation |
+| 16 | Diagnostics Execution | DSDB | Update | Update workflow state to diagnostics execution with regional compliance |
+| 17 | Regional Diagnostics Compliance | SCDB | Select | Verify regional diagnostics compliance requirements |
+| 18 | Diagnostics Progress | DSDB | Update | Update `DistributedVariable` with cultural diagnostics progress |
+| 19 | Cultural Progress Updates | CMDB | Insert | Store culturally-adapted diagnostics progress |
+| 20 | Cross-Session Device Learning | CSM | Update | Update device learning context across sessions |
+| 21 | Diagnostics Results Analysis | DSDB | Update | Update workflow state to results analysis with cultural interpretation |
+| 22 | Cultural Results Interpretation | CCDB | Select | Retrieve cultural results communication patterns |
+| 23 | Diagnostics Completion | DSDB | Update | Update workflow state to completed with cultural success |
+| 24 | Cultural Recommendations | CCDB | Select | Retrieve cultural recommendation communication patterns |
+| 25 | Diagnostics Completion | CMDB | Insert | Store outcome with cultural and regional success markers |
+| 26 | Knowledge Update | USPDB | Update | Update `EntityFamiliarity` with cultural device diagnostics context |
+| 27 | Device Context Enrichment | CSM | Update | Enrich cross-session device context |
+| 28 | Security Audit Completion | SCDB | Insert | Complete security audit with cultural compliance logging |
+| 29 | Diagnostics Completion | DSDB | Insert | Create `DistributedEvent` for successful completion with cultural logging |
+
+## 11. Key Data Flows and Functional Processes
 
 ### 10.1 Cultural Context-Aware Conversation Flow
 
